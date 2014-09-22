@@ -1,9 +1,14 @@
 <?php
 	class database
 	{
-		function __construct($mysqli)
+		function __construct($db_hostname, $db_username, $db_password, $db_name)
 		{
-			$this->mysqli = $mysqli;
+			$this->mysqli = new mysqli($db_hostname, $db_username, $db_password, $db_name);
+
+			if ($this->mysqli->connect_errno) {
+			    die("Failed to connect to MySQL: " . $mysqli->connect_error);
+			}
+
 		}
 
 		function getRowsFromTable($table)
