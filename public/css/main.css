@@ -1,3 +1,5 @@
+@import url("dropdown.css");
+
 /* Main style sheet */
 
 /******************************
@@ -42,7 +44,10 @@ header {
 	float: left;
 	min-height: 100%;
 	width: 100%;
-	padding: 50px;
+}
+
+#program-select-title {
+	padding: 10px
 }
 
 
@@ -68,7 +73,7 @@ footer {
 .page-footer-trademark {
 	padding: 0.1em;
 	padding-left: 12px;
-	background-color: #202020;
+	background-color: #202020; /* dark grey */
 }
 
 
@@ -103,8 +108,7 @@ footer {
 
 /* site body */
 body {
-	/*background-color: #fff;*/
-	background-color: #444;
+	background-color: #333;
 	color: #999;
 }
 
