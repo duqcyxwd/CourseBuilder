@@ -1,4 +1,5 @@
 @import url("dropdown.css");
+@import url("checkbox.css");
 
 /* Main style sheet */
 
@@ -46,9 +47,31 @@ header {
 	width: 100%;
 }
 
-#program-select-title {
-	padding: 10px
+.program-select {
+	padding: 10px;
+	width: 700px;
+	margin: 0 auto;
 }
+
+#program-select-title {
+	padding: 10px 4px;
+}
+
+#program-select-dd {
+	float: left;
+	width: 500px;
+}
+
+#year-select-dd {
+	float: right;
+	width: 120px;
+	height: 100%;
+}
+
+#program-select-onpattern {
+	padding-top: 55px;
+}
+
 
 
 /******************************

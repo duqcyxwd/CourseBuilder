@@ -22,11 +22,12 @@ Note: Abstract all database queries
 
 ###Front End
 
-1. [ ] Create input page (View 1)
+1. [x] Create input page (View 1)
     Input fields: Program, on/off pattern, list of completed courses
     - NOTE: Need to replace hard-coded dropdown menu with data from database
     - When a program has been selected, replace the combo box value
     - Right now the page is reloaded upon selection, need to change this.
+    - Add JavaScript so that the courses are auto-selected when user chooses on pattern
 2. [ ] Display user input (list)
 3. [ ] Allow user to input courses as text (need to parse text)
 4. [ ] Add auto-completion for text
