@@ -5,9 +5,7 @@
 ?>
 
 	<div id="container">
-		<div id="content">
-			
-		</div>
+
 	</div>
 
 

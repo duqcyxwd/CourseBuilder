@@ -4,7 +4,7 @@ require_once(realpath(dirname(__FILE__)) . '/include/database.class.php');
 
 // Database connection details
 $db_hostname = 'localhost';
-$db_name = 'courses'; // TODO_KR replace this with future database name
+$db_name = 'CourseBuilder'; // TODO_KR replace this with future database name
 $db_username = 'root';
 $db_password = '';
 
