@@ -1,6 +1,7 @@
 <?php
 
 require_once(realpath(dirname(__FILE__)) . '/include/database.class.php');
+require_once(realpath(dirname(__FILE__)) . '/include/constants.php');
 
 // Database connection details
 $db_hostname = 'localhost';

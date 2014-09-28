@@ -18,3 +18,7 @@ function toggleClass(element, className){
 function selectProgram(obj) {
 	toggleClass(obj, 'active');
 }
+
+function something(obj) {
+    console.log(obj);
+}
