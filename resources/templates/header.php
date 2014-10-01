@@ -6,5 +6,5 @@
 </head>
 <body>
 	<div id="header">
-			<h1>Course Builder (Header)</h1>
+			<h1>Course Builder</h1>
 	</div>
