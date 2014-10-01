@@ -1,0 +1,236 @@
+@import url("dropdown.css");
+@import url("checkbox.css");
+
+/* Main style sheet */
+
+/******************************
+						GENERAL
+******************************/
+
+/* remove browser margins */
+html, body, div {
+	margin:0;
+	padding:0;
+	height: 100%;
+}
+
+body {
+	font-family: 'Open Sans', sans-serif;
+	min-height: 1000px;
+}
+
+a {
+	text-decoration: none;
+}
+
+h2 {
+	margin: 0.5em 0 0.5em 1em;
+}
+
+h3 {
+	margin: 0.5em 0 0.5em 1em;
+}
+
+
+/******************************
+						HEADER
+******************************/
+
+header {
+	float: left;
+	width: 100%;
+}
+
+
+/******************************
+							BODY
+******************************/
+
+#container {
+	float: left;
+	min-height: 100%;
+	width: 100%;
+}
+
+/******************************
+				PROGRAM SELECT
+******************************/
+
+.program-select {
+	padding: 10px;
+	width: 700px;
+	margin: 0 auto;
+}
+
+#program-select-title {
+	padding: 10px 4px;
+}
+
+#program-select-dd {
+	float: left;
+	width: 500px;
+}
+
+#year-select-dd {
+	float: right;
+	width: 120px;
+	height: 100%;
+}
+
+#program-select-onpattern {
+	padding-top: 55px;
+}
+
+/******************************
+					COURSE TABLE
+******************************/
+
+.course-table {
+	margin: 0 auto;
+	margin-top: 20px;
+	width: 80%;
+	border: 2px solid black;
+}
+
+.course-table table th {
+	border: 1px solid black;
+}
+
+#course-header-year th {
+	background-color: black;
+	width: 10%;
+}
+
+#course-header-term th {
+	width: 8%;
+}
+
+#course-classes td {
+	text-align: center;
+	height: 100px;
+	border: 1px solid black;
+	background-color: #BDC3C7;
+	color: black;
+}
+
+#course-classes td:hover {
+	background-color: grey;
+	color: white;
+}
+
+
+
+/******************************
+						FOOTER
+******************************/
+
+footer {
+	float: left;
+	width: 100%;
+	font-size: 10pt;
+}
+
+.page-footer-content {
+	min-height: 120px;
+}
+
+.page-footer-content ul {
+	list-style: none;
+	float: left;
+}
+
+.page-footer-content ul li a:hover {
+	color: #404040;
+}
+
+.page-footer-trademark {
+	padding: 0.1em;
+	padding-left: 12px;
+	background-color: #202020; /* dark grey */
+}
+
+
+/******************************
+					PAGE GRID
+******************************/
+
+.col-1-5 {
+	width: 20%;
+}
+
+.col-2-5 {
+	width: 40%;
+}
+
+.col-3-5 {
+	width: 60%;
+}
+
+.col-4-5 {
+	width: 80%;
+}
+
+.col-1-1 {
+	width: 100%;
+}
+
+
+/******************************
+						COLORS
+******************************/
+
+/* site body */
+body {
+	background-color: #333;
+	color: #999;
+}
+
+/* red header */
+header {
+	background: #C0392B;
+}
+
+/* header text */
+h3 {
+	color: #fff;
+}
+
+/* black footer */
+footer {
+	background: #000;
+}
+
+/* footer links */
+footer a {
+	color: white;	
+}
+
+
+/******************************
+				COURSE COLORS
+******************************/
+/*
+.MATH, .STAT {
+	border: 3px solid green;
+}
+
+.PHYS, .CHEM, .COMP {
+	border: 3px solid yellow;
+}
+
+.SYSC {
+	border: 3px solid purple;
+}
+
+.ECOR, .CCDP {
+	border: 3px solid black;
+}
+
+.ELEC {
+	border: 3px solid orange;
+}*/
+
+/* elective */
+/*.ETIV {
+	border: 3px solid gray;
+}*/
