@@ -1,32 +1,32 @@
 <?php 
 
-	require_once("../resources/config.php");
-	require_once(TEMPLATES_PATH . "/header.php"); 
-?>
+	include("../resources/templates/header.php");
 
-<?php 
 	$errorId = $_GET['errorid'];
 	$codes = array(
-		100 => array('100 DataBase Unconnect', 'DataBase is not ready.'),
-	    404 => array('404 Not Found', 'The document/file requested was not found on this server.'),
-	);
+									100 => array('Database Connection Error', 'Could not connect to the database'),
+	    						404 => array('404 Not Found', 'The document/file requested was not found on this server.'),
+								);
 
-	print_r($errorId);
-
-	$title = $codes[$errorId][0];
-	$message = $codes[$errorId][1];
-	if ($title == false || strlen($errorId) != 3) {
-		$message = 'Please supply a valid errorId.';
-		die();
+	if (@$codes[$errorId] == null) {
+		$title = "Unknown error";
+		$message = "Unrecognized error id: " . $errorId;
+	} else {
+		$title = $codes[$errorId][0];
+		$message = $codes[$errorId][1];
 	}
+
 	$pageTitle = $title;
 
-	echo '<h1>'.$title.'</h1>
-	<p>'.$message.'</p>';
-
 	session_start();
-	echo "<p style='color: #AA1111;'>".$_SESSION['error']."</a>";
+	echo ("
+					<h1> Oh No! Something went horribly wrong! </h1>
+				  <h2>$_SESSION[error]</h2>
+
+		    	<strong>$title</strong>
+		      <p>$message</p>
+			");
+
+include("../resources/templates/footer.php"); 
 
 ?>
-
-<?php require_once(TEMPLATES_PATH . "/footer.php"); ?>

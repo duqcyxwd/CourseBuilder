@@ -1,6 +1,4 @@
 <?php 
-	require_once("../resources/config.php");
-
 
 	function errorMessage($url, $statusCode = 100, $additionMessage = "")
 	{
