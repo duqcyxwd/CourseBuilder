@@ -4,6 +4,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
+-- Generation Time: Oct 01, 2014 at 03:02 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -42,10 +43,10 @@ CREATE TABLE IF NOT EXISTS `courses` (
   `programID` int(11) NOT NULL,
   `year` tinyint(1) NOT NULL,
   `term` tinyint(1) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3799 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3798 ;
 
 --
--- Data for table `courses`
+-- Dumping data for table `courses`
 --
 
 INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `days`, `startTime`, `endTime`, `roomCap`, `programID`, `year`, `term`) VALUES
@@ -514,8 +515,7 @@ INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `day
 (463, 'BUSI', '1402', 'F08', 'Intr Business Info & Comm Tech', 'TUT', 'W', '00:13:35', '00:14:25', 31, 0, 0, 0),
 (464, 'BUSI', '1402', 'F09', 'Intr Business Info & Comm Tech', 'TUT', '', '00:00:00', '00:00:00', 0, 0, 0, 0),
 (465, 'BUSI', '1402', 'F10', 'Intr Business Info & Comm Tech', 'TUT', 'T', '00:14:35', '00:15:25', 31, 0, 0, 0),
-(466, 'BUSI', '1402', 'T', 'Intr Business Info & Comm Tech', 'LEC', '', '00:00:00', '00:00:00', 0, 0, 0, 0);
-INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `days`, `startTime`, `endTime`, `roomCap`, `programID`, `year`, `term`) VALUES
+(466, 'BUSI', '1402', 'T', 'Intr Business Info & Comm Tech', 'LEC', '', '00:00:00', '00:00:00', 0, 0, 0, 0),
 (467, 'BUSI', '1402', 'TOD', 'Intr Business Info & Comm Tech', 'VOD', '', '00:00:00', '00:00:00', 0, 0, 0, 0),
 (468, 'BUSI', '1701', 'A', 'Intro. International Business', 'LEC', 'MW', '00:11:35', '00:12:25', 56, 0, 0, 0),
 (469, 'BUSI', '1701', 'A1', 'Intro. International Business', 'TUT', 'M', '00:13:35', '00:14:25', 115, 0, 0, 0),
@@ -529,7 +529,8 @@ INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `day
 (477, 'BUSI', '1800', 'A05', 'Introduction to Business', 'TUT', 'R', '00:14:35', '00:16:25', 35, 0, 0, 0),
 (478, 'BUSI', '1800', 'A06', 'Introduction to Business', 'TUT', 'R', '00:11:35', '00:13:25', 58, 0, 0, 0),
 (479, 'BUSI', '1800', 'B', 'Introduction to Business', 'LEC', 'T', '00:14:35', '00:17:25', 195, 0, 0, 0),
-(480, 'BUSI', '1800', 'B01', 'Introduction to Business', 'TUT', 'F', '00:14:35', '00:16:25', 42, 0, 0, 0),
+(480, 'BUSI', '1800', 'B01', 'Introduction to Business', 'TUT', 'F', '00:14:35', '00:16:25', 42, 0, 0, 0);
+INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `days`, `startTime`, `endTime`, `roomCap`, `programID`, `year`, `term`) VALUES
 (481, 'BUSI', '1800', 'B02', 'Introduction to Business', 'TUT', 'W', '00:15:35', '00:17:25', 35, 0, 0, 0),
 (482, 'BUSI', '1800', 'B03', 'Introduction to Business', 'TUT', 'R', '00:08:35', '00:10:25', 35, 0, 0, 0),
 (483, 'BUSI', '1800', 'B04', 'Introduction to Business', 'TUT', 'F', '00:08:35', '00:10:25', 35, 0, 0, 0),
@@ -980,8 +981,7 @@ INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `day
 (928, 'COMM', '2000', 'A', 'Intro to Qual. Research Comm', 'LEC', 'M', '00:14:35', '00:16:25', 195, 0, 0, 0),
 (929, 'COMM', '2000', 'A01', 'Intro to Qual. Research Comm', 'LAB', 'W', '00:14:35', '00:15:25', 27, 0, 0, 0),
 (930, 'COMM', '2000', 'A02', 'Intro to Qual. Research Comm', 'LAB', 'W', '00:14:35', '00:15:25', 26, 0, 0, 0),
-(931, 'COMM', '2000', 'A03', 'Intro to Qual. Research Comm', 'LAB', 'W', '00:15:35', '00:16:25', 27, 0, 0, 0);
-INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `days`, `startTime`, `endTime`, `roomCap`, `programID`, `year`, `term`) VALUES
+(931, 'COMM', '2000', 'A03', 'Intro to Qual. Research Comm', 'LAB', 'W', '00:15:35', '00:16:25', 27, 0, 0, 0),
 (932, 'COMM', '2000', 'A04', 'Intro to Qual. Research Comm', 'LAB', 'W', '00:15:35', '00:16:25', 26, 0, 0, 0),
 (933, 'COMM', '2000', 'A05', 'Intro to Qual. Research Comm', 'LAB', 'W', '00:11:35', '00:12:25', 26, 0, 0, 0),
 (934, 'COMM', '2000', 'A06', 'Intro to Qual. Research Comm', 'LAB', 'W', '00:11:35', '00:12:25', 27, 0, 0, 0),
@@ -1007,7 +1007,8 @@ INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `day
 (954, 'COMM', '2100', 'A07', 'Theor Traditions in Comm St.', 'GRP', 'F', '00:15:35', '00:16:25', 29, 0, 0, 0),
 (955, 'COMM', '2100', 'A08', 'Theor Traditions in Comm St.', 'GRP', 'F', '00:16:35', '00:17:25', 27, 0, 0, 0),
 (956, 'COMM', '2100', 'A09', 'Theor Traditions in Comm St.', 'GRP', 'F', '00:16:35', '00:17:25', 27, 0, 0, 0),
-(957, 'COMM', '2100', 'A10', 'Theor Traditions in Comm St.', 'GRP', 'F', '00:16:35', '00:17:25', 27, 0, 0, 0),
+(957, 'COMM', '2100', 'A10', 'Theor Traditions in Comm St.', 'GRP', 'F', '00:16:35', '00:17:25', 27, 0, 0, 0);
+INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `days`, `startTime`, `endTime`, `roomCap`, `programID`, `year`, `term`) VALUES
 (958, 'COMM', '2100', 'A11', 'Theor Traditions in Comm St.', 'GRP', 'F', '00:16:35', '00:17:25', 29, 0, 0, 0),
 (959, 'COMM', '2100', 'A12', 'Theor Traditions in Comm St.', 'GRP', 'F', '00:16:35', '00:17:25', 31, 0, 0, 0),
 (960, 'COMM', '2100', 'A13', 'Theor Traditions in Comm St.', 'GRP', 'F', '00:16:35', '00:17:25', 31, 0, 0, 0),
@@ -1440,8 +1441,7 @@ INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `day
 (1387, 'ENGL', '2608', 'A04', 'History of World Cinema', 'GRP', 'T', '00:08:35', '00:09:25', 27, 0, 0, 0),
 (1388, 'ENGL', '2700', 'A', 'American Literature I', 'LEC', 'TR', '00:14:35', '00:15:55', 78, 0, 0, 0),
 (1389, 'ENGL', '2802', 'A', 'Canadian Literatures', 'LEC', 'TR', '00:11:35', '00:12:55', 67, 0, 0, 0),
-(1390, 'ENGL', '2802', 'B', 'Canadian Literatures', 'LEC', 'TR', '00:16:05', '00:17:25', 63, 0, 0, 0);
-INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `days`, `startTime`, `endTime`, `roomCap`, `programID`, `year`, `term`) VALUES
+(1390, 'ENGL', '2802', 'B', 'Canadian Literatures', 'LEC', 'TR', '00:16:05', '00:17:25', 63, 0, 0, 0),
 (1391, 'ENGL', '2802', 'C', 'Canadian Literatures', 'LEC', 'W', '00:18:05', '00:20:55', 79, 0, 0, 0),
 (1392, 'ENGL', '2900', 'A', 'Literature of the Self', 'LEC', 'TR', '00:14:35', '00:15:55', 98, 0, 0, 0),
 (1393, 'ENGL', '2903', 'A', 'Fiction Workshop', 'WKS', 'W', '00:14:35', '00:17:25', 42, 0, 0, 0),
@@ -1482,7 +1482,8 @@ INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `day
 (1428, 'ENSC', '4901', 'A', 'Directed Projects', 'DIR', 'T', '00:16:35', '00:17:25', 19, 0, 0, 0),
 (1429, 'ENST', '1001', 'A', 'Intro. Environmental Studies', 'LEC', 'M', '00:14:35', '00:16:25', 98, 0, 0, 0),
 (1430, 'ENST', '1001', 'A01', 'Intro. Environmental Studies', 'TUT', 'F', '00:09:35', '00:11:25', 25, 0, 0, 0),
-(1431, 'ENST', '1001', 'A02', 'Intro. Environmental Studies', 'TUT', 'W', '00:08:35', '00:10:25', 25, 0, 0, 0),
+(1431, 'ENST', '1001', 'A02', 'Intro. Environmental Studies', 'TUT', 'W', '00:08:35', '00:10:25', 25, 0, 0, 0);
+INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `days`, `startTime`, `endTime`, `roomCap`, `programID`, `year`, `term`) VALUES
 (1432, 'ENST', '1001', 'A03', 'Intro. Environmental Studies', 'TUT', 'W', '00:15:35', '00:17:25', 55, 0, 0, 0),
 (1433, 'ENST', '1001', 'A04', 'Intro. Environmental Studies', 'TUT', 'W', '00:14:35', '00:16:25', 31, 0, 0, 0),
 (1434, 'ENST', '1020', 'A', 'People, Places & Environments', 'LEC', 'F', '00:11:35', '00:13:25', 285, 0, 0, 0),
@@ -1909,8 +1910,7 @@ INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `day
 (1855, 'GEOG', '3105', 'A1A', 'Climate and Atmospheric Change', 'LAB', 'M', '00:15:35', '00:17:25', 22, 0, 0, 0),
 (1856, 'GEOG', '3105', 'A2', 'Climate and Atmospheric Change', 'LAB', 'R', '00:08:35', '00:10:25', 21, 0, 0, 0),
 (1857, 'GEOG', '3105', 'A2A', 'Climate and Atmospheric Change', 'LAB', 'R', '00:08:35', '00:10:25', 22, 0, 0, 0),
-(1858, 'GEOG', '3209', 'A', 'Sustainability in the South', 'LEC', 'R', '00:18:05', '00:20:55', 47, 0, 0, 0);
-INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `days`, `startTime`, `endTime`, `roomCap`, `programID`, `year`, `term`) VALUES
+(1858, 'GEOG', '3209', 'A', 'Sustainability in the South', 'LEC', 'R', '00:18:05', '00:20:55', 47, 0, 0, 0),
 (1859, 'GEOG', '3404', 'A', 'Geographies of Econ Dvlp', 'LEC', 'M', '00:08:35', '00:11:25', 51, 0, 0, 0),
 (1860, 'GEOG', '4000', 'A', 'Field Studies', 'IND', '', '00:00:00', '00:00:00', 0, 0, 0, 0),
 (1861, 'GEOG', '4005', 'A', 'Directed Studies in Geography', 'IND', '', '00:00:00', '00:00:00', 0, 0, 0, 0),
@@ -1964,7 +1964,8 @@ INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `day
 (1909, 'HIST', '1001', 'A03', 'The Making of Europe', 'GRP', '', '00:00:00', '00:00:00', 0, 0, 0, 0),
 (1910, 'HIST', '1001', 'A04', 'The Making of Europe', 'GRP', 'F', '00:15:35', '00:16:25', 32, 0, 0, 0),
 (1911, 'HIST', '1001', 'A05', 'The Making of Europe', 'GRP', 'F', '00:16:35', '00:17:25', 25, 0, 0, 0),
-(1912, 'HIST', '1001', 'A06', 'The Making of Europe', 'GRP', 'F', '00:09:35', '00:10:25', 23, 0, 0, 0),
+(1912, 'HIST', '1001', 'A06', 'The Making of Europe', 'GRP', 'F', '00:09:35', '00:10:25', 23, 0, 0, 0);
+INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `days`, `startTime`, `endTime`, `roomCap`, `programID`, `year`, `term`) VALUES
 (1913, 'HIST', '1001', 'A07', 'The Making of Europe', 'GRP', '', '00:00:00', '00:00:00', 0, 0, 0, 0),
 (1914, 'HIST', '1001', 'A08', 'The Making of Europe', 'GRP', '', '00:00:00', '00:00:00', 0, 0, 0, 0),
 (1915, 'HIST', '1001', 'B', 'The Making of Europe', 'LEC', 'MW', '00:10:35', '00:11:25', 444, 0, 0, 0),
@@ -2376,8 +2377,7 @@ INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `day
 (2321, 'LAWS', '1000', 'C', 'Introduction to Legal Studies', 'LEC', 'T', '00:14:35', '00:16:25', 331, 0, 0, 0),
 (2322, 'LAWS', '1000', 'C01', 'Introduction to Legal Studies', 'GRP', 'T', '00:16:35', '00:17:25', 48, 0, 0, 0),
 (2323, 'LAWS', '1000', 'C02', 'Introduction to Legal Studies', 'GRP', 'T', '00:18:05', '00:18:55', 30, 0, 0, 0),
-(2324, 'LAWS', '1000', 'C03', 'Introduction to Legal Studies', 'GRP', 'T', '00:16:35', '00:17:25', 30, 0, 0, 0);
-INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `days`, `startTime`, `endTime`, `roomCap`, `programID`, `year`, `term`) VALUES
+(2324, 'LAWS', '1000', 'C03', 'Introduction to Legal Studies', 'GRP', 'T', '00:16:35', '00:17:25', 30, 0, 0, 0),
 (2325, 'LAWS', '1000', 'C04', 'Introduction to Legal Studies', 'GRP', 'T', '00:18:05', '00:18:55', 27, 0, 0, 0),
 (2326, 'LAWS', '1000', 'C05', 'Introduction to Legal Studies', 'GRP', 'T', '00:16:35', '00:17:25', 47, 0, 0, 0),
 (2327, 'LAWS', '1000', 'C06', 'Introduction to Legal Studies', 'GRP', 'T', '00:18:05', '00:18:55', 35, 0, 0, 0),
@@ -2443,7 +2443,8 @@ INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `day
 (2387, 'LAWS', '3201', 'A', 'Business Enterprise Frameworks', 'LEC', 'T', '00:08:35', '00:11:25', 79, 0, 0, 0),
 (2388, 'LAWS', '3202', 'A', 'Intellectual Property', 'LEC', 'M', '00:08:35', '00:11:25', 66, 0, 0, 0),
 (2389, 'LAWS', '3205', 'A', 'Consumer Law', 'LEC', 'F', '00:11:35', '00:14:25', 58, 0, 0, 0),
-(2390, 'LAWS', '3206', 'A', 'Banking Law', 'LEC', 'W', '00:18:05', '00:20:55', 63, 0, 0, 0),
+(2390, 'LAWS', '3206', 'A', 'Banking Law', 'LEC', 'W', '00:18:05', '00:20:55', 63, 0, 0, 0);
+INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `days`, `startTime`, `endTime`, `roomCap`, `programID`, `year`, `term`) VALUES
 (2391, 'LAWS', '3209', 'A', 'Cdn Corr Policies Hist Perspec', 'LEC', 'M', '00:11:35', '00:14:25', 66, 0, 0, 0),
 (2392, 'LAWS', '3305', 'A', 'Crime and State in History', 'LEC', 'W', '00:14:35', '00:17:25', 71, 0, 0, 0),
 (2393, 'LAWS', '3305', 'B', 'Crime and State in History', 'LEC', 'W', '00:18:05', '00:20:55', 98, 0, 0, 0),
@@ -2838,8 +2839,7 @@ INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `day
 (2782, 'MECH', '4003', 'A', 'Mechanical Systems Design', 'LEC', 'WF', '00:16:05', '00:17:25', 391, 0, 0, 0),
 (2783, 'MECH', '4003', 'A1', 'Mechanical Systems Design', 'LAB', 'M', '00:14:35', '00:17:25', 78, 0, 0, 0),
 (2784, 'MECH', '4003', 'A2', 'Mechanical Systems Design', 'LAB', 'F', '00:08:35', '00:11:25', 71, 0, 0, 0),
-(2785, 'MECH', '4210', 'A', 'Biomechanics', 'LEC', 'MW', '00:13:05', '00:14:25', 40, 0, 0, 0);
-INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `days`, `startTime`, `endTime`, `roomCap`, `programID`, `year`, `term`) VALUES
+(2785, 'MECH', '4210', 'A', 'Biomechanics', 'LEC', 'MW', '00:13:05', '00:14:25', 40, 0, 0, 0),
 (2786, 'MECH', '4210', 'A1', 'Biomechanics', 'LAB', 'W', '00:08:35', '00:11:25', 57, 0, 0, 0),
 (2787, 'MECH', '4305', 'A', 'Fluid Machinery', 'LEC', 'TR', '00:08:35', '00:09:55', 66, 0, 0, 0),
 (2788, 'MECH', '4406', 'A', 'Heat Transfer', 'LEC', 'TR', '00:13:05', '00:14:25', 204, 0, 0, 0),
@@ -2921,7 +2921,8 @@ INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `day
 (2864, 'NET', '1002', 'A', 'Networking Fundamentals', 'LEC', 'T', '00:10:05', '00:10:55', 96, 0, 0, 0),
 (2865, 'NET', '1002', 'A1', 'Networking Fundamentals', 'LAB', 'T', '00:12:05', '00:13:55', 30, 0, 0, 0),
 (2866, 'NET', '1002', 'A2', 'Networking Fundamentals', 'LAB', 'R', '00:12:05', '00:13:55', 30, 0, 0, 0),
-(2867, 'NET', '1002', 'A3', 'Networking Fundamentals', 'LAB', 'T', '00:14:05', '00:15:55', 30, 0, 0, 0),
+(2867, 'NET', '1002', 'A3', 'Networking Fundamentals', 'LAB', 'T', '00:14:05', '00:15:55', 30, 0, 0, 0);
+INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `days`, `startTime`, `endTime`, `roomCap`, `programID`, `year`, `term`) VALUES
 (2868, 'NET', '2000', 'A', 'Intermediate Networking', 'LEC', 'M', '00:13:05', '00:14:55', 96, 0, 0, 0),
 (2869, 'NET', '2000', 'A', 'Intermediate Networking', 'LEC', 'W', '00:10:05', '00:10:55', 96, 0, 0, 0),
 (2870, 'NET', '2000', 'A1', 'Intermediate Networking', 'LAB', 'M', '00:10:05', '00:11:55', 30, 0, 0, 0),
@@ -3300,8 +3301,7 @@ INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `day
 (3243, 'PSCI', '3801', 'A', 'Environmental Politics', 'LEC', '', '00:00:00', '00:00:00', 0, 0, 0, 0),
 (3244, 'PSCI', '3802', 'A', 'Globalization & Human Rights', 'LEC', 'M', '00:08:35', '00:11:25', 61, 0, 0, 0),
 (3245, 'PSCI', '3809', 'B', 'Sel Topics in Political Sci', 'LEC', 'R', '00:08:35', '00:11:25', 66, 0, 0, 0),
-(3246, 'PSCI', '3900', 'A', 'Etudes dirigees', 'DIR', '', '00:00:00', '00:00:00', 0, 0, 0, 0);
-INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `days`, `startTime`, `endTime`, `roomCap`, `programID`, `year`, `term`) VALUES
+(3246, 'PSCI', '3900', 'A', 'Etudes dirigees', 'DIR', '', '00:00:00', '00:00:00', 0, 0, 0, 0),
 (3247, 'PSCI', '3905', 'A', 'Washington Center Internship', 'OTH', '', '00:00:00', '00:00:00', 0, 0, 0, 0),
 (3248, 'PSCI', '3906', 'A', 'Full-Year Politi Sci Internshi', 'OTH', '', '00:00:00', '00:00:00', 0, 0, 0, 0),
 (3249, 'PSCI', '3907', 'A', 'One-Term Politic Sci Internshi', 'OTH', '', '00:00:00', '00:00:00', 0, 0, 0, 0),
@@ -3393,7 +3393,8 @@ INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `day
 (3335, 'PSYC', '2700', 'T', 'Cognitive Psychology', 'LEC', '', '00:00:00', '00:00:00', 0, 0, 0, 0),
 (3336, 'PSYC', '2700', 'TOD', 'Cognitive Psychology', 'VOD', '', '00:00:00', '00:00:00', 0, 0, 0, 0),
 (3337, 'PSYC', '3000', 'A', 'Advanced Design & Analysis', 'LEC', 'F', '00:14:35', '00:17:25', 78, 0, 0, 0),
-(3338, 'PSYC', '3000', 'B', 'Advanced Design & Analysis', 'LEC', 'R', '00:08:35', '00:11:25', 78, 0, 0, 0),
+(3338, 'PSYC', '3000', 'B', 'Advanced Design & Analysis', 'LEC', 'R', '00:08:35', '00:11:25', 78, 0, 0, 0);
+INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `days`, `startTime`, `endTime`, `roomCap`, `programID`, `year`, `term`) VALUES
 (3339, 'PSYC', '3000', 'C', 'Advanced Design & Analysis', 'LEC', 'MW', '00:08:35', '00:09:55', 134, 0, 0, 0),
 (3340, 'PSYC', '3000', 'D', 'Advanced Design & Analysis', 'LEC', 'MW', '00:11:35', '00:12:55', 91, 0, 0, 0),
 (3341, 'PSYC', '3000', 'PA1', 'Advanced Design & Analysis', 'PAS', '', '00:00:00', '00:00:00', 0, 0, 0, 0),
@@ -3763,8 +3764,7 @@ INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `day
 (3705, 'SYSC', '4101', 'A', 'Software Validation', 'LEC', 'TR', '00:11:35', '00:12:55', 51, 0, 0, 0),
 (3706, 'SYSC', '4101', 'A1E', 'Software Validation', 'LAB', 'M', '00:08:35', '00:11:25', 25, 0, 0, 0),
 (3707, 'SYSC', '4101', 'A2', 'Software Validation', 'LAB', '', '00:00:00', '00:00:00', 0, 0, 0, 0),
-(3708, 'SYSC', '4120', 'A', 'Software Architecture & Design', 'LEC', 'TR', '00:14:35', '00:15:55', 66, 0, 0, 0);
-INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `days`, `startTime`, `endTime`, `roomCap`, `programID`, `year`, `term`) VALUES
+(3708, 'SYSC', '4120', 'A', 'Software Architecture & Design', 'LEC', 'TR', '00:14:35', '00:15:55', 66, 0, 0, 0),
 (3709, 'SYSC', '4120', 'A1O', 'Software Architecture & Design', 'LAB', 'M', '00:08:35', '00:11:25', 25, 0, 0, 0),
 (3710, 'SYSC', '4203', 'A', 'Bioinstrumentation and Signals', 'LEC', 'WF', '00:14:35', '00:15:55', 36, 0, 0, 0),
 (3711, 'SYSC', '4203', 'A1E', 'Bioinstrumentation and Signals', 'LAB', 'R', '00:08:35', '00:11:25', 24, 0, 0, 0),
@@ -3862,19 +3862,130 @@ INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `day
 --
 
 CREATE TABLE IF NOT EXISTS `programs` (
-  `programID` int(10) NOT NULL,
-  `programName` varchar(180) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `program` varchar(40) CHARACTER SET utf8 NOT NULL,
+  `courseID` int(11) NOT NULL,
+  `subject` varchar(4) CHARACTER SET utf8 NOT NULL,
+  `code` int(11) NOT NULL,
+  `term` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Data for table `programs`
+-- Dumping data for table `programs`
 --
 
-INSERT INTO `programs` (`programID`, `programName`) VALUES
-(0, 'Biomedical and Electrical Engineering'),
-(1, 'Communications Engineering'),
-(2, 'Computer Systems Engineering'),
-(3, 'Software Engineering');
+INSERT INTO `programs` (`program`, `courseID`, `subject`, `code`, `term`) VALUES
+('Biomedical and Electrical Engineering', 223, 'BIOL', 1003, 0),
+('Biomedical and Electrical Engineering', 620, 'CCDP', 2100, 3),
+('Biomedical and Electrical Engineering', 696, 'CHEM', 1001, 0),
+('Biomedical and Electrical Engineering', 0, 'CHEM', 1002, 1),
+('Biomedical and Electrical Engineering', 1201, 'ECOR', 1010, 0),
+('Biomedical and Electrical Engineering', 1230, 'ECOR', 1101, 1),
+('Biomedical and Electrical Engineering', 1238, 'ECOR', 1606, 1),
+('Biomedical and Electrical Engineering', 1250, 'ECOR', 2606, 2),
+('Biomedical and Electrical Engineering', 1264, 'ECOR', 3800, 6),
+('Biomedical and Electrical Engineering', 0, 'ECOR', 4995, 7),
+('Biomedical and Electrical Engineering', 0, 'ELCT', 0, 6),
+('Biomedical and Electrical Engineering', 1265, 'ELEC', 2501, 2),
+('Biomedical and Electrical Engineering', 0, 'ELEC', 2507, 3),
+('Biomedical and Electrical Engineering', 0, 'ELEC', 2607, 3),
+('Biomedical and Electrical Engineering', 1279, 'ELEC', 3105, 3),
+('Biomedical and Electrical Engineering', 1287, 'ELEC', 3500, 5),
+('Biomedical and Electrical Engineering', 1318, 'ELEC', 3908, 4),
+('Biomedical and Electrical Engineering', 1322, 'ELEC', 3909, 5),
+('Biomedical and Electrical Engineering', 1337, 'ELEC', 4601, 6),
+('Biomedical and Electrical Engineering', 2547, 'MATH', 1004, 0),
+('Biomedical and Electrical Engineering', 2582, 'MATH', 1005, 1),
+('Biomedical and Electrical Engineering', 2635, 'MATH', 1104, 0),
+('Biomedical and Electrical Engineering', 2711, 'MATH', 2004, 2),
+('Biomedical and Electrical Engineering', 0, 'MATH', 3705, 3),
+('Biomedical and Electrical Engineering', 0, 'PHYS', 1004, 1),
+('Biomedical and Electrical Engineering', 0, 'SELC', 0, 2),
+('Biomedical and Electrical Engineering', 0, 'STAT', 3502, 5),
+('Biomedical and Electrical Engineering', 3666, 'SYSC', 2006, 2),
+('Biomedical and Electrical Engineering', 3677, 'SYSC', 3006, 4),
+('Biomedical and Electrical Engineering', 3687, 'SYSC', 3203, 4),
+('Biomedical and Electrical Engineering', 0, 'SYSC', 3501, 5),
+('Biomedical and Electrical Engineering', 3699, 'SYSC', 3610, 4),
+('Biomedical and Electrical Engineering', 0, 'SYSC', 4201, 5),
+('Biomedical and Electrical Engineering', 3710, 'SYSC', 4203, 6),
+('Biomedical and Electrical Engineering', 3713, 'SYSC', 4405, 6),
+('Biomedical and Electrical Engineering', 0, 'SYSC', 4917, 6),
+('Computer Systems Engineering', 620, 'CCDP', 2100, 2),
+('Computer Systems Engineering', 724, 'CHEM', 1101, 1),
+('Computer Systems Engineering', 1201, 'ECOR', 1010, 0),
+('Computer Systems Engineering', 1230, 'ECOR', 1101, 1),
+('Computer Systems Engineering', 1264, 'ECOR', 3800, 4),
+('Computer Systems Engineering', 0, 'ECOR', 4995, 7),
+('Computer Systems Engineering', 1265, 'ELEC', 2501, 2),
+('Computer Systems Engineering', 0, 'ELEC', 2507, 3),
+('Computer Systems Engineering', 0, 'ELEC', 2607, 3),
+('Computer Systems Engineering', 1287, 'ELEC', 3500, 4),
+('Computer Systems Engineering', 1347, 'ELEC', 4705, 6),
+('Computer Systems Engineering', 2547, 'MATH', 1004, 0),
+('Computer Systems Engineering', 2582, 'MATH', 1005, 1),
+('Computer Systems Engineering', 2635, 'MATH', 1104, 0),
+('Computer Systems Engineering', 2711, 'MATH', 2004, 2),
+('Computer Systems Engineering', 0, 'MATH', 3705, 3),
+('Computer Systems Engineering', 2997, 'PHYS', 1003, 0),
+('Computer Systems Engineering', 0, 'PHYS', 1004, 1),
+('Computer Systems Engineering', 0, 'STAT', 3502, 5),
+('Computer Systems Engineering', 3649, 'SYSC', 1005, 0),
+('Computer Systems Engineering', 3656, 'SYSC', 2001, 2),
+('Computer Systems Engineering', 0, 'SYSC', 2003, 3),
+('Computer Systems Engineering', 3661, 'SYSC', 2004, 2),
+('Computer Systems Engineering', 3666, 'SYSC', 2006, 1),
+('Computer Systems Engineering', 0, 'SYSC', 2100, 3),
+('Computer Systems Engineering', 3681, 'SYSC', 3010, 4),
+('Computer Systems Engineering', 0, 'SYSC', 3020, 5),
+('Computer Systems Engineering', 0, 'SYSC', 3303, 5),
+('Computer Systems Engineering', 0, 'SYSC', 3501, 5),
+('Computer Systems Engineering', 3691, 'SYSC', 3600, 4),
+('Computer Systems Engineering', 0, 'SYSC', 3601, 5),
+('Computer Systems Engineering', 3703, 'SYSC', 4001, 4),
+('Computer Systems Engineering', 0, 'SYSC', 4507, 7),
+('Computer Systems Engineering', 3724, 'SYSC', 4602, 6),
+('Computer Systems Engineering', 0, 'SYSC', 4805, 7),
+('Computer Systems Engineering', 0, 'SYSC', 4907, 6),
+('Software Engineering', 620, 'CCDP', 2100, 2),
+('Software Engineering', 724, 'CHEM', 1101, 1),
+('Software Engineering', 1040, 'COMP', 3005, 4),
+('Software Engineering', 1201, 'ECOR', 1010, 0),
+('Software Engineering', 1230, 'ECOR', 1101, 1),
+('Software Engineering', 1264, 'ECOR', 3800, 4),
+('Software Engineering', 0, 'ECOR', 4995, 7),
+('Software Engineering', 1265, 'ELEC', 2501, 2),
+('Software Engineering', 0, 'ELEC', 2607, 3),
+('Software Engineering', 0, 'ELEC', 4507, 6),
+('Software Engineering', 2547, 'MATH', 1004, 0),
+('Software Engineering', 2582, 'MATH', 1005, 1),
+('Software Engineering', 0, 'MATH', 1101, 0),
+('Software Engineering', 0, 'MATH', 1805, 3),
+('Software Engineering', 2711, 'MATH', 2004, 2),
+('Software Engineering', 2997, 'PHYS', 1003, 0),
+('Software Engineering', 0, 'PHYS', 1004, 1),
+('Software Engineering', 0, 'STAT', 3502, 5),
+('Software Engineering', 3649, 'SYSC', 1005, 0),
+('Software Engineering', 3656, 'SYSC', 2001, 2),
+('Software Engineering', 0, 'SYSC', 2003, 3),
+('Software Engineering', 3661, 'SYSC', 2004, 2),
+('Software Engineering', 3666, 'SYSC', 2006, 1),
+('Software Engineering', 0, 'SYSC', 2100, 3),
+('Software Engineering', 0, 'SYSC', 3101, 5),
+('Software Engineering', 3683, 'SYSC', 3110, 4),
+('Software Engineering', 0, 'SYSC', 3120, 5),
+('Software Engineering', 0, 'SYSC', 3303, 5),
+('Software Engineering', 3703, 'SYSC', 4001, 4),
+('Software Engineering', 0, 'SYSC', 4005, 7),
+('Software Engineering', 3705, 'SYSC', 4101, 6),
+('Software Engineering', 0, 'SYSC', 4106, 5),
+('Software Engineering', 3708, 'SYSC', 4120, 6),
+('Software Engineering', 0, 'SYSC', 4507, 7),
+('Software Engineering', 0, 'SYSC', 4806, 7),
+('Software Engineering', 0, 'SYSC', 4927, 7);
+
+--
+-- Indexes for dumped tables
+--
 
 --
 -- Indexes for table `courses`
@@ -3886,13 +3997,17 @@ ALTER TABLE `courses`
 -- Indexes for table `programs`
 --
 ALTER TABLE `programs`
- ADD PRIMARY KEY (`programID`);
+ ADD UNIQUE KEY `idx_name` (`program`,`subject`,`code`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
 
 --
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3799;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3798;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
