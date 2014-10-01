@@ -3,10 +3,10 @@
 	{
 		function __construct($db_hostname, $db_username, $db_password, $db_name)
 		{
-			$this->mysqli = new mysqli($db_hostname, $db_username, $db_password, $db_name);
+			@$this->mysqli = new mysqli($db_hostname, $db_username, $db_password, $db_name);
 
 			if ($this->mysqli->connect_errno) {
-			    die("Failed to connect to MySQL: " . $this->mysqli->connect_error);
+				throw new Exception('Could not connect to database.');
 			}
 		}
 
