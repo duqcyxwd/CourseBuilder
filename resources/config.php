@@ -5,7 +5,7 @@ require_once(realpath(dirname(__FILE__)) . '/library/utilities.php');
 
 // Database connection details
 $db_hostname = 'localhost';
-$db_name = 'courseBuilder'; // TODO_KR replace this with future database name
+$db_name = 'courseBuilder';
 $db_username = 'root';
 $db_password = '';
 
@@ -36,6 +36,7 @@ catch (Exception $e)
 // TODO_KR basic format for getting database rows:
 // $result = $db->getRowsFromTable("courses");
 // while ($row = mysqli_fetch_array($result)) {
-// 	echo $row["courses"];
+// 	echo $row["subject"];
 // }
+
 ?>
