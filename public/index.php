@@ -1,9 +1,9 @@
 <?php 
 	$pageTitle = "Home";
-	require_once("../resources/config.php");
-	require_once(TEMPLATES_PATH . "/header.php"); 
+	require("../resources/config.php");
+	include(TEMPLATES_PATH . "/header.php"); 
 ?>
-
+	
 	<div id="container">
 		<section class="program-select">
 			<div id="program-select-title">
@@ -120,5 +120,4 @@
 		</section>
 	</div>
 
-
-<?php require_once(TEMPLATES_PATH . "/footer.php"); ?>
+<?php include(TEMPLATES_PATH . "/footer.php"); ?>
