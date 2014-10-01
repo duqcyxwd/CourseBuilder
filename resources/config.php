@@ -18,22 +18,8 @@ defined("INCLUDE_PATH")
 defined("TEMPLATES_PATH")
     or define("TEMPLATES_PATH", realpath(dirname(__FILE__) . '/templates'));
 
+defined("LIBRARY_PATH")
+    or define("LIBRARY_PATH", realpath(dirname(__FILE__) . '/library'));
 
-
-// Connect to Database
-$mysqli = new mysqli($db_hostname, $db_username, $db_password, $db_name);
-
-if ($mysqli->connect_errno) {
-    echo "Failed to connect to MySQL: " . $mysqli->connect_error;
-}
-
-$db = new database($mysqli);
-
-
-// TODO_KR basic format for getting database rows:
-// $result = $db->getRowsFromTable("test");
-// while ($row = mysqli_fetch_array($result)) {
-// 	echo $row["courses"];
-// }
 
 ?>
