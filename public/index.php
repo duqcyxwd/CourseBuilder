@@ -72,7 +72,6 @@
 				<!-- TEST DATA - TO BE REMOVED -->
 				<tbody id="course-classes">
 					<?php 
-						echo "hell ";
 						$courses = array();
 						// $result=mysqli_query($con,"SELECT `code`, `subject`,`program` FROM `programs` WHERE term = '0' AND program = 'Biomedical and Electrical Engineering'");
 						$result=mysqli_query($con,"SELECT `subject`,`code`, `term`, `program` FROM `programs` WHERE program = 'Biomedical and Electrical Engineering'");
@@ -86,8 +85,6 @@
 						}
 						// calculate max course in a term
 						$temp = array();
-						echo gettype($courseArray[0][0][1]);
-						echo "$c" . $c;
 
 						foreach ($courseArray as $key => $value) {
 							array_push($temp, sizeof($value));
