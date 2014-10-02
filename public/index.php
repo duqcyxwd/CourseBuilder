@@ -14,7 +14,16 @@
 					Select a program
 				</div>
 				<ul class="dropdown">
-				<?php foreach ($UNIVERSITY_PROGRAMS as $program) { ?>
+				<?php 
+					// connection should be set up in config.php update later
+					$con=mysqli_connect("localhost","root","","courseBuilder");
+					$result=mysqli_query($con,"SELECT DISTINCT program FROM programs");
+					$programList = array();
+					while ($row = mysqli_fetch_array($result)) {
+						$programList[] = $row['program'];
+					}
+				?>
+				<?php foreach ($programList as $program) { ?>
 
 					<li><a href="#"><?php echo $program; ?></a></li>
 

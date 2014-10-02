@@ -7,9 +7,6 @@ $NUMBER_OF_YEARS = 4;
 // temporary contants
 // Will later be replaced by data pulled from database
 
-$UNIVERSITY_PROGRAMS = ["Biomedical and Electrical Engineering", "Communications Engineering", 
-											  "Computer Systems Engineering", "Software Engineering"];
-
 $UNIVERSITY_YEARS = ["First", "Second", "Third", "Fourth"];
 
 
