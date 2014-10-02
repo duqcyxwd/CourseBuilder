@@ -32,13 +32,13 @@
 				</ul>
 			</div>
 	  	<div id="program-select-onpattern">
-				<div class="checkbox">
+			<div class="checkbox">
 		  		<input type="checkbox" value="1" id="checkboxInput" name="" />
 			  	<label for="checkboxInput"></label>
 		  	</div>
 		  	On Pattern
 				
-			</div>
+		</div>
 		</section>
 		<section class="course-table">
 			
@@ -62,56 +62,26 @@
 				</thead>
 				<!-- TEST DATA - TO BE REMOVED -->
 				<tbody id="course-classes">
-					<tr>
-						<td class="MATH">MATH 1104</td>
-						<td class="MATH">MATH 1005</td>
-						<td class="MATH">MATH 2004</td>
-						<td class="MATH">MATH 1805</td>
-						<td class="COMP">COMP 3005</td>
-						<td class="STAT">STAT 3502</td>
-						<td class="ELEC">ELEC 4507</td>
-						<td class="ECOR">ECOR 4995</td>
-					</tr>
-					<tr>
-						<td class="MATH">MATH 1004</td>
-						<td class="PHYS">PHYS 1004</td>
-						<td class="ELEC">ELEC 2501</td>
-						<td class="ELEC">ELEC 2607</td>
-						<td class="ECOR">ECOR 3800</td>
-						<td class="SYSC">SYSC 3101</td>
-						<td class="SYSC">SYSC 4101</td>
-						<td class="SYSC">SYSC 4005</td>
-					</tr>
-					<tr>
-						<td class="PHYS">PHYS 1003</td>
-						<td class="ECOR">ECOR 1101</td>
-						<td class="SYSC">SYSC 2001</td>
-						<td class="SYSC">SYSC 2003</td>
-						<td class="SYSC">SYSC 3110</td>
-						<td class="SYSC">SYSC 3120</td>
-						<td class="SYSC">SYSC 4120</td>
-						<td class="SYSC">SYSC 4507</td>
-					</tr>
-					<tr>
-						<td class="SYSC">SYSC 1005</td>
-						<td class="SYSC">SYSC 2006</td>
-						<td class="SYSC">SYSC 2004</td>
-						<td class="SYSC">SYSC 2100</td>
-						<td class="SYSC">SYSC 4001</td>
-						<td class="SYSC">SYSC 3303</td>
-						<td class="ETIV">ELECTIVE</td>
-						<td class="SYSC">SYSC 4806</td>
-					</tr>
-					<tr>
-						<td class="ECOR">ECOR 1010</td>
-						<td class="CHEM">CHEM 1101</td>
-						<td class="CCDP">CCDP 2100</td>
-						<td class="ETIV">ELECTIVE</td>
-						<td class="ETIV">ELECTIVE</td>
-						<td class="SYSC">SYSC 4106</td>
-						<td class="ETIV">ELECTIVE</td>
-						<td class="SYSC">SYSC 4927</td>
-					</tr>
+					<?php 
+						$courses = array();
+						$con=mysqli_connect("localhost","root","","courseBuilder");
+						$result=mysqli_query($con,"SELECT `code`, `subject`,`program` FROM `programs` WHERE term = '0' AND program = 'Biomedical and Electrical Engineering'");
+						while ($row = mysqli_fetch_array($result)){
+							$courses[] = $row;
+						}
+					foreach ($courses as $key => $value): ?>
+						<tr>
+							<td><?php echo $value['subject'] . ' ' . $value['code'] ?></td>
+							<td><?php echo $value['subject'] . ' ' . $value['code'] ?></td>
+							<td><?php echo $value['subject'] . ' ' . $value['code'] ?></td>
+							<td><?php echo $value['subject'] . ' ' . $value['code'] ?></td>
+							<td><?php echo $value['subject'] . ' ' . $value['code'] ?></td>
+							<td><?php echo $value['subject'] . ' ' . $value['code'] ?></td>
+							<td><?php echo $value['subject'] . ' ' . $value['code'] ?></td>
+							<td><?php echo $value['subject'] . ' ' . $value['code'] ?></td>
+						</tr>
+					<?php endforeach ?>
+					
 				</tbody>
 				<tfoot>
 					
