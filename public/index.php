@@ -72,25 +72,44 @@
 				<!-- TEST DATA - TO BE REMOVED -->
 				<tbody id="course-classes">
 					<?php 
+						echo "hell ";
 						$courses = array();
-						$con=mysqli_connect("localhost","root","","courseBuilder");
-						$result=mysqli_query($con,"SELECT `code`, `subject`,`program` FROM `programs` WHERE term = '0' AND program = 'Biomedical and Electrical Engineering'");
+						// $result=mysqli_query($con,"SELECT `code`, `subject`,`program` FROM `programs` WHERE term = '0' AND program = 'Biomedical and Electrical Engineering'");
+						$result=mysqli_query($con,"SELECT `subject`,`code`, `term`, `program` FROM `programs` WHERE program = 'Biomedical and Electrical Engineering'");
 						while ($row = mysqli_fetch_array($result)){
 							$courses[] = $row;
 						}
-					foreach ($courses as $key => $value): ?>
-						<tr>
-							<td><?php echo $value['subject'] . ' ' . $value['code'] ?></td>
-							<td><?php echo $value['subject'] . ' ' . $value['code'] ?></td>
-							<td><?php echo $value['subject'] . ' ' . $value['code'] ?></td>
-							<td><?php echo $value['subject'] . ' ' . $value['code'] ?></td>
-							<td><?php echo $value['subject'] . ' ' . $value['code'] ?></td>
-							<td><?php echo $value['subject'] . ' ' . $value['code'] ?></td>
-							<td><?php echo $value['subject'] . ' ' . $value['code'] ?></td>
-							<td><?php echo $value['subject'] . ' ' . $value['code'] ?></td>
-						</tr>
-					<?php endforeach ?>
-					
+						$courseArray = array(array(), array(), array(), array(), array(), array(), array(), array(), );
+						foreach ($courses as $key => $course) {
+							$term = $course['term'];
+							array_push($courseArray[$term], array($course['subject'], $course['code']));
+						}
+						// calculate max course in a term
+						$temp = array();
+						echo gettype($courseArray[0][0][1]);
+						echo "$c" . $c;
+
+						foreach ($courseArray as $key => $value) {
+							array_push($temp, sizeof($value));
+						}
+						$maxNumOfCourseInterm = max($temp);
+						for ($i=0; $i < $maxNumOfCourseInterm; $i++) { 
+							echo "<tr>";
+							for ($j=0; $j < sizeof($courseArray); $j++) { 
+								
+								if (array_key_exists($i, $courseArray[$j])) {
+									echo "<td> " . $courseArray[$j][$i][0] . " " .$courseArray[$j][$i][1] . " </td>";
+								} else {
+									echo "<td>  </td>";
+
+								}
+							}
+
+							echo "</tr>";
+						}
+					?>
+
+
 				</tbody>
 				<tfoot>
 					
