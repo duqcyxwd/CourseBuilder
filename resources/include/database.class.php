@@ -20,7 +20,7 @@
 			return mysqli_query($this->mysqli,"SELECT DISTINCT program FROM programs");
 		}
 
-		function getCourseInfor($program = 'Biomedical and Electrical Engineering')
+		function getCourseInfor($program)
 		{
 			return mysqli_query($this->mysqli,"SELECT `subject`,`code`, `term`, `program` FROM `programs` WHERE program = '$program'");
 		}

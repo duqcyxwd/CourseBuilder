@@ -41,6 +41,10 @@ header {
 	width: 100%;
 }
 
+#program-name {
+	text-align: center;
+}
+
 
 /******************************
 							BODY

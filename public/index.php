@@ -1,7 +1,14 @@
 <?php 
 	$pageTitle = "Home";
 	require("../resources/config.php");
-	include(TEMPLATES_PATH . "/header.php"); 
+	include(TEMPLATES_PATH . "/header.php");
+	$isRequiredPage = array_key_exists('program', $_GET);
+	if($isRequiredPage) {
+		$requiredProgram = $_GET['program'];
+	} else {
+		$requiredProgram = "Biomedical and Electrical Engineering";
+	}
+
 ?>
 	
 	<div id="container">
@@ -11,12 +18,17 @@
 			</div>
 			<div id="program-select-dd" class="wrapper-dropdown" tabindex="1" onclick="selectProgram(this);">
 				<div id="program-select-subtitle">
-					Select a program
+					<?php 
+						if ($isRequiredPage) {
+							echo "$requiredProgram";
+						} else
+							echo "Select a program";
+
+					?>
 				</div>
 				<ul class="dropdown">
 				<?php 
 					$result= $db->getProgramList();
-
 					$programList = array();
 					while ($row = mysqli_fetch_array($result)) {
 						$programList[] = $row['program'];
@@ -24,11 +36,16 @@
 				?>
 				<?php foreach ($programList as $program) { ?>
 
-					<li><a href="#"><?php echo $program; ?></a></li>
+				<li>
+					<a href="<?php echo "?program=$program" ?>">
+						<?php echo $program; ?>
+					</a>
+				</li>
 
 				<?php } ?>
 				</ul>
 			</div>
+
 			<div id="year-select-dd" class="wrapper-dropdown" tabindex="1" onclick="selectProgram(this);">
 				<div id="year-select-subtitle">Select a year</div>
 				<ul class="dropdown">
@@ -48,6 +65,11 @@
 				
 		</div>
 		</section>
+
+		<h1 id="program-name">
+			<?php echo "$requiredProgram"." Prerequisite Tree" ?>
+		</h1>
+
 		<section class="course-table">
 			
 			<table id="schedule-table" onclick="something(this);">
@@ -71,7 +93,7 @@
 				<tbody id="course-classes">
 					<?php 
 						$courses = array();
-						$result= $db->getCourseInfor();
+						$result= $db->getCourseInfor($requiredProgram);
 
 						while ($row = mysqli_fetch_array($result)){
 							$courses[] = $row;
