@@ -2,6 +2,7 @@
 	$pageTitle = "Home";
 	require("../resources/config.php");
 	include(TEMPLATES_PATH . "/header.php"); 
+	$dataBase = new DataBase($db_hostname, $db_username, $db_password, $db_name);
 ?>
 	
 	<div id="container">
@@ -15,9 +16,8 @@
 				</div>
 				<ul class="dropdown">
 				<?php 
-					// connection should be set up in config.php update later
-					$con=mysqli_connect("localhost","root","","courseBuilder");
-					$result=mysqli_query($con,"SELECT DISTINCT program FROM programs");
+					$result= $dataBase->getProgramList();
+
 					$programList = array();
 					while ($row = mysqli_fetch_array($result)) {
 						$programList[] = $row['program'];
@@ -69,12 +69,11 @@
 					<?php } ?>
 					</tr>
 				</thead>
-				<!-- TEST DATA - TO BE REMOVED -->
 				<tbody id="course-classes">
 					<?php 
 						$courses = array();
-						// $result=mysqli_query($con,"SELECT `code`, `subject`,`program` FROM `programs` WHERE term = '0' AND program = 'Biomedical and Electrical Engineering'");
-						$result=mysqli_query($con,"SELECT `subject`,`code`, `term`, `program` FROM `programs` WHERE program = 'Biomedical and Electrical Engineering'");
+						$result= $dataBase->getCourse();
+
 						while ($row = mysqli_fetch_array($result)){
 							$courses[] = $row;
 						}
