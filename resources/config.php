@@ -26,7 +26,7 @@ defined("LIBRARY_PATH")
 // Connect to Database
 try 
 {
-	$db = new database($db_hostname, $db_username, $db_password, $db_name);
+	$db = new DataBase($db_hostname, $db_username, $db_password, $db_name);
 }
 catch (Exception $e) 
 {

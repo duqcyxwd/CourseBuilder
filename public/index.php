@@ -2,7 +2,6 @@
 	$pageTitle = "Home";
 	require("../resources/config.php");
 	include(TEMPLATES_PATH . "/header.php"); 
-	$dataBase = new DataBase($db_hostname, $db_username, $db_password, $db_name);
 ?>
 	
 	<div id="container">
@@ -16,7 +15,7 @@
 				</div>
 				<ul class="dropdown">
 				<?php 
-					$result= $dataBase->getProgramList();
+					$result= $db->getProgramList();
 
 					$programList = array();
 					while ($row = mysqli_fetch_array($result)) {
@@ -72,7 +71,7 @@
 				<tbody id="course-classes">
 					<?php 
 						$courses = array();
-						$result= $dataBase->getCourse();
+						$result= $db->getCourseInfor();
 
 						while ($row = mysqli_fetch_array($result)){
 							$courses[] = $row;
