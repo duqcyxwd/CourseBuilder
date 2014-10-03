@@ -1,3 +1,4 @@
+	</div>
 	<footer class="page-footer">
 		<div class="page-footer-content">
 			<ul class="col-1-5">

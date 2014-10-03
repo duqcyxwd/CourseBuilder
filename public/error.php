@@ -1,6 +1,7 @@
 <?php 
-
-	include("../resources/templates/header.php");
+	$pageTitle = "Error";
+	require("../resources/config.php");
+	include(TEMPLATES_PATH . "/header.php"); 
 
 	$errorId = $_GET['errorid'];
 	$codes = array(
@@ -16,17 +17,15 @@
 		$message = $codes[$errorId][1];
 	}
 
-	$pageTitle = $title;
-
 	session_start();
 	echo ("
-					<h1> Oh No! Something went horribly wrong! </h1>
-				  <h2>$_SESSION[error]</h2>
+					<h2> Oh No! Something went horribly wrong! </h2>
+				  <h3>$_SESSION[error]</h3>
 
-		    	<strong>$title</strong>
-		      <p>$message</p>
+		    	<strong>$title</strong><br />
+							    $message
 			");
 
-include("../resources/templates/footer.php"); 
+include(TEMPLATES_PATH . "/footer.php"); 
 
 ?>

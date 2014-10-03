@@ -22,7 +22,6 @@ defined("TEMPLATES_PATH")
 defined("LIBRARY_PATH")
     or define("LIBRARY_PATH", realpath(dirname(__FILE__) . '/library'));
 
-
 // Connect to Database
 try 
 {
@@ -30,8 +29,9 @@ try
 }
 catch (Exception $e) 
 {
-	echo $_SERVER['PATH_INFO'];
-	errorMessage('error.php', 100, "Looks like we couldn't connect to the database");
+	if (!strpos($_SERVER['REQUEST_URI'], 'error.php')) {
+		errorMessage('error.php', 100, "Looks like we couldn't connect to the database");
+	}
 }
 
 // TODO_KR basic format for getting database rows:

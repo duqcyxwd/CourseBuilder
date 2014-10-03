@@ -13,3 +13,5 @@
 			<h3>Course Builder</h3>
 		</a>
 	</header>
+
+	<div id="container">
