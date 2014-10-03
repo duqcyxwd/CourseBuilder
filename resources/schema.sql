@@ -3875,41 +3875,50 @@ CREATE TABLE IF NOT EXISTS `programs` (
 
 INSERT INTO `programs` (`program`, `courseID`, `subject`, `code`, `term`) VALUES
 ('Biomedical and Electrical Engineering', 223, 'BIOL', 1003, 0),
-('Biomedical and Electrical Engineering', 620, 'CCDP', 2100, 3),
 ('Biomedical and Electrical Engineering', 696, 'CHEM', 1001, 0),
-('Biomedical and Electrical Engineering', 0, 'CHEM', 1002, 1),
 ('Biomedical and Electrical Engineering', 1201, 'ECOR', 1010, 0),
+('Biomedical and Electrical Engineering', 2547, 'MATH', 1004, 0),
+('Biomedical and Electrical Engineering', 2635, 'MATH', 1104, 0),
+
+('Biomedical and Electrical Engineering', 0, 'CHEM', 1002, 1),
 ('Biomedical and Electrical Engineering', 1230, 'ECOR', 1101, 1),
 ('Biomedical and Electrical Engineering', 1238, 'ECOR', 1606, 1),
+('Biomedical and Electrical Engineering', 2582, 'MATH', 1005, 1),
+('Biomedical and Electrical Engineering', 0, 'PHYS', 1004, 1),
+
 ('Biomedical and Electrical Engineering', 1250, 'ECOR', 2606, 2),
-('Biomedical and Electrical Engineering', 1264, 'ECOR', 3800, 6),
-('Biomedical and Electrical Engineering', 0, 'ECOR', 4995, 7),
-('Biomedical and Electrical Engineering', 0, 'ELCT', 0, 6),
 ('Biomedical and Electrical Engineering', 1265, 'ELEC', 2501, 2),
+('Biomedical and Electrical Engineering', 2711, 'MATH', 2004, 2),
+('Biomedical and Electrical Engineering', 3666, 'SYSC', 2006, 2),
+
+('Biomedical and Electrical Engineering', 620, 'CCDP', 2100, 3),
 ('Biomedical and Electrical Engineering', 0, 'ELEC', 2507, 3),
 ('Biomedical and Electrical Engineering', 0, 'ELEC', 2607, 3),
 ('Biomedical and Electrical Engineering', 1279, 'ELEC', 3105, 3),
-('Biomedical and Electrical Engineering', 1287, 'ELEC', 3500, 5),
-('Biomedical and Electrical Engineering', 1318, 'ELEC', 3908, 4),
-('Biomedical and Electrical Engineering', 1322, 'ELEC', 3909, 5),
-('Biomedical and Electrical Engineering', 1337, 'ELEC', 4601, 6),
-('Biomedical and Electrical Engineering', 2547, 'MATH', 1004, 0),
-('Biomedical and Electrical Engineering', 2582, 'MATH', 1005, 1),
-('Biomedical and Electrical Engineering', 2635, 'MATH', 1104, 0),
-('Biomedical and Electrical Engineering', 2711, 'MATH', 2004, 2),
 ('Biomedical and Electrical Engineering', 0, 'MATH', 3705, 3),
-('Biomedical and Electrical Engineering', 0, 'PHYS', 1004, 1),
-('Biomedical and Electrical Engineering', 0, 'SELC', 0, 2),
-('Biomedical and Electrical Engineering', 0, 'STAT', 3502, 5),
-('Biomedical and Electrical Engineering', 3666, 'SYSC', 2006, 2),
+
+('Biomedical and Electrical Engineering', 1318, 'ELEC', 3908, 4),
 ('Biomedical and Electrical Engineering', 3677, 'SYSC', 3006, 4),
 ('Biomedical and Electrical Engineering', 3687, 'SYSC', 3203, 4),
-('Biomedical and Electrical Engineering', 0, 'SYSC', 3501, 5),
 ('Biomedical and Electrical Engineering', 3699, 'SYSC', 3610, 4),
+
+('Biomedical and Electrical Engineering', 1287, 'ELEC', 3500, 5),
+('Biomedical and Electrical Engineering', 1322, 'ELEC', 3909, 5),
+('Biomedical and Electrical Engineering', 0, 'STAT', 3502, 5),
+('Biomedical and Electrical Engineering', 0, 'SYSC', 3501, 5),
 ('Biomedical and Electrical Engineering', 0, 'SYSC', 4201, 5),
-('Biomedical and Electrical Engineering', 3710, 'SYSC', 4203, 6),
+
+('Biomedical and Electrical Engineering', 1264, 'ECOR', 3800, 6),
+('Biomedical and Electrical Engineering', 1337, 'ELEC', 4601, 6),
 ('Biomedical and Electrical Engineering', 3713, 'SYSC', 4405, 6),
+('Biomedical and Electrical Engineering', 3710, 'SYSC', 4203, 6),
 ('Biomedical and Electrical Engineering', 0, 'SYSC', 4917, 6),
+
+('Biomedical and Electrical Engineering', 0, 'ECOR', 4995, 7),
+
+
+
+
 ('Computer Systems Engineering', 620, 'CCDP', 2100, 2),
 ('Computer Systems Engineering', 724, 'CHEM', 1101, 1),
 ('Computer Systems Engineering', 1201, 'ECOR', 1010, 0),
@@ -3946,6 +3955,8 @@ INSERT INTO `programs` (`program`, `courseID`, `subject`, `code`, `term`) VALUES
 ('Computer Systems Engineering', 3724, 'SYSC', 4602, 6),
 ('Computer Systems Engineering', 0, 'SYSC', 4805, 7),
 ('Computer Systems Engineering', 0, 'SYSC', 4907, 6),
+
+
 ('Software Engineering', 620, 'CCDP', 2100, 2),
 ('Software Engineering', 724, 'CHEM', 1101, 1),
 ('Software Engineering', 1040, 'COMP', 3005, 4),
