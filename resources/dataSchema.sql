@@ -1,10 +1,8 @@
--- CourseBuilder Schema and Data
-
 DROP TABLE IF EXISTS CourseCompleted;
-DROP TABLE IF EXISTS ProgramsRequirement;
 DROP TABLE IF EXISTS Prerequisite;
 DROP TABLE IF EXISTS Classes;
 DROP TABLE IF EXISTS Students;
+DROP TABLE IF EXISTS ProgramsRequirement;
 DROP TABLE IF EXISTS Courses;
 
 
@@ -13,23 +11,6 @@ DROP TABLE IF EXISTS Courses;
 --
 
 -- --------------------------------------------------------
-
---
--- Table structure for table `Students`
---
-
-CREATE TABLE IF NOT EXISTS Students(
-	Name varchar(30),
-	Email varchar(30),
-	Student_number int(9) PRIMARY KEY NOT NULL,
-	Program varchar(30) NOT NULL,
-	User_Name varchar(20) NOT NULL,
-	Password varchar(20) NOT NULL
-);
-
-INSERT INTO Students (Name, Email, Student_number, Program, User_Name, Password) values 
-("Chuan", "duq@gmail.com", '100810219', 'Software Engineering', 'duqcyxwd', '12345');
-
 
 --
 -- Table structure for table `Courses`
@@ -49,6 +30,43 @@ INSERT INTO Courses (Subject, CourseNumber, CourseTitle) values
 
 
 --
+-- Table structure for table `ProgramsRequirement`
+--
+
+CREATE TABLE IF NOT EXISTS ProgramsRequirement(
+	Name varchar(30) NOT NULL,
+	Subject varchar(4)  NOT NULL,
+	CourseNumber int(3)  NOT NULL,
+	isElective tinyint(1) NOT NULL, -- use 0 for true, else for false
+	YearRequirement tinyint(1),
+	FOREIGN KEY (Subject,CourseNumber) references Courses (Subject,CourseNumber),
+	PRIMARY KEY(Name, Subject, CourseNumber)
+);
+
+INSERT INTO ProgramsRequirement (Name, Subject, CourseNumber, isElective, YearRequirement) values
+("Software Engineering", "SYSC", 3101, 1, 3);
+
+
+--
+-- Table structure for table `Students`
+--
+
+CREATE TABLE IF NOT EXISTS Students(
+	Name varchar(30),
+	Email varchar(30),
+	Student_number int(9) PRIMARY KEY NOT NULL,
+	Program varchar(30) NOT NULL,
+	User_Name varchar(20) NOT NULL,
+	Password varchar(20) NOT NULL,
+	FOREIGN KEY (Program) references ProgramsRequirement (Name)
+);
+
+INSERT INTO Students (Name, Email, Student_number, Program, User_Name, Password) values 
+("Chuan", "duq@gmail.com", '100810219', 'Software Engineering', 'duqcyxwd', '12345');
+
+
+
+--
 -- Table structure for table `CourseCompleted`
 --
 
@@ -57,8 +75,8 @@ CREATE TABLE IF NOT EXISTS CourseCompleted(
 	Student_number int(9) NOT NULL,
 	Subject varchar(4)  NOT NULL,
 	CourseNumber int(3)  NOT NULL,
-	PRIMARY KEY (Subject, CourseNumber) references Courses (Subject, CourseNumber),
-	PRIMARY KEY (Student_number) references Students (Student_number),
+	FOREIGN KEY (Subject, CourseNumber) references Courses (Subject, CourseNumber),
+	FOREIGN KEY (Student_number) references Students (Student_number),
 	PRIMARY KEY(Student_number, Subject, CourseNumber)
 );
 
@@ -76,8 +94,8 @@ CREATE TABLE IF NOT EXISTS Prerequisite(
 	CourseNumber int(3)  NOT NULL,
 	RequiredCourseSubject varchar(4)  NOT NULL,
 	RequiredCourseCourseNumber int(3)  NOT NULL,
-	PRIMARY KEY (Subject, CourseNumber) references Courses (Subject, CourseNumber),
-	PRIMARY KEY (RequiredCourseSubject, RequiredCourseCourseNumber) references Courses (Subject, CourseNumber),
+	FOREIGN KEY (Subject, CourseNumber) references Courses (Subject, CourseNumber),
+	FOREIGN KEY (RequiredCourseSubject, RequiredCourseCourseNumber) references Courses (Subject, CourseNumber),
 	PRIMARY KEY(Subject, CourseNumber, RequiredCourseSubject, RequiredCourseCourseNumber)
 
 );
@@ -101,28 +119,14 @@ CREATE TABLE IF NOT EXISTS Classes(
 	Available_seat int(3) NOT NULL,
 	Type varchar(4) NOT NULL,
 	Section varchar(4) NOT NULL,
-	PRIMARY KEY (Subject, CourseNumber) references Courses (Subject, CourseNumber)
+	FOREIGN KEY (Subject, CourseNumber) references Courses (Subject, CourseNumber)
 );
 
 INSERT INTO Classes (Subject, CourseNumber, Start_Time, End_Time, Days, Room, Professor, Available_seat, Type, Section) values
 ('SYSC', '3102', '1135', '1300', 'TR', 'A', 40, 'LEC', "A.A", 35);
 
 
---
--- Table structure for table `ProgramsRequirement`
---
 
-CREATE TABLE IF NOT EXISTS ProgramsRequirement(
-	Name varchar(30) NOT NULL,
-	Subject varchar(4)  NOT NULL,
-	CourseNumber int(3)  NOT NULL,
-	isElective tinyint(1) NOT NULL, -- use 0 for true, else for false
-	YearRequirement tinyint(1),
-	PRIMARY KEY (Subject,CourseNumber) references Courses (Subject,CourseNumber)
-);
-
-INSERT INTO ProgramsRequirement (Name, Subject, CourseNumber, isElective, YearRequirement) values
-("Software Engineering", "SYSC", 3101, 1, 3);
 
 
 
