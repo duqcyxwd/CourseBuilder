@@ -8,7 +8,7 @@
 ******************************/
 
 /* remove browser margins */
-html, body, div {
+html, body {
 	margin:0;
 	padding:0;
 	height: 100%;
@@ -89,14 +89,13 @@ header {
 					COURSE TABLE
 ******************************/
 
-.course-table {
+#course-table {
 	margin: 0 auto;
 	margin-top: 20px;
 	width: 80%;
-	border: 2px solid black;
 }
 
-.course-table table th {
+#course-table table th {
 	border: 1px solid black;
 }
 
@@ -109,7 +108,7 @@ header {
 	width: 8%;
 }
 
-#course-classes td {
+#course-classes-table td {
 	text-align: center;
 	height: 100px;
 	border: 1px solid black;
@@ -117,7 +116,7 @@ header {
 	color: black;
 }
 
-#course-classes td:hover {
+#course-classes-table td:hover {
 	background-color: grey;
 	color: white;
 }

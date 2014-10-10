@@ -1,5 +1,5 @@
 <?php 
-
+	$pageTitle = "Error";
 	include("../resources/templates/header.php");
 
 	$errorId = $_GET['errorid'];
@@ -15,8 +15,6 @@
 		$title = $codes[$errorId][0];
 		$message = $codes[$errorId][1];
 	}
-
-	$pageTitle = $title;
 
 	session_start();
 	echo ("

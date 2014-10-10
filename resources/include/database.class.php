@@ -10,17 +10,22 @@
 			}
 		}
 
-		function getRowsFromTable($table)
+		function getAllRowsFromTable($table)
 		{
 			return mysqli_query($this->mysqli, "SELECT * FROM $table");
 		}
 
-		function getProgramList()
+		function getDistinctFromTable($rows, $table) 
 		{
-			return mysqli_query($this->mysqli,"SELECT DISTINCT program FROM programs");
+			return mysqli_query($this->mysqli, "SELECT DISTINCT $rows FROM $table");
 		}
 
-		function getCourseInfor($program)
+		function getRowsFromTableWithParms($rows="*", $table, $parms="1") 
+		{
+			return mysqli_query($this->mysqli, "SELECT $rows FROM $table WHERE $parms");
+		}
+
+		function getCourseInfo($program)
 		{
 			return mysqli_query($this->mysqli,"SELECT `subject`,`code`, `term`, `program` FROM `programs` WHERE program = '$program'");
 		}
