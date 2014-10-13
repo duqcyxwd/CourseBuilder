@@ -7,4 +7,15 @@
 		header('Location: ' . $url .'?errorid=' . $statusCode);
 		exit();
 	}
+
+	function getListOfPrograms($db) 
+	{
+		$result = $db->getDistinctFromTable("program", "programs");
+		$programList = array();
+		while ($row = mysqli_fetch_array($result))
+			$programList[] = $row['program'];
+		
+		return $programList;
+	}
+	
 ?>
