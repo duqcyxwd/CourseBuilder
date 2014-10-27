@@ -3,7 +3,7 @@
  *
  * generates and populates a prerequisite table
  */
- 
+
 function table(id, numOfYears) {
 
   var MAX_NUMBER_OF_ROWS = 6;
@@ -152,7 +152,13 @@ function table(id, numOfYears) {
 
 
   function getJSON() {
-    // return JSON
+    var json = [];
+
+    for (var i = listOfCourses.length - 1; i >= 0; i--)
+      if (listOfCourses[i].isSelected())
+        json.push(listOfCourses[i].getJSON());
+
+    return json;
   }
 
 

@@ -54,7 +54,6 @@ window.onload = function() {
 
         prerequisiteTable.selectYear(year);
       }
-      
     }
   }
 }
@@ -107,8 +106,8 @@ function createTable(tableID, selectedProgram, numOfYears) {
         courseDetails = courseLabel.split(/[ ,]+/);
         prerequisiteTable.appendCourse(year, term, courseDetails[name], courseDetails[code], courseLabel);
       }
-    }
 
+    }
   }, page, params);
 }
 

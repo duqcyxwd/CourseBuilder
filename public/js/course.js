@@ -3,7 +3,7 @@
  *
  * representation of a single course
  */
- 
+
 function course (obj, courseName, courseNumber, courseYear, courseTerm, htmlBody) {
 
   var name     = courseName,
@@ -53,12 +53,17 @@ function course (obj, courseName, courseNumber, courseYear, courseTerm, htmlBody
   		toggleSelection();
   }
 
+  function isSelected() {
+  	return selected;
+  }
+
   // public methods
   this.init = init;
   this.getJSON = getJSON;
   this.toggleSelection = toggleSelection;
   this.select = select;
   this.deselect = deselect;
+  this.isSelected = isSelected;
 
   this.init(); // initialize
 }
