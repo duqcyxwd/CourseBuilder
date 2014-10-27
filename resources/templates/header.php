@@ -6,7 +6,10 @@
 </head>
 
 <noscript><link rel="stylesheet" type="text/css" href="<?php echo ROOT_PATH . '/css/noJS.css'; ?>"/></noscript>
+<script src="<?php echo ROOT_PATH . '/js/course.js'; ?>"></script>
+<script src="<?php echo ROOT_PATH . '/js/table.js'; ?>"></script>
 <script src="<?php echo ROOT_PATH . '/js/main.js'; ?>"></script>
+<script src="<?php echo ROOT_PATH . '/js/utilities.js'; ?>"></script>
 <body>
 	<header>
 		<a href="<?php echo ROOT_PATH; ?>">
