@@ -5,7 +5,6 @@ DROP TABLE IF EXISTS Students;
 DROP TABLE IF EXISTS ProgramsRequirement;
 DROP TABLE IF EXISTS Courses;
 
-
 --
 -- Database: `courseBuilder`
 --
@@ -18,33 +17,25 @@ DROP TABLE IF EXISTS Courses;
 
 CREATE TABLE IF NOT EXISTS Courses(
 	Subject varchar(4)  NOT NULL,
-	CourseNumber int(3)  NOT NULL,
+	CourseNumber int(4)  NOT NULL,
 	CourseTitle varchar(40)  NOT NULL,
 	PRIMARY KEY(Subject, CourseNumber)
-
 );
-
-INSERT INTO Courses (Subject, CourseNumber, CourseTitle) values 
-("SYSC", "3101", 'Intensive First Year Arabic'),
-("SYSC", "3102", 'Intensive First Year Arabic Fake');
-
 
 --
 -- Table structure for table `ProgramsRequirement`
 --
 
 CREATE TABLE IF NOT EXISTS ProgramsRequirement(
+	RrequestId integer PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	Name varchar(30) NOT NULL,
 	Subject varchar(4)  NOT NULL,
-	CourseNumber int(3)  NOT NULL,
-	isElective tinyint(1) NOT NULL, -- use 0 for true, else for false
-	YearRequirement tinyint(1),
-	FOREIGN KEY (Subject,CourseNumber) references Courses (Subject,CourseNumber),
-	PRIMARY KEY(Name, Subject, CourseNumber)
+	CourseNumber int(4)  NOT NULL,
+	YearRequirement tinyint(1)
+	-- FOREIGN KEY (Subject,CourseNumber) references Courses (Subject,CourseNumber)
+	-- PRIMARY KEY(Name, Subject, CourseNumber)
 );
 
-INSERT INTO ProgramsRequirement (Name, Subject, CourseNumber, isElective, YearRequirement) values
-("Software Engineering", "SYSC", 3101, 1, 3);
 
 
 --
@@ -52,17 +43,16 @@ INSERT INTO ProgramsRequirement (Name, Subject, CourseNumber, isElective, YearRe
 --
 
 CREATE TABLE IF NOT EXISTS Students(
-	Name varchar(30),
+	Name varchar(30) references ProgramsRequirement (Name),
 	Email varchar(30),
 	Student_number int(9) PRIMARY KEY NOT NULL,
 	Program varchar(30) NOT NULL,
 	User_Name varchar(20) NOT NULL,
-	Password varchar(20) NOT NULL,
-	FOREIGN KEY (Program) references ProgramsRequirement (Name)
+	Password varchar(20) NOT NULL
 );
 
-INSERT INTO Students (Name, Email, Student_number, Program, User_Name, Password) values 
-("Chuan", "duq@gmail.com", '100810219', 'Software Engineering', 'duqcyxwd', '12345');
+-- INSERT INTO Students (Name, Email, Student_number, Program, User_Name, Password) values 
+-- ("Chuan", "duq@gmail.com", '100810219', 'Software Engineering', 'duqcyxwd', '12345');
 
 
 
@@ -74,14 +64,14 @@ INSERT INTO Students (Name, Email, Student_number, Program, User_Name, Password)
 CREATE TABLE IF NOT EXISTS CourseCompleted(
 	Student_number int(9) NOT NULL,
 	Subject varchar(4)  NOT NULL,
-	CourseNumber int(3)  NOT NULL,
+	CourseNumber int(4)  NOT NULL,
 	FOREIGN KEY (Subject, CourseNumber) references Courses (Subject, CourseNumber),
 	FOREIGN KEY (Student_number) references Students (Student_number),
 	PRIMARY KEY(Student_number, Subject, CourseNumber)
 );
 
-INSERT INTO CourseCompleted (Student_number, Subject, CourseNumber) values 
-("100810219", "SYSC", 3101);
+-- INSERT INTO CourseCompleted (Student_number, Subject, CourseNumber) values 
+-- ("100810219", "SYSC", 3101);
 
 
 --
@@ -91,42 +81,37 @@ INSERT INTO CourseCompleted (Student_number, Subject, CourseNumber) values
 
 CREATE TABLE IF NOT EXISTS Prerequisite(
 	Subject varchar(4)  NOT NULL,
-	CourseNumber int(3)  NOT NULL,
+	CourseNumber int(4)  NOT NULL,
 	RequiredCourseSubject varchar(4)  NOT NULL,
-	RequiredCourseCourseNumber int(3)  NOT NULL,
+	RequiredCourseCourseNumber int(4)  NOT NULL,
 	FOREIGN KEY (Subject, CourseNumber) references Courses (Subject, CourseNumber),
 	FOREIGN KEY (RequiredCourseSubject, RequiredCourseCourseNumber) references Courses (Subject, CourseNumber),
 	PRIMARY KEY(Subject, CourseNumber, RequiredCourseSubject, RequiredCourseCourseNumber)
 
 );
-INSERT INTO Prerequisite (Subject, CourseNumber, RequiredCourseSubject, RequiredCourseCourseNumber) values 
-("SYSC", 3102, "SYSC", 3101);
+-- INSERT INTO Prerequisite (Subject, CourseNumber, RequiredCourseSubject, RequiredCourseCourseNumber) values 
+-- ("SYSC", 3102, "SYSC", 3101);
 
 
 --
 -- Table structure for table `Classes`
 --
 
+
 CREATE TABLE IF NOT EXISTS Classes(
-	CRN integer PRIMARY KEY,
+	CourseId integer PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	Subject varchar(4)  NOT NULL,
-	CourseNumber int(3)  NOT NULL,
-	Start_Time varchar(4) NOT NULL,
-	End_Time varchar(4) NOT NULL,
-	Days varchar(6) NOT NULL,
-	Room varchar(6) NOT NULL,
-	Professor varchar(30) NOT NULL,
-	Available_seat int(3) NOT NULL,
-	Type varchar(4) NOT NULL,
-	Section varchar(4) NOT NULL,
+	CourseNumber int(4)  NOT NULL,
+	Start_Time varchar(4),
+	End_Time varchar(4),
+	Days varchar(6),
+	RoomCap varchar(6),
+	Professor varchar(30),
+	Type varchar(4),
+	Section varchar(4),
+	Term varchar(5) NOT NULL,
 	FOREIGN KEY (Subject, CourseNumber) references Courses (Subject, CourseNumber)
+
 );
 
-INSERT INTO Classes (Subject, CourseNumber, Start_Time, End_Time, Days, Room, Professor, Available_seat, Type, Section) values
-('SYSC', '3102', '1135', '1300', 'TR', 'A', 40, 'LEC', "A.A", 35);
-
-
-
-
-
-
+select * from Classes;
