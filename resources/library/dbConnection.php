@@ -27,25 +27,5 @@
 		}
 
 		echo json_encode($courseArray);
-		// calculate max course in a term
-		// $temp = array();
-
-		// foreach ($courseArray as $key => $value) {
-		// 	array_push($temp, sizeof($value));
-		// }
-
-		// $maxNumOfCoursesInTerm = max($temp);
-		// for ($i=0; $i < $maxNumOfCoursesInTerm; $i++) {
-		// 	echo "<tr>";
-		// 	for ($j=0; $j < sizeof($courseArray); $j++) {
-				
-		// 		if (array_key_exists($i, $courseArray[$j])) {
-		// 			echo "<td> " . $courseArray[$j][$i] . " </td>";
-		// 		} else {
-		// 			echo "<td> ELECTIVE </td>";
-		// 		}
-		// 	}
-		// 	echo "</tr>";
-		// }
 	}
 ?>

@@ -1,31 +1,133 @@
-var CONSTANT_YEARS = 4;
+var DB_CONNECTION_URL = "../resources/library/dbConnection.php";
+var prerequisiteTable; // global declaration of table
 
-function toggleClass(element, className){
-  if (!element || !className) { return; }
+var stringToYear = {
+      'First'  : 1,
+      'Second' : 2,
+      'Third'  : 3,
+      'Fourth' : 4,
+    };
 
-  var classString = element.className, 
-  	nameIndex   = classString.indexOf(className);
+/**
+ * onLoad
+ *
+ * initialize dropdown menu. Add listener for each
+ * dropdown option. When an option is selected, the
+ * method updates the program title and generates the
+ * prerequisite tree by making an AJAX request.
+**/
 
-  if (nameIndex == -1) {
-    classString += ' ' + className;
-  } else {
-    classString = classString.substr(0, nameIndex) + classString.substr(nameIndex+className.length);
+window.onload = function() {
+
+  // select all program dropdown menu items
+  var dropdownMenuItems = document.getElementsByClassName("gen-tree");
+
+  for (var i = 0; i < dropdownMenuItems.length; i++) {
+    dropdownMenuItems[i].onclick = function() {
+
+      updateProgramTitle(this.innerHTML);
+
+      var tableId    = 'course-table'; 
+      var program    = this.innerHTML;
+      var numOfYears = 4;
+
+      createTable(tableId, program, numOfYears);
+    }
   }
-  element.className = classString;
+
+
+  var onPatternCheckbox = document.getElementById('checkboxInput');
+  onPatternCheckbox.onclick = function() {
+    toggleVisibility('year-select-dd');
+
+    if (prerequisiteTable)
+      prerequisiteTable.resetSelection();
+  }
+
+
+  var selectYearDropDown = document.getElementsByClassName('select-year');
+
+  for (var i = 0; i < selectYearDropDown.length; i++) {
+    selectYearDropDown[i].onclick = function() {
+
+      if (prerequisiteTable != null) {
+        var text = this.innerHTML.split(/[ ,]+/);
+        var year = stringToYear[text[0]];
+
+        prerequisiteTable.selectYear(year);
+      }
+    }
+  }
+
+  var submit = document.getElementById('submit');
+  submit.onclick = function() {
+    // handle submission
+  }
 }
 
-function selectProgram(obj) {
-	toggleClass(obj, 'active');
+
+/**
+ * createTable
+ *
+ * make AJAX request to get courses and create a table
+ * containing all the information for the prerequisite tree
+ * param tableID          : element ID to append table to
+ * param selectedProgram  : program to be displayed
+ * param numOfYears       : length of program (in years)
+**/
+
+function createTable(tableID, selectedProgram, numOfYears) {
+
+  var page = DB_CONNECTION_URL,
+      params = { action: "prereqTree", program: selectedProgram };
+
+
+  // request 
+  AJAXRequest( function(response) {
+
+    var json = JSON.parse(response);
+
+    prerequisiteTable = new table(tableID, numOfYears);
+
+    var term, 
+        courseLabel, 
+        courseDetails,
+        year = 0,
+        name = 0,
+        code = 1;
+    
+    // Loop through terms
+    for (var termNumber = 0; termNumber < json.length; termNumber++) {
+
+      // increment year and alternate term
+      if (termNumber % 2 == 0) {
+        year++;
+        term = 'FALL';
+      } else {
+        term = 'WINTER';
+      }
+
+      // Loop through courses within this term
+      for (var course = 0; course < json[termNumber].length; course++) {
+        courseLabel = json[termNumber][course];
+        courseDetails = courseLabel.split(/[ ,]+/);
+        prerequisiteTable.appendCourse(year, term, courseDetails[name], courseDetails[code], courseLabel);
+      }
+
+    }
+  }, page, params);
 }
 
-function objectToParameters(obj) {
-  var retval = "";
-  for (var key in obj)
-    retval += key + "=" + obj[key] + "&";
-  return retval.slice(0, -1);
-}
 
-// general AJAX Request
+/**
+ * AJAXRequest
+ *
+ * method for making AJAX requrests
+ * param callback : function that will be called when the request is completed
+ * param page     : url to requested php webpage
+ * param params   : object containing parameters to be passed to the page
+**/
+
 function AJAXRequest(callback, page, params) {
   var httpRequest = new XMLHttpRequest();
   var postRequest = objectToParameters(params);
@@ -41,83 +143,19 @@ function AJAXRequest(callback, page, params) {
 
 }
 
-function generatePrerequisiteTable(tableId, prog) {
-  var params = { action: "prereqTree", program: prog };
-  var page = "../resources/library/dbConnection.php";
 
-  AJAXRequest( function(result) {
-    var retval = calculateTable(result);
-    generate_table('course-table', retval);
-    // document.getElementById(tableId).innerHTML = retval;
-  }, page, params);
+/**
+ * objectToParameters
+ *
+ * converts a given object into PHP parameters
+ * This method is used to help make an AJAXRequest
+ * param obj : object to be converted
+ * returns string parameters of object
+**/
 
-}
-
-function calculateTable(result) {
-
-  var json = JSON.parse(result);
-  var tr, td;
-  var body = document.createElement('tbody');
-
-  var max = 0;
-  json.forEach(function(obj) { 
-    max = (max < obj.length) ? obj.length : max; 
-  });
-  console.log(json);
-
-  for (var i = 0; i < max; i++) {
-    tr = document.createElement('tr');
-    for (var j = 0; j < json.length; j++) {
-      td = document.createElement('td');
-      td.innerHTML = (json[i][j]) ? json[i][j] : "ELECTIVE";
-      tr.appendChild(td);
-    };
-    body.appendChild(tr);
-  };
-
-  body.id = "course-classes-table";
-  return body;
-}
-
-
-function generate_table(tableId, bodyHTML) {
-
-  var i, term, th, th2, body;
-  var table = document.createElement('table');
-  var header = table.createTHead();
-  var row = header.insertRow(0);
-  row.id = "course-header-year";
-
-  for (i = 1; i <= CONSTANT_YEARS; i++) {
-    th = document.createElement('th');
-    th.innerHTML = "YEAR " + i;
-    th.colSpan = '2';
-    row.appendChild(th);
-  };
-
-  row = header.insertRow(1);
-  row.id = "course-header-term";
-
-  for (i = 0; i < CONSTANT_YEARS * 2; i++) {
-    term = (i % 2 == 0) ? "FALL" : "WINTER";
-    th = document.createElement('th');
-    th.innerHTML = term;
-    row.appendChild(th);
-  }
-
-  table.appendChild(bodyHTML);
-  table.id = "schedule-table";
-
-  document.getElementById(tableId).innerHTML = "";
-  document.getElementById(tableId).appendChild(table);
-}
-
-// EventListeners
-window.onload = function() {
-  var dropdownMenu = document.getElementsByClassName("gen-tree");
-  for (var i = 0; i < dropdownMenu.length; i++) {
-    dropdownMenu[i].onclick = function() {
-      generatePrerequisiteTable('course-classes-table', this.innerHTML);
-    }
-  }
+function objectToParameters(obj) {
+  var retval = "";
+  for (var key in obj)
+    retval += key + "=" + obj[key] + "&";
+  return retval.slice(0, -1);
 }
