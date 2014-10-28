@@ -7,7 +7,7 @@
 	
 	<section class="program-select">
 		<div id="program-select-title">
-			Please select a program
+			Please select a program from the dropdown menu
 		</div>
 		<div id="program-select-dd" class="wrapper-dropdown" tabindex="1" onclick="selectProgram(this);">
 			<div id="program-select-subtitle" class="selected-program">
@@ -23,6 +23,12 @@
 			<?php endforeach; ?>
 			</ul>
 		</div>
+
+		<div class='submit'>
+			<input type="submit" value="Submit" id="submitButton"/>
+			<label for="submitButton">Submit</label>
+		</div>
+	
 		
 		<div id="year-select-dd" class="wrapper-dropdown" tabindex="1" onclick="selectProgram(this);" style="display:none">
 			<div id="year-select-subtitle">Select a year</div>
@@ -30,7 +36,7 @@
 			<?php foreach ($UNIVERSITY_YEARS as $year): ?>
 
 				<li>
-					<div class='select-year' ><?= $year; ?> Year</div>  <!-- onclick="selectYear(this)" data-year="<?= $year; ?>" -->
+					<div class='select-year' ><?= $year; ?> Year</div>
 				</li>
 
 			<?php endforeach ?>

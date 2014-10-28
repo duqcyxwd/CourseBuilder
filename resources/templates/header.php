@@ -3,6 +3,7 @@
 <head>
 	<title><?php echo $pageTitle; ?></title>
 	<link rel="stylesheet" href="<?php echo ROOT_PATH; ?>/css/main.css" type="text/css">
+	<link rel="stylesheet" href="<?php echo ROOT_PATH; ?>/css/submit.css" type="text/css">
 </head>
 
 <noscript><link rel="stylesheet" type="text/css" href="<?php echo ROOT_PATH . '/css/noJS.css'; ?>"/></noscript>

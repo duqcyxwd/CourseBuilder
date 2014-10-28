@@ -47,6 +47,7 @@ header {
 
 #program-name {
 	text-align: center;
+	/*padding-top: 30px;*/
 }
 
 
@@ -66,7 +67,7 @@ header {
 
 .program-select {
 	padding: 10px;
-	width: 530px;
+	width: 560px;
 	margin: 0 auto;
 }
 
@@ -76,15 +77,15 @@ header {
 
 #program-select-dd {
 	float: left;
-	width: 500px;
+	width: 400px;
 	z-index: 9999;
 }
 
 #year-select-dd {
 	float: right;
-	width: 120px;
+	width: 140px;
 	height: 100%;
-	margin-top: 5px;
+	margin-top: 10px;
 }
 
 #program-select-onpattern {

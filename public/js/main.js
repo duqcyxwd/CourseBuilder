@@ -40,10 +40,12 @@ window.onload = function() {
   onPatternCheckbox.onclick = function() {
     toggleVisibility('year-select-dd');
 
+    if (prerequisiteTable)
+      prerequisiteTable.resetSelection();
   }
 
 
-  var selectYearDropDown = document.getElementsByClassName("select-year");
+  var selectYearDropDown = document.getElementsByClassName('select-year');
 
   for (var i = 0; i < selectYearDropDown.length; i++) {
     selectYearDropDown[i].onclick = function() {
@@ -55,6 +57,11 @@ window.onload = function() {
         prerequisiteTable.selectYear(year);
       }
     }
+  }
+
+  var submit = document.getElementById('submit');
+  submit.onclick = function() {
+    // handle submission
   }
 }
 

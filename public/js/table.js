@@ -124,11 +124,8 @@ function table(id, numOfYears) {
 
 
   function resetSelection() {
-
-    var selectedCourses = getSelectedCourses();
-
-    for (var i = selectedCourses.length - 1; i >= 0; i--)
-      selectedCourses[i].toggleSelection();
+    for (var i = listOfCourses.length - 1; i >= 0; i--)
+      listOfCourses[i].deselect();
   }
 
 
@@ -144,6 +141,7 @@ function table(id, numOfYears) {
 
 
   function selectYear(year) {
+    resetSelection();
 
     for (var i = listOfCourses.length - 1; i >= 0; i--)
       if (listOfCourses[i].year <= year)
