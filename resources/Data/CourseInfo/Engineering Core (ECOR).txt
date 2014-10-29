@@ -1,0 +1,6 @@
+ECOR, 1010, 0.5, "Introduction to Engineering"
+ECOR, 1101, 0.5, "Mechanics I"
+ECOR, 1606, 0.5, "Problem Solving and Computers"
+ECOR, 2606, 0.5, "Numerical Methods"
+ECOR, 3800, 0.5, "Engineering Economics"
+ECOR, 4995, 0.5, "Professional Practice"

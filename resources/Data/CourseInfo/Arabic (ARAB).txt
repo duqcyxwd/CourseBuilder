@@ -1,0 +1,5 @@
+ARAB, 1110, 1.0, "Intensive First-Year Arabic"
+ARAB, 2110, 1.0, "Intensive Second-Year Arabic"
+ARAB, 3010, 0.5, "Third-Year Arabic I"
+ARAB, 3015, 0.5, "Arabic for Heritage Speakers"
+ARAB, 3020, 0.5, "Third-Year Arabic II"

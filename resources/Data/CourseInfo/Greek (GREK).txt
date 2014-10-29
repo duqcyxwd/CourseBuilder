@@ -1,0 +1,8 @@
+GREK, 1005, 0.5, "Introduction to Greek I"
+GREK, 1006, 0.5, "Introduction to Greek II"
+GREK, 2200, 0.5, "Intermediate Greek I"
+GREK, 2201, 0.5, "Intermediate Greek II"
+GREK, 3900, 0.5, "Advanced Greek I"
+GREK, 3901, 0.5, "Advanced Greek II"
+GREK, 4900, 0.5, "Directed Study"
+GREK, 4901, 0.5, "Directed Study"

@@ -1,0 +1,4 @@
+INSC, 3907, 0.5, "Topics in Integrated Science"
+INSC, 3909, 0.5, "Independent Study"
+INSC, 4907, 1.0, "Honours Essay and Research Proposal"
+INSC, 4908, 1.0, "Honours Project"

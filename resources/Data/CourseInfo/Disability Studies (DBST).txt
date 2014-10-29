@@ -1,0 +1,2 @@
+DBST, 1001, 0.5, "Introduction to Disability Studies"
+DBST, 4001, 0.5, "Disability Studies: Policy and Activism"

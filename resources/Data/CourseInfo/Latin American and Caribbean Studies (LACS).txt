@@ -1,0 +1,3 @@
+LACS, 1001, 0.5, "Introduction to Latin American and Caribbean Studies I"
+LACS, 1002, 0.5, "Introduction to Latin American and Caribbean Studies II"
+LACS, 4001, 0.5, "Issues in Latin American and Caribbean Studies"

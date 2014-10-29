@@ -1,0 +1,2 @@
+CCDP, 2000, 0.5, "Communication Skills for Computer Science Students"
+CCDP, 2100, 0.5, "Communication Skills for Engineering Students"

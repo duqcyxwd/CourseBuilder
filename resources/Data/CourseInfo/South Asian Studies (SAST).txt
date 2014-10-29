@@ -1,0 +1,2 @@
+SAST, 1001, 0.5, "Introduction to South Asian Studies I"
+SAST, 1002, 0.5, "Introduction to South Asian Studies II"

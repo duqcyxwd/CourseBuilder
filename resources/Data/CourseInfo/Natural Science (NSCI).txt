@@ -1,0 +1,1 @@
+NSCI, 1000, 0.5, "Seminar in Science"

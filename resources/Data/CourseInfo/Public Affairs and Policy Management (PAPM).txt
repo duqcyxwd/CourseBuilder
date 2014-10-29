@@ -1,0 +1,7 @@
+PAPM, 1000, 1.0, "Introduction to Public Affairs and Policy Management"
+PAPM, 2000, 1.0, "Policy: Analysis, Implementation and Evaluation"
+PAPM, 3000, 0.5, "Policy Research"
+PAPM, 3999, 0.0, "Co-operative Work Term"
+PAPM, 4000, 0.5, "Capstone Seminar in Public Affairs and Policy Management"
+PAPM, 4100, 0.5, "Special Topics in Public Affairs and Policy Management"
+PAPM, 4908, 1.0, "Honours Research Essay"

@@ -1,0 +1,3 @@
+ISCI, 1001, 0.5, "Introduction to the Environment"
+ISCI, 2000, 0.5, "Natural Laws"
+ISCI, 2002, 0.5, "Human Impacts on the Environment"
