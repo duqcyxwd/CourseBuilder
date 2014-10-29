@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS Prerequisite;
 DROP TABLE IF EXISTS Classes;
 DROP TABLE IF EXISTS Students;
 DROP TABLE IF EXISTS ProgramsRequirement;
+DROP TABLE IF EXISTS Electives;
 DROP TABLE IF EXISTS Courses;
 
 --
@@ -16,7 +17,7 @@ DROP TABLE IF EXISTS Courses;
 --
 
 CREATE TABLE IF NOT EXISTS Courses(
-	Subject varchar(4)  NOT NULL,
+	Subject varchar(10)  NOT NULL,
 	CourseNumber int(4)  NOT NULL,
 	CourseTitle varchar(40)  NOT NULL,
 	PRIMARY KEY(Subject, CourseNumber)
@@ -27,16 +28,28 @@ CREATE TABLE IF NOT EXISTS Courses(
 --
 
 CREATE TABLE IF NOT EXISTS ProgramsRequirement(
-	RrequestId integer PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	AutoId integer PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	Name varchar(30) NOT NULL,
-	Subject varchar(4)  NOT NULL,
+	Subject varchar(10)  NOT NULL,
 	CourseNumber int(4)  NOT NULL,
-	YearRequirement tinyint(1)
-	-- FOREIGN KEY (Subject,CourseNumber) references Courses (Subject,CourseNumber)
+	YearRequirement tinyint(1),
+	FOREIGN KEY (Subject, CourseNumber) references Courses (Subject,CourseNumber)
 	-- PRIMARY KEY(Name, Subject, CourseNumber)
 );
 
+--
+-- Table structure for table `Electives`
+-- TODO set FOREIGN KEY!!!!
+--
 
+CREATE TABLE IF NOT EXISTS Electives(
+	AutoId integer PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	ElectiveType int(4)  NOT NULL,
+	Subject varchar(10)  NOT NULL,
+	CourseNumber int(4)  NOT NULL,
+	FOREIGN KEY (Subject, CourseNumber) references Courses (Subject,CourseNumber)
+	-- PRIMARY KEY(Name, Subject, CourseNumber)
+);
 
 --
 -- Table structure for table `Students`
@@ -63,7 +76,7 @@ CREATE TABLE IF NOT EXISTS Students(
 
 CREATE TABLE IF NOT EXISTS CourseCompleted(
 	Student_number int(9) NOT NULL,
-	Subject varchar(4)  NOT NULL,
+	Subject varchar(10)  NOT NULL,
 	CourseNumber int(4)  NOT NULL,
 	FOREIGN KEY (Subject, CourseNumber) references Courses (Subject, CourseNumber),
 	FOREIGN KEY (Student_number) references Students (Student_number),
@@ -80,9 +93,9 @@ CREATE TABLE IF NOT EXISTS CourseCompleted(
 
 
 CREATE TABLE IF NOT EXISTS Prerequisite(
-	Subject varchar(4)  NOT NULL,
+	Subject varchar(10)  NOT NULL,
 	CourseNumber int(4)  NOT NULL,
-	RequiredCourseSubject varchar(4)  NOT NULL,
+	RequiredCourseSubject varchar(10)  NOT NULL,
 	RequiredCourseCourseNumber int(4)  NOT NULL,
 	FOREIGN KEY (Subject, CourseNumber) references Courses (Subject, CourseNumber),
 	FOREIGN KEY (RequiredCourseSubject, RequiredCourseCourseNumber) references Courses (Subject, CourseNumber),
@@ -100,7 +113,7 @@ CREATE TABLE IF NOT EXISTS Prerequisite(
 
 CREATE TABLE IF NOT EXISTS Classes(
 	CourseId integer PRIMARY KEY NOT NULL AUTO_INCREMENT,
-	Subject varchar(4)  NOT NULL,
+	Subject varchar(10)  NOT NULL,
 	CourseNumber int(4)  NOT NULL,
 	Start_Time varchar(4),
 	End_Time varchar(4),
