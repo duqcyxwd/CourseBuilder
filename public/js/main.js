@@ -59,9 +59,10 @@ window.onload = function() {
     }
   }
 
-  var submit = document.getElementById('submit');
+  var submit = document.getElementById('submitButton');
   submit.onclick = function() {
     // handle submission
+    toggleVisibility('year-select-dd');
   }
 }
 
