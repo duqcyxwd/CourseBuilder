@@ -39,21 +39,34 @@
 		}
 
 		function getPrerequisiteTree($program) {
-			include(INCLUDE_PATH . "/constants.php");
-
 			$courses = array();
 			$result = $this->getCourseInfo($program);
-
 			while ($row = mysqli_fetch_array($result)){
 				$courses[] = $row;
 			}
-
+			// TODO: simplify this....
 			$courseArray = array(array(), array(), array(), array(), array(), array(), array(), array());
+
 			foreach ($courses as $key => $course) {
 				$term = $course['yearRequirement'];
 				array_push($courseArray[$term], $course['Subject'] . " " . $course['CourseNumber']);
 			}
+			return $courseArray;
+		}
 
+		function getPrerequisiteTreeInArray($program) {
+			$courses = array();
+			$result = $this->getCourseInfo($program);
+			while ($row = mysqli_fetch_array($result)){
+				$courses[] = $row;
+			}
+			// TODO: simplify this....
+			$courseArray = array(array(), array(), array(), array(), array(), array(), array(), array());
+
+			foreach ($courses as $key => $course) {
+				$term = $course['yearRequirement'];
+				array_push($courseArray[$term], $course['Subject'] . " " . $course['CourseNumber']);
+			}
 			return $courseArray;
 		}
 
@@ -65,6 +78,14 @@
 				$programList[] = $row['program'];
 			
 			return $programList;
+		}
+
+		// Giving a list of Classes and return a list of classes open in this term
+		function getClasses()
+		{
+			$sql = "SELECT * FROM Classes";
+			$classes = $this->execute($sql);
+			return $classes;
 		}
 
 	}
