@@ -10,10 +10,10 @@
 
 	function getListOfPrograms($db) 
 	{
-		$result = $db->getDistinctFromTable("program", "programs");
+		$result = $db->getDistinctFromTable("Name", "ProgramsRequirement");
 		$programList = array();
 		while ($row = mysqli_fetch_array($result))
-			$programList[] = $row['program'];
+			$programList[] = $row['Name'];
 		
 		return $programList;
 	}
