@@ -1,31 +1,44 @@
 <?php
 	require("../config.php");
 
-	$action = $_POST['action'];
+	if (isset($_POST['action'])){
+		$variable = $_POST;
+	} else {
+		$variable = $_GET;
+	}
+
+	$action = $variable['action'];
 	switch ($action) {
 		case 'prereqTree':
-			getPrerequisiteTree($db, $_POST['program']);
+			$result = $db->getPrerequisiteTree($variable['program']);
+			echo json_encode($result);
+			break;
+		case 'timeTable':
+			$courses = explode(";", $variable['courseCompleted']);
+			$program = $variable['program'];
+			$prerequisiteTree = $db->getPrerequisiteTree($variable['program']);
+			// $avaiableCourse = $db->getAvaiableCourse
+
+			print_r($courses);
+			echo "<br>$program"; 
+
+			$db->getClasses();
 			break;
 		default:
 			break;
 	}
 
-	function getPrerequisiteTree($db, $program) {
-		include(INCLUDE_PATH . "/constants.php");
-
-		$courses = array();
-		$result = $db->getCourseInfo($program);
-
-		while ($row = mysqli_fetch_array($result)){
-			$courses[] = $row;
-		}
-
-		$courseArray = array(array(), array(), array(), array(), array(), array(), array(), array());
+	function stringToClassArray($value='')
+	{
+		$array = array();
+		$courses = explode(";", $value);
 		foreach ($courses as $key => $course) {
-			$term = $course['term'];
-			array_push($courseArray[$term], $course['subject'] . " " . $course['code']);
+			$course = explode(" ", $course);
+			array_push($array, $course);
 		}
 
-		echo json_encode($courseArray);
+		echo "<br>";
+		return $array;
 	}
+
 ?>

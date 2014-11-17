@@ -1,0 +1,8 @@
+ARCS, 1005, 0.5, "Drawing"
+ARCS, 1105, 1.0, "Studio 1"
+ARCS, 2105, 1.5, "Studio 2"
+ARCS, 2106, 1.5, "Studio 3"
+ARCS, 3105, 1.5, "Studio 4"
+ARCS, 3106, 1.5, "Studio 5"
+ARCS, 4105, 1.5, "Studio 6"
+ARCS, 4106, 1.5, "Studio 7"

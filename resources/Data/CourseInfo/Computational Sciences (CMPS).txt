@@ -1,0 +1,4 @@
+CMPS, 2800, 0.5, "Discrete Mathematics and Algorithms"
+CMPS, 3604, 0.5, "Analysis of Ecological Relationships"
+CMPS, 3800, 0.5, "Modeling and Computational Methods for Experimental Science"
+CMPS, 4909, 1.0, "Honours Research Thesis in Computational Science"

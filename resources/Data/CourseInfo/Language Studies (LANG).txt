@@ -1,0 +1,6 @@
+LANG, 1010, 0.5, "Introduction to a Language I"
+LANG, 1020, 0.5, "Introduction to a Language II"
+LANG, 1110, 1.0, "Intensive Introduction to a Language"
+LANG, 2010, 0.5, "Second-Year Language I"
+LANG, 2020, 0.5, "Second-Year Language II"
+LANG, 2110, 1.0, "Continuing Intensive Study of a Language"

@@ -1,0 +1,3 @@
+HEBR, 1904, 1.0, "Introductory Hebrew I"
+HEBR, 2904, 1.0, "Introductory Hebrew II"
+HEBR, 3904, 1.0, "Advanced Hebrew"

@@ -1,0 +1,5 @@
+INAF, 3000, 1.0, "Policy in a Global Context"
+INAF, 4101, 0.5, "Special Topics in Conflict Analysis and International Affairs"
+INAF, 4102, 0.5, "Special Topics in Development and International Affairs"
+INAF, 4103, 0.5, "Special Topics in International Political Economy and International Affairs"
+INAF, 4202, 0.5, "Issues in Development Management"

@@ -1,0 +1,7 @@
+SREE, 1000, 0.0, "Introduction to Sustainable Energy"
+SREE, 3001, 0.5, "Sustainable and Renewable Energy Sources"
+SREE, 3002, 0.5, "Energy Distribution and Efficient Utilization"
+SREE, 3003, 0.5, "Sustainable Energy Systems Design"
+SREE, 4001, 0.5, "Efficient Energy Conversion"
+SREE, 4002, 0.5, "The Energy Economy, Reliability and Risk"
+SREE, 4907, 1.0, "Energy Engineering Project"

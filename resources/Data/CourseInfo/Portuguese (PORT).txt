@@ -1,0 +1,6 @@
+PORT, 1010, 0.5, "First-Year Portuguese I"
+PORT, 1020, 0.5, "First-Year Portuguese II"
+PORT, 1110, 1.0, "Intensive First-Year Portuguese"
+PORT, 2110, 1.0, "Intensive Second-Year Portuguese"
+PORT, 3110, 1.0, "Intensive Third-Year Portuguese"
+PORT, 4110, 1.0, "Intensive Fourth-Year Portuguese"

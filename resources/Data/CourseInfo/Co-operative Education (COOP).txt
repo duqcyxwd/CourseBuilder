@@ -1,0 +1,1 @@
+COOP, 1000, 0.0, "Co-op Preparation"

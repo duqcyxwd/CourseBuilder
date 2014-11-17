@@ -1,0 +1,8 @@
+LATN, 1005, 0.5, "Introduction to Latin I"
+LATN, 1006, 0.5, "Introduction to Latin II"
+LATN, 2200, 0.5, "Intermediate Latin I"
+LATN, 2201, 0.5, "Intermediate Latin II"
+LATN, 3900, 0.5, "Advanced Latin I"
+LATN, 3901, 0.5, "Advanced Latin II"
+LATN, 4900, 0.5, "Directed Study"
+LATN, 4901, 0.5, "Directed Study"

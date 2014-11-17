@@ -1,0 +1,4 @@
+GPOL, 1000, 1.0, "Global Politics"
+GPOL, 3000, 0.5, "Themes in Global and Comparative Politics"
+GPOL, 3100, 2.5, "Internship in Global Politics"
+GPOL, 4908, 1.0, "Honours Research Essay"
