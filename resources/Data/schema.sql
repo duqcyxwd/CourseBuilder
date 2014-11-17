@@ -49,6 +49,8 @@ CREATE TABLE IF NOT EXISTS `courses` (
 -- Dumping data for table `courses`
 --
 
+
+
 INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `days`, `startTime`, `endTime`, `roomCap`, `programID`, `year`, `term`) VALUES
 (1, 'AERO', '3240', 'A', 'Orbital Mechanics', 'LEC', 'WF', '00:10:05', '00:11:25', 40, 0, 0, 0),
 (2, 'AERO', '3240', 'A1', 'Orbital Mechanics', 'TUT', 'W', '00:08:35', '00:09:25', 40, 0, 0, 0),
@@ -530,6 +532,8 @@ INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `day
 (478, 'BUSI', '1800', 'A06', 'Introduction to Business', 'TUT', 'R', '00:11:35', '00:13:25', 58, 0, 0, 0),
 (479, 'BUSI', '1800', 'B', 'Introduction to Business', 'LEC', 'T', '00:14:35', '00:17:25', 195, 0, 0, 0),
 (480, 'BUSI', '1800', 'B01', 'Introduction to Business', 'TUT', 'F', '00:14:35', '00:16:25', 42, 0, 0, 0);
+
+
 INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `days`, `startTime`, `endTime`, `roomCap`, `programID`, `year`, `term`) VALUES
 (481, 'BUSI', '1800', 'B02', 'Introduction to Business', 'TUT', 'W', '00:15:35', '00:17:25', 35, 0, 0, 0),
 (482, 'BUSI', '1800', 'B03', 'Introduction to Business', 'TUT', 'R', '00:08:35', '00:10:25', 35, 0, 0, 0),
@@ -1008,6 +1012,8 @@ INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `day
 (955, 'COMM', '2100', 'A08', 'Theor Traditions in Comm St.', 'GRP', 'F', '00:16:35', '00:17:25', 27, 0, 0, 0),
 (956, 'COMM', '2100', 'A09', 'Theor Traditions in Comm St.', 'GRP', 'F', '00:16:35', '00:17:25', 27, 0, 0, 0),
 (957, 'COMM', '2100', 'A10', 'Theor Traditions in Comm St.', 'GRP', 'F', '00:16:35', '00:17:25', 27, 0, 0, 0);
+
+
 INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `days`, `startTime`, `endTime`, `roomCap`, `programID`, `year`, `term`) VALUES
 (958, 'COMM', '2100', 'A11', 'Theor Traditions in Comm St.', 'GRP', 'F', '00:16:35', '00:17:25', 29, 0, 0, 0),
 (959, 'COMM', '2100', 'A12', 'Theor Traditions in Comm St.', 'GRP', 'F', '00:16:35', '00:17:25', 31, 0, 0, 0),
@@ -1483,6 +1489,10 @@ INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `day
 (1429, 'ENST', '1001', 'A', 'Intro. Environmental Studies', 'LEC', 'M', '00:14:35', '00:16:25', 98, 0, 0, 0),
 (1430, 'ENST', '1001', 'A01', 'Intro. Environmental Studies', 'TUT', 'F', '00:09:35', '00:11:25', 25, 0, 0, 0),
 (1431, 'ENST', '1001', 'A02', 'Intro. Environmental Studies', 'TUT', 'W', '00:08:35', '00:10:25', 25, 0, 0, 0);
+
+
+
+
 INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `days`, `startTime`, `endTime`, `roomCap`, `programID`, `year`, `term`) VALUES
 (1432, 'ENST', '1001', 'A03', 'Intro. Environmental Studies', 'TUT', 'W', '00:15:35', '00:17:25', 55, 0, 0, 0),
 (1433, 'ENST', '1001', 'A04', 'Intro. Environmental Studies', 'TUT', 'W', '00:14:35', '00:16:25', 31, 0, 0, 0),
@@ -1965,6 +1975,8 @@ INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `day
 (1910, 'HIST', '1001', 'A04', 'The Making of Europe', 'GRP', 'F', '00:15:35', '00:16:25', 32, 0, 0, 0),
 (1911, 'HIST', '1001', 'A05', 'The Making of Europe', 'GRP', 'F', '00:16:35', '00:17:25', 25, 0, 0, 0),
 (1912, 'HIST', '1001', 'A06', 'The Making of Europe', 'GRP', 'F', '00:09:35', '00:10:25', 23, 0, 0, 0);
+
+
 INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `days`, `startTime`, `endTime`, `roomCap`, `programID`, `year`, `term`) VALUES
 (1913, 'HIST', '1001', 'A07', 'The Making of Europe', 'GRP', '', '00:00:00', '00:00:00', 0, 0, 0, 0),
 (1914, 'HIST', '1001', 'A08', 'The Making of Europe', 'GRP', '', '00:00:00', '00:00:00', 0, 0, 0, 0),
@@ -2444,6 +2456,8 @@ INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `day
 (2388, 'LAWS', '3202', 'A', 'Intellectual Property', 'LEC', 'M', '00:08:35', '00:11:25', 66, 0, 0, 0),
 (2389, 'LAWS', '3205', 'A', 'Consumer Law', 'LEC', 'F', '00:11:35', '00:14:25', 58, 0, 0, 0),
 (2390, 'LAWS', '3206', 'A', 'Banking Law', 'LEC', 'W', '00:18:05', '00:20:55', 63, 0, 0, 0);
+
+
 INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `days`, `startTime`, `endTime`, `roomCap`, `programID`, `year`, `term`) VALUES
 (2391, 'LAWS', '3209', 'A', 'Cdn Corr Policies Hist Perspec', 'LEC', 'M', '00:11:35', '00:14:25', 66, 0, 0, 0),
 (2392, 'LAWS', '3305', 'A', 'Crime and State in History', 'LEC', 'W', '00:14:35', '00:17:25', 71, 0, 0, 0),
@@ -2922,6 +2936,9 @@ INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `day
 (2865, 'NET', '1002', 'A1', 'Networking Fundamentals', 'LAB', 'T', '00:12:05', '00:13:55', 30, 0, 0, 0),
 (2866, 'NET', '1002', 'A2', 'Networking Fundamentals', 'LAB', 'R', '00:12:05', '00:13:55', 30, 0, 0, 0),
 (2867, 'NET', '1002', 'A3', 'Networking Fundamentals', 'LAB', 'T', '00:14:05', '00:15:55', 30, 0, 0, 0);
+
+
+
 INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `days`, `startTime`, `endTime`, `roomCap`, `programID`, `year`, `term`) VALUES
 (2868, 'NET', '2000', 'A', 'Intermediate Networking', 'LEC', 'M', '00:13:05', '00:14:55', 96, 0, 0, 0),
 (2869, 'NET', '2000', 'A', 'Intermediate Networking', 'LEC', 'W', '00:10:05', '00:10:55', 96, 0, 0, 0),
@@ -3394,6 +3411,9 @@ INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `day
 (3336, 'PSYC', '2700', 'TOD', 'Cognitive Psychology', 'VOD', '', '00:00:00', '00:00:00', 0, 0, 0, 0),
 (3337, 'PSYC', '3000', 'A', 'Advanced Design & Analysis', 'LEC', 'F', '00:14:35', '00:17:25', 78, 0, 0, 0),
 (3338, 'PSYC', '3000', 'B', 'Advanced Design & Analysis', 'LEC', 'R', '00:08:35', '00:11:25', 78, 0, 0, 0);
+
+
+
 INSERT INTO `courses` (`id`, `subject`, `code`, `section`, `title`, `type`, `days`, `startTime`, `endTime`, `roomCap`, `programID`, `year`, `term`) VALUES
 (3339, 'PSYC', '3000', 'C', 'Advanced Design & Analysis', 'LEC', 'MW', '00:08:35', '00:09:55', 134, 0, 0, 0),
 (3340, 'PSYC', '3000', 'D', 'Advanced Design & Analysis', 'LEC', 'MW', '00:11:35', '00:12:55', 91, 0, 0, 0),

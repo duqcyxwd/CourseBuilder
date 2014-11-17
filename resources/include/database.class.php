@@ -14,5 +14,13 @@
 		{
 			return mysqli_query($this->mysqli, "SELECT * FROM $table");
 		}
+		
+		function execute($sql){
+			return $this->connection->query($sql);
+		}
+		
+		function getError(){
+			return mysqli_error($this->connection);
+		}
 	}
 ?>

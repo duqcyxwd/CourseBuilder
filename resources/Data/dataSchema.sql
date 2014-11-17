@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS CourseCompleted;
 DROP TABLE IF EXISTS Prerequisite;
+DROP TABLE IF EXISTS SpePrereq;
 DROP TABLE IF EXISTS Classes;
 DROP TABLE IF EXISTS Students;
 DROP TABLE IF EXISTS ProgramsRequirement;
@@ -86,31 +87,21 @@ CREATE TABLE IF NOT EXISTS CourseCompleted(
 -- INSERT INTO CourseCompleted (Student_number, Subject, CourseNumber) values 
 -- ("100810219", "SYSC", 3101);
 
-
 --
 -- Table structure for table `Prerequisite`
 --
-
-
 CREATE TABLE IF NOT EXISTS Prerequisite(
 	Subject varchar(10)  NOT NULL,
 	CourseNumber int(4)  NOT NULL,
-	RequiredCourseSubject varchar(10)  NOT NULL,
-	RequiredCourseCourseNumber int(4)  NOT NULL,
-	FOREIGN KEY (Subject, CourseNumber) references Courses (Subject, CourseNumber),
-	FOREIGN KEY (RequiredCourseSubject, RequiredCourseCourseNumber) references Courses (Subject, CourseNumber),
-	PRIMARY KEY(Subject, CourseNumber, RequiredCourseSubject, RequiredCourseCourseNumber)
+	Requirement varchar(200),
+	YearReq int(1),
+	FOREIGN KEY (Subject, CourseNumber) references Courses (Subject, CourseNumber)
 
 );
--- INSERT INTO Prerequisite (Subject, CourseNumber, RequiredCourseSubject, RequiredCourseCourseNumber) values 
--- ("SYSC", 3102, "SYSC", 3101);
-
 
 --
 -- Table structure for table `Classes`
 --
-
-
 CREATE TABLE IF NOT EXISTS Classes(
 	CourseId integer PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	Subject varchar(10)  NOT NULL,
