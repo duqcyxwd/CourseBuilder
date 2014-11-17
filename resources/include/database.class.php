@@ -35,7 +35,38 @@
 
 		function getCourseInfo($program)
 		{
-			return mysqli_query($this->mysqli,"SELECT `subject`,`code`, `term`, `program` FROM `programs` WHERE program = '$program'");
+			return mysqli_query($this->mysqli,"SELECT `Subject`,`CourseNumber`, `yearRequirement`, `program` FROM `ProgramsRequirement` WHERE program = '$program'");
 		}
+
+		function getPrerequisiteTree($program) {
+			include(INCLUDE_PATH . "/constants.php");
+
+			$courses = array();
+			$result = $this->getCourseInfo($program);
+
+			while ($row = mysqli_fetch_array($result)){
+				$courses[] = $row;
+			}
+
+			$courseArray = array(array(), array(), array(), array(), array(), array(), array(), array());
+			foreach ($courses as $key => $course) {
+				$term = $course['yearRequirement'];
+				array_push($courseArray[$term], $course['Subject'] . " " . $course['CourseNumber']);
+			}
+
+			return $courseArray;
+		}
+
+		function getListOfPrograms() 
+		{
+			$result = $this->getDistinctFromTable("program", "ProgramsRequirement");
+			$programList = array();
+			while ($row = mysqli_fetch_array($result))
+				$programList[] = $row['program'];
+			
+			return $programList;
+		}
+
 	}
+
 ?>

@@ -2,7 +2,7 @@
 	$pageTitle = "Home";
 	require("../resources/config.php");
 	include(TEMPLATES_PATH . "/header.php");
-	$programList = getListOfPrograms($db);
+	$programList = $db->getListOfPrograms();
 ?>
 	
 	<section class="program-select">
