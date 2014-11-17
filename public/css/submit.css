@@ -1,0 +1,42 @@
+.submit {
+	float:left;
+	margin-left: 10px;
+	position: relative;
+}
+
+.submit label {
+	cursor: pointer;
+	position: absolute;
+	text-align: center;
+	display: inline-block;
+	vertical-align: baseline;
+
+	width: 95px;
+	height: 23px;
+	padding: 11px 12px;
+
+	top: 0;
+  left: 0;
+
+	background: white;
+	color: #C0392B;
+	border: 0.5px solid #333;
+}
+
+
+.submit label:after {
+	width: 9px;
+	height: 5px;
+	/*background: transparent;*/
+	top: 4px;
+	left: 4px;
+	border: 3px solid #333;
+	border-top: none;
+	border-right: none;
+}
+
+
+.submit label:hover {
+	color: white;
+	background-color: #C0392B;
+}
