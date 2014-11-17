@@ -1,11 +1,3 @@
-CREATE TABLE IF NOT EXISTS Prerequisite(
-	Subject varchar(10)  NOT NULL,
-	CourseNumber int(4)  NOT NULL,
-	Requirement varchar(200),
-	YearReq int(1),
-	FOREIGN KEY (Subject, CourseNumber) references Courses (Subject, CourseNumber)
-
-);
 
 INSERT INTO `Prerequisite` (`Subject`, `CourseNumber`, `Requirement`, `YearReq`) VALUES
 ("ELEC", 1908, "registration in the Engineering Physics program", 0),
