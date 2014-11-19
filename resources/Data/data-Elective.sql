@@ -1,15 +1,15 @@
-INSERT INTO `Courses` (`Subject`, `CourseNumber`, `CourseTitle`) VALUES
-("Elective", 9999, "Complementary studies electives"),
-("Elective", 1111, "Basic science electives"),
-("Elective", 2001, "Computer System Engineering Elective B"),
-("Elective", 3001, "Software Engkneering Elective A"),
-("Elective", 3002, "Software Engineering Elective B"),
-("Elective", 4003, "Communications Engineering Elective C"),
-("Elective", 5001, "Biomedical & Electrical Engineering Elective A"),
-("Elective", 5002, "Biomedical & Electrical Engineering Elective B"),
-("Elective", 8883, "SYSC at 3000 or 4000 level"),
-("Elective", 7773, "ELEC at 3000 or 4000 level"),
-("Elective", 9993, "ELEC or SYSC at 3000 or 4000 level");
+-- INSERT INTO `Courses` (`Subject`, `CourseNumber`, `CourseTitle`) VALUES
+-- ("Elective", 9999, "Complementary studies electives"),
+-- ("Elective", 1111, "Basic science electives"),
+-- ("Elective", 2001, "Computer System Engineering Elective B"),
+-- ("Elective", 3001, "Software Engkneering Elective A"),
+-- ("Elective", 3002, "Software Engineering Elective B"),
+-- ("Elective", 4003, "Communications Engineering Elective C"),
+-- ("Elective", 5001, "Biomedical & Electrical Engineering Elective A"),
+-- ("Elective", 5002, "Biomedical & Electrical Engineering Elective B"),
+-- ("Elective", 8883, "SYSC at 3000 or 4000 level"),
+-- ("Elective", 7773, "ELEC at 3000 or 4000 level"),
+-- ("Elective", 9993, "ELEC or SYSC at 3000 or 4000 level");
 
 
 INSERT INTO `Electives` (`ElectiveType`, `Subject`, `CourseNumber`) VALUES

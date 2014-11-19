@@ -1,4 +1,4 @@
-INSERT INTO `ProgramsRequirement` (`Program`, `Subject`, `CourseNumber`, `YearRequirement`) VALUES
+INSERT INTO `ProgramsRequirement` (`Name`, `Subject`, `CourseNumber`, `YearRequirement`) VALUES
 ('Biomedical and Electrical Engi', 'BIOL', 1003, 0),
 ('Biomedical and Electrical Engi', 'CHEM', 1001, 0),
 ('Biomedical and Electrical Engi', 'ECOR', 1010, 0),

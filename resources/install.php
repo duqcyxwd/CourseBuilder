@@ -34,11 +34,11 @@
 	/* create the object*/
 	$data = new database("");
 	
-	$sql = "CREATE DATABASE IF NOT EXISTS usersdb2" ;
+	$sql = "CREATE DATABASE IF NOT EXISTS courseBuilder" ;
 	$data->execute($sql);
 
 
-	$data = new database("usersdb2");
+	$data = new database("courseBuilder");
 	echo "Clean old data<br>";
 
 	$sql = "DROP TABLE IF EXISTS CourseCompleted;
