@@ -1,5 +1,6 @@
 <?php
 	class DataBase
+	// TODO: factory Queries code to handle sql error
 	{
 		function __construct($hostname = NULL, $username = NULL, $password = NULL, $name = NULL)
 		{
@@ -14,14 +15,7 @@
 		{
 			return mysqli_query($this->mysqli, "SELECT * FROM $table");
 		}
-		
-		function execute($sql){
-			return $this->connection->query($sql);
-		}
-		
-		function getError(){
-			return mysqli_error($this->connection);
-		}
+
 
 		function getDistinctFromTable($rows, $table) 
 		{
@@ -33,30 +27,10 @@
 			return mysqli_query($this->mysqli, "SELECT $rows FROM $table WHERE $parms");
 		}
 
-		function getCourseInfo($program)
-		{
-			return mysqli_query($this->mysqli,"SELECT `Subject`,`CourseNumber`, `yearRequirement`, `program` FROM `ProgramsRequirement` WHERE program = '$program'");
-		}
-
 		function getPrerequisiteTree($program) {
 			$courses = array();
-			$result = $this->getCourseInfo($program);
-			while ($row = mysqli_fetch_array($result)){
-				$courses[] = $row;
-			}
-			// TODO: simplify this....
-			$courseArray = array(array(), array(), array(), array(), array(), array(), array(), array());
+			$result = mysqli_query($this->mysqli,"SELECT `Subject`,`CourseNumber`, `yearRequirement`, `program` FROM `ProgramsRequirement` WHERE program = '$program'");
 
-			foreach ($courses as $key => $course) {
-				$term = $course['yearRequirement'];
-				array_push($courseArray[$term], $course['Subject'] . " " . $course['CourseNumber']);
-			}
-			return $courseArray;
-		}
-
-		function getPrerequisiteTreeInArray($program) {
-			$courses = array();
-			$result = $this->getCourseInfo($program);
 			while ($row = mysqli_fetch_array($result)){
 				$courses[] = $row;
 			}
@@ -81,13 +55,34 @@
 		}
 
 		// Giving a list of Classes and return a list of classes open in this term
-		function getClasses()
+		function getOpeningClasses()
 		{
-			$sql = "SELECT * FROM Classes";
-			$classes = $this->execute($sql);
+			$term = getCurrentTerm();
+			$sql = "SELECT DISTINCT `Subject`, `CourseNumber` FROM Classes WHERE `TERM` = \"".$term."\"";
+			$result = mysqli_query($this->mysqli, $sql);
+			while ($row = mysqli_fetch_array($result)){
+				$classes[] = $row;
+			}
 			return $classes;
 		}
 
+
+		function getCourseInfoByCourseArray($courseArray) {
+			$result = [];
+			if (sizeof($courseArray) >0) {
+				$sql = "SELECT * FROM Classes WHERE 0 ";
+				foreach ($courseArray as $course) {
+					$courseTemp = explode(" ", $course);
+					$sql .= "OR (`Subject` = \"".$courseTemp[0]."\" AND "
+						."`CourseNumber` = \"".$courseTemp[1]."\") ";
+				}
+				$queryResult = mysqli_query($this->mysqli, $sql);
+				while ($row = mysqli_fetch_array($queryResult)){
+					$result[] = $row;
+				}
+			}
+			return $result;
+		}
 	}
 
 ?>
