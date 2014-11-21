@@ -190,6 +190,7 @@ window.onload = function() {
 
   var submit = document.getElementById('submitButton');
   submit.onclick = function() {
+    alert(prerequisiteTable.getStringFormat());
     submitTable();
   }
 }

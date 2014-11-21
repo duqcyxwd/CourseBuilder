@@ -135,12 +135,12 @@ function course (obj, courseName, courseNumber, courseYear, courseTerm, htmlBody
   }
 
   function getNumber() {
-    return courseNumber;
+    return number;
   }
 
-  function updateCourse(name, number, body) {
-    name = this.name;
-    number = this.number;
+  function updateCourse(newName, newNumber, body) {
+    name = newName;
+    number = newNumber;
     element.innerHTML = body;
   }
 
