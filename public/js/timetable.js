@@ -188,7 +188,6 @@ function Timetable(id) {
 
 			// get the first cell
 			var rows = row[startRow].cells;
-			console.log(row[startRow]);
 			var firstRow;
 
 			// loop to find first cell that will be replaced
@@ -234,7 +233,6 @@ window.onload = function() {
 	// request 
 	AJAXRequest( function(response) {
 	  var json = JSON.parse(response);
-	  console.log(json);
 
 	  // Loop through terms
 	  for (var solution = 0; solution < json.length; solution++) {

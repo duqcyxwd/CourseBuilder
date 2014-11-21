@@ -101,10 +101,10 @@ function table(id, numOfYears, progName) {
    * adds a new course element to the end of the
    * specified year and term
   **/
-  function appendCourse(year, term, name, number, innerHTML, isPrereq, listOfElectives) {
+  function appendCourse(year, term, name, number, innerHTML, isElective, listOfElectives) {
 
     var listOfElectives = listOfElectives || [];
-    var isPrereq = isPrereq || false;
+    // var isElective = isElective || false;
     
     var termNum;
     if (term == "FALL")
@@ -120,7 +120,7 @@ function table(id, numOfYears, progName) {
     // append child to empty field
     for (var i = 0; i < courseList.length; i++) {
       if (courseList[i].innerHTML === '') {
-        listOfCourses.push(new course(courseList[i], name, number, year, term, innerHTML, isPrereq, listOfElectives));
+        listOfCourses.push(new course(courseList[i], name, number, year, term, innerHTML, isElective, listOfElectives));
         break;
       }
     }

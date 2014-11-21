@@ -61,9 +61,7 @@ function createTable(tableID, selectedProgram, numOfYears) {
   // request 
   AJAXRequest( function(response) {
 
-    console.log(response);
     var json = JSON.parse(response);
-    console.log(json);
     prerequisiteTable = new table(tableID, numOfYears, selectedProgram);
 
     var term, 
@@ -84,17 +82,17 @@ function createTable(tableID, selectedProgram, numOfYears) {
         term = 'WINTER';
       }
 
-      var isPrereq = false;
+      var isElective = false;
       var listOfElectives = [];
 
       // Loop through courses within this term
       for (var course = 0; course < json[termNumber].length; course++) {
         courseLabel = json[termNumber][course];
         courseDetails = courseLabel.split(/[ ,]+/);
-        // TODO CHANGE THIS TO ELECTIVE
-        isPrereq = (courseDetails[name] === "FIX") ? true : false;
+        // TODO CHANGE THIS TO ELECTIVE [IMPORTANT!!!]
+        isElective = (courseDetails[name] === "SYSC") ? true : false;
 
-        prerequisiteTable.appendCourse(year, term, courseDetails[name], courseDetails[code], courseLabel, isPrereq, listOfElectives);
+        prerequisiteTable.appendCourse(year, term, courseDetails[name], courseDetails[code], courseLabel, isElective, listOfElectives);
       }
 
     }

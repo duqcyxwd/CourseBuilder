@@ -76,7 +76,6 @@ function toggleVisibility(obj) {
 function AJAXRequest(callback, page, params) {
   var httpRequest = new XMLHttpRequest();
   var postRequest = objectToParameters(params);
-  console.log(postRequest);
 
   httpRequest.onreadystatechange = function() {
     if (httpRequest.readyState === 4 && httpRequest.status === 200)
