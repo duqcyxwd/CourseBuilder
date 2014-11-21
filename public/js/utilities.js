@@ -64,60 +64,6 @@ function toggleVisibility(obj) {
     e.style.display = 'none';
 }
 
-
-/**
- * createTable
- *
- * make AJAX request to get courses and create a table
- * containing all the information for the prerequisite tree
- * param tableID          : element ID to append table to
- * param selectedProgram  : program to be displayed
- * param numOfYears       : length of program (in years)
-**/
-
-function createTable(tableID, selectedProgram, numOfYears) {
-
-  var page = DB_CONNECTION_URL,
-      params = { action: "prereqTree", program: selectedProgram };
-
-
-  // request 
-  AJAXRequest( function(response) {
-
-    var json = JSON.parse(response);
-
-    prerequisiteTable = new table(tableID, numOfYears);
-
-    var term, 
-        courseLabel, 
-        courseDetails,
-        year = 0,
-        name = 0,
-        code = 1;
-    
-    // Loop through terms
-    for (var termNumber = 0; termNumber < json.length; termNumber++) {
-
-      // increment year and alternate term
-      if (termNumber % 2 == 0) {
-        year++;
-        term = 'FALL';
-      } else {
-        term = 'WINTER';
-      }
-
-      // Loop through courses within this term
-      for (var course = 0; course < json[termNumber].length; course++) {
-        courseLabel = json[termNumber][course];
-        courseDetails = courseLabel.split(/[ ,]+/);
-        prerequisiteTable.appendCourse(year, term, courseDetails[name], courseDetails[code], courseLabel);
-      }
-
-    }
-  }, page, params);
-}
-
-
 /**
  * AJAXRequest
  *

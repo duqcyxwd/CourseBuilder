@@ -6,7 +6,7 @@ require_once(realpath(dirname(__FILE__)) . '/library/utilities.php');
 
 // Database connection details
 $db_hostname = 'localhost';
-$db_name = 'cb2';
+$db_name = 'courseBuilder';
 $db_username = 'root';
 $db_password = '';
 $testing = false;

@@ -1,8 +1,6 @@
 <?php
-	require "../config.php";
-	require "timeTable.php";
-	require_once ('/Users/SuperiMan/repo/kint/Kint.class.php');
-
+	require"../config.php";
+	require "timetable.php";
 
 	if (isset($_POST['action'])){
 		$variable = $_POST;
@@ -10,10 +8,12 @@
 		$variable = $_GET;
 	}
 
+	session_start();
 	$action = $variable['action'];
 	switch ($action) {
 		case 'prereqTree':
-			$result = $db->getPrerequisiteTree($variable['program']);
+			$program = $variable['program'];
+			$result = $db->getPrerequisiteTree($program);
 			echo json_encode($result);
 			break;
 		case 'timeTable':
@@ -30,6 +30,7 @@
 			$openingClasses = $db->getOpeningClasses();
 			$unCompletedCourses = getUnCompletedCourses($courseCompleted, $prerequisiteTree, $openingClasses);
 			$coursesInfo = $db->getCourseInfoByCourseArray(flatArray($unCompletedCourses));
+
 
 			$timeTables = [];
 			$courseArray = createCourseArray($unCompletedCourses, $coursesInfo);
@@ -51,34 +52,45 @@
 				// echo "prerequisiteTree: <br>";
 				// print_r($prerequisiteTree);
 
-				echo "<br>";
-				d(sizeof($coursesInfo));
-
-
-				// only problem left here is time conflict!!!!!!!!.....
-				// now we have $unCompletedCourses and $coursesInfo
-
-
+			echo "<br>";
+			$unCompletedCourses = getUnCompletedCourses($courseCompleted, $prerequisiteTree, $openingClasses);
+			$coursesInfo = $db->getCourseInfoByCourseArray(flatArray($unCompletedCourses));
 
 				// getTimeTables($timeTables, $courseArray, 0, new TimeTable());
 				echo "Result: <br>";
-				d($singleTimeTable->toString());
+				// d($singleTimeTable->toString());
 
 				echo "Time table: <br>";
-				d($table);
-				pprint($table);
+				// d($table);
+				// pprint($table);
 			}
+
+			// getTimeTables($timeTables, $courseArray, 0, new TimeTable());
+			// $singleTimeTable = getTimeTable($courseArray);
+			echo "Result: <br>";
+			// d($singleTimeTable);
+			// d($singleTimeTable->getATable());
+
+
+			// redirect to timetable
+			// $generatedTimetables = array();
+			// $_SESSION['timetables'] = json_encode($generatedTimetables);
+			// header('Location: ' . ROOT_PATH . '/timetable.php');
 
 			break;
 		default:
 			break;
 	}
 
+
 	/*
 		return an array of Course Object
 	 */
 	function createCourseArray($unCompletedCourses, $classesInfo){
 		$result = [];
+
+		if (count($unCompletedCourses) == 0) return []; // TODO: WHAT IF NO COURSES SELECTED?
+
 		foreach ($unCompletedCourses as $term => $coursesOfOneTerm) {
 			foreach ($coursesOfOneTerm as $number => $singleCourse) {
 				$course = new Course($singleCourse);
@@ -139,7 +151,8 @@
 	 * @return course that not completed and open in current term
 	 * @author 
 	 **/
-	function getUnCompletedCourses($coursesCompleted, $prerequisiteTree, $openingClasses){
+	function getUnCompletedCourses($coursesCompleted, $prerequisiteTree, $openingClasses)
+	{
 
 		$requiredCourses = $prerequisiteTree;
 		$numOfCourseCompledInTree = 0;
@@ -159,11 +172,19 @@
 						} 
 					}
 					
+					$ccourse = explode(" ", $c);
+					if (count($ccourse) < 2) return; // WHAT IF THE STUDENT HASN'T TAKEN ANY CLASSES?
 
+					if ($singleCourse == $ccourse[0]." ".$ccourse[1]){
+						$numOfCourseCompledInTree++;
+						unset($requiredCourses[$term][$number]);
+						break;
+					} 
 				}
 			}
 			
 		}
+
 		// get course that unCompletedCourses open in current term
 		// check if this course opening
 		foreach ($requiredCourses as $term => $coursesOfOneTerm) {
