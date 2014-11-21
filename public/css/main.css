@@ -1,6 +1,7 @@
 @import url("submit.css");
 @import url("dropdown.css");
 @import url("checkbox.css");
+@import url("popup.css");
 
 /* Main style sheet */
 
@@ -82,7 +83,7 @@ header {
 #program-select-dd {
 	float: left;
 	width: 400px;
-	z-index: 9999;
+	z-index: 1000;
 }
 
 #year-select-dd {

@@ -2,6 +2,10 @@
 	$pageTitle = "Timetable";
 	require("../resources/config.php");
 	include(TEMPLATES_PATH . "/header.php");
+	session_start();
+	// TODO: handle php stuff from dbConnection
+	// TODO: if no sessions, return to index page
+	$generatedTables = $_SESSION['timetables'];
 ?>
 
 <div id="timetable">

@@ -15,11 +15,13 @@
 			return mysqli_query($this->mysqli, "SELECT * FROM $table");
 		}
 		
-		function execute($sql){
-			return $this->connection->query($sql);
+		function execute($sql)
+		{
+			return mysqli_query($this->mysqli, $sql);
 		}
 		
-		function getError(){
+		function getError()
+		{
 			return mysqli_error($this->connection);
 		}
 
@@ -35,47 +37,39 @@
 
 		function getCourseInfo($program)
 		{
-			return mysqli_query($this->mysqli,"SELECT `Subject`,`CourseNumber`, `yearRequirement`, `program` FROM `ProgramsRequirement` WHERE program = '$program'");
+			return mysqli_query($this->mysqli,"SELECT `Subject`,`CourseNumber`, `YearRequirement`, `Program` FROM `ProgramsRequirement` WHERE `Program` = '$program'");
 		}
 
-		function getPrerequisiteTree($program) {
-			$courses = array();
-			$result = $this->getCourseInfo($program);
-			while ($row = mysqli_fetch_array($result)){
-				$courses[] = $row;
-			}
-			// TODO: simplify this....
-			$courseArray = array(array(), array(), array(), array(), array(), array(), array(), array());
-
-			foreach ($courses as $key => $course) {
-				$term = $course['yearRequirement'];
-				array_push($courseArray[$term], $course['Subject'] . " " . $course['CourseNumber']);
-			}
-			return $courseArray;
-		}
-
-		function getPrerequisiteTreeInArray($program) {
-			$courses = array();
-			$result = $this->getCourseInfo($program);
-			while ($row = mysqli_fetch_array($result)){
-				$courses[] = $row;
-			}
-			// TODO: simplify this....
-			$courseArray = array(array(), array(), array(), array(), array(), array(), array(), array());
-
-			foreach ($courses as $key => $course) {
-				$term = $course['yearRequirement'];
-				array_push($courseArray[$term], $course['Subject'] . " " . $course['CourseNumber']);
-			}
-			return $courseArray;
-		}
-
-		function getListOfPrograms() 
+		function getPrerequisiteTree($program)
 		{
-			$result = $this->getDistinctFromTable("program", "ProgramsRequirement");
+			$courses = array();
+			$result = $this->getCourseInfo($program);
+			while ($row = mysqli_fetch_array($result)){
+				$courses[] = $row;
+			}
+
+			foreach ($courses as $key => $course) {
+				$term = '' . $course['YearRequirement'];
+				if (isset($courseArray[$term]))
+					array_push($courseArray[$term], $course['Subject'] . " " . $course['CourseNumber']);
+				else
+					$courseArray[$term] = array($course['Subject'] . " " . $course['CourseNumber']);
+			}
+
+			return $courseArray;
+		}
+
+		function getElectives($program)
+		{
+			// todo
+		}
+
+		function getListOfPrograms()
+		{
+			$result = $this->getDistinctFromTable("Program", "ProgramsRequirement");
 			$programList = array();
 			while ($row = mysqli_fetch_array($result))
-				$programList[] = $row['program'];
+				$programList[] = $row['Program'];
 			
 			return $programList;
 		}
@@ -83,7 +77,7 @@
 		// Giving a list of Classes and return a list of classes open in this term
 		function getClasses()
 		{
-			$sql = "SELECT * FROM Classes";
+			$sql = "SELECT * FROM `Classes`";
 			$classes = $this->execute($sql);
 			return $classes;
 		}
