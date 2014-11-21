@@ -1,6 +1,4 @@
 <?php 
-
-
 	/**
 	* TimeTable
 	*/
@@ -62,7 +60,6 @@
 		public function getATable()
 		{
 			$numberOfCourses = sizeof($this->courses);
-			d($numberOfCourses);
 			$combination = [];
 			foreach ($this->courses as $couse) {
 				$combination[] = $couse->getCourseCombination();
@@ -70,18 +67,7 @@
 			}
 
 			$result = [];
-
 			if ($numberOfCourses ==6) {
-				echo "table size: ".
-				sizeof($combination[0])."*".
-				sizeof($combination[1])."*".
-				sizeof($combination[2])."*".
-				sizeof($combination[3])."*".
-				sizeof($combination[4])."*".
-				sizeof($combination[5])."=".
-				sizeof($combination[0])* sizeof($combination[1])* sizeof($combination[2])* sizeof($combination[3])* sizeof($combination[4])* sizeof($combination[5]);
-				
-
 				foreach ($combination[0] as $key0 => $value0) {
 					foreach ($combination[1] as $key1 => $value1) {
 						foreach ($combination[2] as $key2 => $value2) {
@@ -110,12 +96,11 @@
 					}
 				}
 			} else if ($numberOfCourses ==3) {
-				echo "table size: ".
-				sizeof($combination[0])."*".
-				sizeof($combination[1])."*".
-				sizeof($combination[2])."=".
-				sizeof($combination[0])* sizeof($combination[1])* sizeof($combination[2]);
-				
+				// 	echo "table size: ".
+				// 	sizeof($combination[0])."*".
+				// 	sizeof($combination[1])."*".
+				// 	sizeof($combination[2])."=".
+				// 	sizeof($combination[0])* sizeof($combination[1])* sizeof($combination[2]);
 
 				foreach ($combination[0] as $key0 => $value0) {
 					foreach ($combination[1] as $key1 => $value1) {
@@ -128,7 +113,7 @@
 								return $result;
 
 							if (!hasTimeConflictArray($possibleSolution)) {
-								$result[] = $possibleSolution;
+								$result = $possibleSolution;
 								return $result;
 							} else {
 								// pprint("timeconflict");
@@ -142,12 +127,21 @@
 			} else {
 				echo "table for this numberOfCourses is not implement yet";
 			}
+			return $resultInArray;
+		}
 
-			
-
-			return $result;
+		public function getATableInArray()
+		{
+			$result = $this->getATable();
+			$resultInArray = [];
+			foreach ($result as $class) {
+				$resultInArray[] = ($class->toArray());
+			}
+			return [$resultInArray];
 		}
 	}
+
+
 
 	/*
 	 * @return true : there is conflict
@@ -279,6 +273,11 @@
 			$this->days = $course['Days'];
 			$this->start_Time = intval($course['Start_Time']);
 			$this->end_Time = intval($course['End_Time']);
+		}
+
+		public function toArray()
+		{
+			return [$this->courseName, $this->section, $this->days, $this->start_Time, $this->end_Time];
 		}
 
 		public function isLecture()

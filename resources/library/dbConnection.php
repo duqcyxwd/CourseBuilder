@@ -1,5 +1,5 @@
 <?php
-	require"../config.php";
+	require "../config.php";
 	require "timeTable.php";
 	require_once ('/Users/SuperiMan/repo/kint/Kint.class.php');
 
@@ -21,37 +21,53 @@
 			$prerequisiteTree = $db->getPrerequisiteTree($variable['program']);
 			$courseCompleted = explode(";", $variable['courseCompleted']);
 			$program = $variable['program'];
+			if (isset($variable['max'])) {
+				$maxNumOfCourse=$variable['max'];
+			} else {
+				$maxNumOfCourse = 3;
+			}
+
 			$openingClasses = $db->getOpeningClasses();
-
-			// for ($i=0; $i < sizeof($openingClasses); $i++) { 
-			// 	pprint($openingClasses[$i]);
-			// }
-
-			// echo "CourseCompleted";
-			// pprint($courseCompleted);
-
-			// echo "<br>Program: $program<br>"; 
-
-			// echo "prerequisiteTree: <br>";
-			// print_r($prerequisiteTree);
-
-			echo "<br>";
 			$unCompletedCourses = getUnCompletedCourses($courseCompleted, $prerequisiteTree, $openingClasses);
 			$coursesInfo = $db->getCourseInfoByCourseArray(flatArray($unCompletedCourses));
-			d(sizeof($coursesInfo));
-
-
-			// only problem left here is time conflict!!!!!!!!.....
-			// now we have $unCompletedCourses and $coursesInfo
 
 			$timeTables = [];
 			$courseArray = createCourseArray($unCompletedCourses, $coursesInfo);
+			$singleTimeTable = getTimeTable($courseArray, $maxNumOfCourse);
+			$table = $singleTimeTable->getATableInArray();
+			echo json_encode($table);
 
-			// getTimeTables($timeTables, $courseArray, 0, new TimeTable());
-			$singleTimeTable = getTimeTable($courseArray);
-			echo "Result: <br>";
-			d($singleTimeTable);
-			d($singleTimeTable->getATable());
+			if ($testing) {
+				echo "hi";
+				// for ($i=0; $i < sizeof($openingClasses); $i++) { 
+				// 	pprint($openingClasses[$i]);
+				// }
+
+				// echo "CourseCompleted";
+				// pprint($courseCompleted);
+
+				// echo "<br>Program: $program<br>"; 
+
+				// echo "prerequisiteTree: <br>";
+				// print_r($prerequisiteTree);
+
+				echo "<br>";
+				d(sizeof($coursesInfo));
+
+
+				// only problem left here is time conflict!!!!!!!!.....
+				// now we have $unCompletedCourses and $coursesInfo
+
+
+
+				// getTimeTables($timeTables, $courseArray, 0, new TimeTable());
+				echo "Result: <br>";
+				d($singleTimeTable->toString());
+
+				echo "Time table: <br>";
+				d($table);
+				pprint($table);
+			}
 
 			break;
 		default:
@@ -103,9 +119,9 @@
 	}
 
 	// get all the single of timeTable
-	function getTimeTable($courseArray)
+	function getTimeTable($courseArray, $maxNumOfCourse)
 	{
-		$timeTable = new TimeTable();
+		$timeTable = new TimeTable($maxNumOfCourse);
 		for ($i=0; $i < sizeof($courseArray); $i++) { 
 			$timeTable->addCourse($courseArray[$i]);
 			if ($timeTable->isFull()) {
@@ -134,12 +150,15 @@
 				foreach ($coursesCompleted as $c) {
 
 					// TODO: ... 
-					$ccourse = explode(" ", $c);
-					if ($singleCourse == $ccourse[0]." ".$ccourse[1]){
-						$numOfCourseCompledInTree++;
-						unset($requiredCourses[$term][$number]);
-						break;
-					} 
+					if ($c != "") {
+						$ccourse = explode(" ", $c);
+						if ($singleCourse == $ccourse[0]." ".$ccourse[1]){
+							$numOfCourseCompledInTree++;
+							unset($requiredCourses[$term][$number]);
+							break;
+						} 
+					}
+					
 
 				}
 			}
@@ -172,7 +191,6 @@
 				}
 			}
 		}
-		echo "Completed ".$numOfCourseCompledInTree." course";
 		return $requiredCourses;
 	}
 
