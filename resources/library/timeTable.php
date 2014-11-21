@@ -6,10 +6,12 @@
 	*/
 	class TimeTable
 	{
-		function __construct()
+		function __construct($max="3")
 		{
 			$this->courses = [];
-			$this->maxmiumCourseTaking = 6;
+			$this->maxmiumCourseTaking = $max;
+			$this->limit = 100; // limit the operation that program will loop
+
 		}
 
 		public function duplicate(){
@@ -19,6 +21,14 @@
 			return $c;
 		}
 
+		public function toString(){
+			$r = "";
+			foreach ($this->courses as $var) {
+				$r .= $var->name."; ";
+			}
+			return $r;
+		}
+
 		public function addCourse($c)
 		{
 			if ($this->isFull()) {
@@ -26,7 +36,7 @@
 			}
 			
 			if ($this->checkTimeConflict($c)) {
-				// add..........
+				// TODO:add..........
 				array_push($this->courses, $c);
 				return true;
 			} else {
@@ -51,7 +61,8 @@
 
 		public function getATable()
 		{
-			$courseSize = sizeof($this->courses);
+			$numberOfCourses = sizeof($this->courses);
+			d($numberOfCourses);
 			$combination = [];
 			foreach ($this->courses as $couse) {
 				$combination[] = $couse->getCourseCombination();
@@ -59,35 +70,80 @@
 			}
 
 			$result = [];
-			$counter = 100;
-			foreach ($combination[0] as $key0 => $value0) {
-				echo "hi";
-				foreach ($combination[1] as $key1 => $value1) {
-					foreach ($combination[2] as $key2 => $value2) {
-						foreach ($combination[3] as $key3 => $value3) {
-							foreach ($combination[4] as $key4 => $value4) {
-								foreach ($combination[5] as $key5 => $value5) {
-									$possibleSolution = [$value0, $value1, $value2, $value3, $value4, $value5];
-									$possibleSolution = flatArray($possibleSolution);
-									
-									$counter--;
-									if ($counter == 0) 
-										return $result;
 
-									if (!hasTimeConflictArray($possibleSolution)) {
-										$result[] = $possibleSolution;
-										return $result;
-									} else {
-										// pprint("timeconflict");
-										// return $result;
+			if ($numberOfCourses ==6) {
+				echo "table size: ".
+				sizeof($combination[0])."*".
+				sizeof($combination[1])."*".
+				sizeof($combination[2])."*".
+				sizeof($combination[3])."*".
+				sizeof($combination[4])."*".
+				sizeof($combination[5])."=".
+				sizeof($combination[0])* sizeof($combination[1])* sizeof($combination[2])* sizeof($combination[3])* sizeof($combination[4])* sizeof($combination[5]);
+				
+
+				foreach ($combination[0] as $key0 => $value0) {
+					foreach ($combination[1] as $key1 => $value1) {
+						foreach ($combination[2] as $key2 => $value2) {
+							foreach ($combination[3] as $key3 => $value3) {
+								foreach ($combination[4] as $key4 => $value4) {
+									foreach ($combination[5] as $key5 => $value5) {
+										$possibleSolution = [$value0, $value1, $value2, $value3, $value4, $value5];
+										$possibleSolution = flatArray($possibleSolution);
+										
+										$this->limit--;
+										if ($this->limit == 0) 
+											return $result;
+
+										if (!hasTimeConflictArray($possibleSolution)) {
+											$result[] = $possibleSolution;
+											return $result;
+										} else {
+											// pprint("timeconflict");
+											// return $result;
+										}
+										
 									}
-									
 								}
 							}
 						}
 					}
 				}
+			} else if ($numberOfCourses ==3) {
+				echo "table size: ".
+				sizeof($combination[0])."*".
+				sizeof($combination[1])."*".
+				sizeof($combination[2])."=".
+				sizeof($combination[0])* sizeof($combination[1])* sizeof($combination[2]);
+				
+
+				foreach ($combination[0] as $key0 => $value0) {
+					foreach ($combination[1] as $key1 => $value1) {
+						foreach ($combination[2] as $key2 => $value2) {
+							$possibleSolution = [$value0, $value1, $value2];
+							$possibleSolution = flatArray($possibleSolution);
+							
+							$this->limit--;
+							if ($this->limit == 0) 
+								return $result;
+
+							if (!hasTimeConflictArray($possibleSolution)) {
+								$result[] = $possibleSolution;
+								return $result;
+							} else {
+								// pprint("timeconflict");
+								// return $result;
+							}
+										
+						}
+					}
+				}
+
+			} else {
+				echo "table for this numberOfCourses is not implement yet";
 			}
+
+			
 
 			return $result;
 		}
@@ -102,8 +158,6 @@
 		foreach ($classArray as $keyA => $classA) {
 			foreach ($classArray as $keyB => $classB) {
 				if ($keyA != $keyB and hasClassTimeConflict($classA, $classB)) {
-					// pprint($classA);
-					// pprint($classB);
 					return true;
 				}
 			}
@@ -113,7 +167,7 @@
 
 	/**
 	 * 
-	 *
+	 * taking two courseClasses
 	 * @return true : there is conflict
 	 *         false: there is no conflict
 	 * @author 
@@ -205,8 +259,8 @@
 			}
 
 			if (sizeof($result) == 1) {
-				d($result);
-				d($this);
+				// d($result);
+				// d($this);
 			}
 			return $result;
 		}
