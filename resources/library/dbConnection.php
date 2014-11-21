@@ -21,6 +21,7 @@
 			$prerequisiteTree = $db->getPrerequisiteTree($variable['program']);
 			$courseCompleted = explode(";", $variable['courseCompleted']);
 			$program = $variable['program'];
+
 			if (isset($variable['max'])) {
 				$maxNumOfCourse=$variable['max'];
 			} else {
@@ -68,6 +69,27 @@
 			// getTimeTables($timeTables, $courseArray, 0, new TimeTable());
 			// $singleTimeTable = getTimeTable($courseArray);
 			echo "Result: <br>";
+
+			// $openingClasses = $db->getOpeningClasses();
+			$eligibleCourses = $db->getEligibleCourses($courseCompleted, $program, 3); // change the 3
+
+
+			// echo "<br>";
+			// $unCompletedCourses = getUnCompletedCourses($courseCompleted, $prerequisiteTree, $openingClasses);
+			// $coursesInfo = $db->getCourseInfoByCourseArray(flatArray($unCompletedCourses));
+			// d(sizeof($coursesInfo));
+
+
+			// only problem left here is time conflict!!!!!!!!.....
+			// now we have $unCompletedCourses and $coursesInfo
+
+			// $timeTables = [];
+			// $courseArray = createCourseArray($unCompletedCourses, $coursesInfo);
+
+			// getTimeTables($timeTables, $courseArray, 0, new TimeTable());
+			// $singleTimeTable = getTimeTable($courseArray);
+			// echo "Result: <br>";
+
 			// d($singleTimeTable);
 			// d($singleTimeTable->getATable());
 

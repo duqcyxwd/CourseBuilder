@@ -49,6 +49,67 @@
 		}
 
 
+		function getEligibleCourses($completedCourses, $program, $yearStanding) {
+
+			$eligibleCourses = [];
+
+			// first get all the courses of the entire program
+			$requirementsTable = "ProgramsRequirement";
+
+			$sql = "SELECT ProgramsRequirement.Subject, ProgramsRequirement.CourseNumber, Requirement 
+							FROM ProgramsRequirement
+							INNER JOIN Prerequisite
+							ON ProgramsRequirement.Subject=Prerequisite.Subject 
+							AND ProgramsRequirement.CourseNumber=Prerequisite.CourseNumber
+							WHERE YearRequirement >= $yearStanding AND Program = '$program'";
+
+			$result = $this->execute($sql);
+
+			while ($row = mysqli_fetch_array($result)){
+
+				// determine which courses can be taken
+				$requirement = $row['Requirement'];
+
+				if ($requirement == '') { // no requirements
+					$isEligible = true;
+				} else {
+
+					$isEligible = false;
+
+					// Check if year status requirement TODO: INCOMPLETE
+					if (strpos($requirement, '-year status')) {
+						preg_match('/(\w+)-year status in Engineering/', $requirement, $matches);
+
+						if (count($matches) > 1) {
+							// todo
+						}
+					}
+
+					// split by 'and'
+					$requirement = preg_split('/(and)/', $requirement);
+
+					// evaluate each and
+					foreach ($requirement as $courses) {
+						// split by 'or'
+						$courses = preg_split('/(or)/', $courses);
+
+						foreach ($courses as $course) {
+							if (in_array(trim($course), $completedCourses)) {
+								$isEligible = true;
+							}
+						}
+					}
+				}
+
+				if ($isEligible) {
+					array_push($eligibleCourses, $row['Subject'] . " " . $row['CourseNumber']);
+				}
+			}
+
+			return $eligibleCourses;
+		}
+
+
 		function getPrerequisiteTree($program)
 		{
 			$courses = array();
