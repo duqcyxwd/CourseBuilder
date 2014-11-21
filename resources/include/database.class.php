@@ -16,7 +16,6 @@
 			return mysqli_query($this->mysqli, "SELECT * FROM $table");
 		}
 
-
 		function getDistinctFromTable($rows, $table) 
 		{
 			return mysqli_query($this->mysqli, "SELECT DISTINCT $rows FROM $table");
@@ -54,7 +53,7 @@
 			return $programList;
 		}
 
-		// Giving a list of Classes and return a list of classes open in this term
+		// return a list of Classes and return a list of classes open in this term
 		function getOpeningClasses()
 		{
 			$term = getCurrentTerm();
@@ -69,13 +68,17 @@
 
 		function getCourseInfoByCourseArray($courseArray) {
 			$result = [];
+			$term = getCurrentTerm();
 			if (sizeof($courseArray) >0) {
-				$sql = "SELECT * FROM Classes WHERE 0 ";
+				$sql = "SELECT * FROM Classes WHERE `TERM` = \"".$term."\" AND ( 0 ";
 				foreach ($courseArray as $course) {
 					$courseTemp = explode(" ", $course);
 					$sql .= "OR (`Subject` = \"".$courseTemp[0]."\" AND "
 						."`CourseNumber` = \"".$courseTemp[1]."\") ";
 				}
+
+				$sql .= ")";
+
 				$queryResult = mysqli_query($this->mysqli, $sql);
 				while ($row = mysqli_fetch_array($queryResult)){
 					$result[] = $row;
