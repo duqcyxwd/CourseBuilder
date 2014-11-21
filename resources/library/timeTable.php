@@ -59,20 +59,81 @@
 			}
 
 			$result = [];
-			// foreach ($combination[0] as $key0 => $value0) {
-			// 	foreach ($combination[1] as $key1 => $value1) {
-			// 		foreach ($combination[2] as $key2 => $value2) {
-			// 			foreach ($combination[3] as $key3 => $value3) {
-			// 				foreach ($combination[4] as $key4 => $value4) {
-			// 					foreach ($combination[5] as $key5 => $value5) {
-			// 						$result[] = [$value0, $value1, $value2, $value3, $value4, $value5];
-			// 					}
-			// 				}
-			// 			}
-			// 		}
-			// 	}
-			// }
-			
+			$counter = 100;
+			foreach ($combination[0] as $key0 => $value0) {
+				echo "hi";
+				foreach ($combination[1] as $key1 => $value1) {
+					foreach ($combination[2] as $key2 => $value2) {
+						foreach ($combination[3] as $key3 => $value3) {
+							foreach ($combination[4] as $key4 => $value4) {
+								foreach ($combination[5] as $key5 => $value5) {
+									$possibleSolution = [$value0, $value1, $value2, $value3, $value4, $value5];
+									$possibleSolution = flatArray($possibleSolution);
+									
+									$counter--;
+									if ($counter == 0) 
+										return $result;
+
+									if (!hasTimeConflictArray($possibleSolution)) {
+										$result[] = $possibleSolution;
+										return $result;
+									} else {
+										// pprint("timeconflict");
+										// return $result;
+									}
+									
+								}
+							}
+						}
+					}
+				}
+			}
+
+			return $result;
+		}
+	}
+
+	/*
+	 * @return true : there is conflict
+	 *         false: there is no conflict		
+	 */
+	function hasTimeConflictArray($classArray)
+	{
+		foreach ($classArray as $keyA => $classA) {
+			foreach ($classArray as $keyB => $classB) {
+				if ($keyA != $keyB and hasClassTimeConflict($classA, $classB)) {
+					// pprint($classA);
+					// pprint($classB);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * 
+	 *
+	 * @return true : there is conflict
+	 *         false: there is no conflict
+	 * @author 
+	 **/
+	function hasClassTimeConflict($classA, $classB) {
+		$daysA = str_split($classA->days);
+		$daysB = str_split($classB->days);
+
+		if (array_intersect($daysA, $daysB) == []) {
+			return false;
+		} else {
+			$A = $classA->start_Time;
+			$B = $classA->end_Time;
+			$C = $classB->start_Time;
+			$D = $classB->end_Time;
+
+			if (($A < $D and $D <= $B) or ($A <= $C and $C < $B)) {
+				return true;
+			}
+			return false;
 		}
 	}
 
@@ -139,14 +200,14 @@
 			}
 
 			if (sizeof($labs) == 0) {
-				$result = [$labs];
+				$result = [$lectures];
 				$this->courseCombination = sizeof($labs);
 			}
 
-			d($this->courseClasses);
-			d($result);
-
-
+			if (sizeof($result) == 1) {
+				d($result);
+				d($this);
+			}
 			return $result;
 		}
 	}
@@ -170,21 +231,6 @@
 		{
 			if (preg_match('([0-9])', $this->section)) {
 				// pprint("Lab");
-				return false;
-			}
-			return true;
-		}
-
-
-
-		public function checkConflict($compareCourse)
-		{
-			$A = $this->start_Time;
-			$B = $this->end_Time;
-			$C = $compareCourse->start_Time;
-			$D = $compareCourse->end_Time;
-
-			if (($A < $D and $D <= $B) or ($A <= $C and $C < $B)) {
 				return false;
 			}
 			return true;
