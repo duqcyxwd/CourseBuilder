@@ -1,4 +1,4 @@
-INSERT INTO `ProgramsRequirement` (`Name`, `Subject`, `CourseNumber`, `YearRequirement`) VALUES
+INSERT INTO `ProgramsRequirement` (`Program`, `Subject`, `CourseNumber`, `YearRequirement`) VALUES
 ('Biomedical and Electrical Engi', 'BIOL', 1003, 0),
 ('Biomedical and Electrical Engi', 'CHEM', 1001, 0),
 ('Biomedical and Electrical Engi', 'ECOR', 1010, 0),
@@ -142,7 +142,7 @@ INSERT INTO `ProgramsRequirement` (`Name`, `Subject`, `CourseNumber`, `YearRequi
 
 
 -- Elective
-INSERT INTO `ProgramsRequirement` (`Name`, `Subject`, `CourseNumber`, `YearRequirement`) VALUES
+INSERT INTO `ProgramsRequirement` (`Program`, `Subject`, `CourseNumber`, `YearRequirement`) VALUES
 ('Biomedical and Electrical Engineering', 'Elective', 5001, 9),
 ('Biomedical and Electrical Engineering', 'Elective', 5002, 9),
 ('Biomedical and Electrical Engineering', 'Elective', 5002, 9),

@@ -4,11 +4,12 @@
  * generates and populates a prerequisite table
  */
 
-function table(id, numOfYears) {
+function table(id, numOfYears, progName) {
 
   var MAX_NUMBER_OF_ROWS = 6;
 
   var tableID = id;
+  var programName = progName;
   var numOfYears = numOfYears;
   var table = document.createElement('table');
   var tableBody = document.createElement('tbody');
@@ -100,8 +101,11 @@ function table(id, numOfYears) {
    * adds a new course element to the end of the
    * specified year and term
   **/
-  function appendCourse(year, term, name, number, innerHTML) {
+  function appendCourse(year, term, name, number, innerHTML, isPrereq, listOfElectives) {
 
+    var listOfElectives = listOfElectives || [];
+    var isPrereq = isPrereq || false;
+    
     var termNum;
     if (term == "FALL")
       termNum = year * 2 - 2; // term is zero indexed
@@ -116,10 +120,14 @@ function table(id, numOfYears) {
     // append child to empty field
     for (var i = 0; i < courseList.length; i++) {
       if (courseList[i].innerHTML === '') {
-        listOfCourses.push(new course(courseList[i], name, number, year, term, innerHTML));
+        listOfCourses.push(new course(courseList[i], name, number, year, term, innerHTML, isPrereq, listOfElectives));
         break;
       }
     }
+  }
+
+  function getCourses() {
+    return listOfCourses;
   }
 
 
@@ -159,13 +167,30 @@ function table(id, numOfYears) {
     return json;
   }
 
+  function getStringFormat() {
+    var stringFormat = "";
+
+    for (var i = listOfCourses.length - 1; i >= 0; i--)
+      if (listOfCourses[i].isSelected())
+        stringFormat += listOfCourses[i].getName() + " " + listOfCourses[i].getNumber() + ";";
+
+    // remove trailing comma
+    return stringFormat.substring(0, stringFormat.length - 1);
+  }
+
+  function getProgramName() {
+    return programName;
+  }
+
 
   // public methods
-  this.init           = init;
-  this.getJSON        = getJSON;
-  this.appendCourse   = appendCourse;
-  this.selectYear     = selectYear;
-  this.resetSelection = resetSelection;
+  this.init            = init;
+  this.getJSON         = getJSON;
+  this.appendCourse    = appendCourse;
+  this.selectYear      = selectYear;
+  this.resetSelection  = resetSelection;
+  this.getStringFormat = getStringFormat;
+  this.getProgramName  = getProgramName;
   this.getSelectedCourses = getSelectedCourses;
 
 

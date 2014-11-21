@@ -7,26 +7,37 @@
 		$variable = $_GET;
 	}
 
+	session_start();
 	$action = $variable['action'];
 	switch ($action) {
 		case 'prereqTree':
-			$result = $db->getPrerequisiteTree($variable['program']);
+			$program = $variable['program'];
+			$result = $db->getPrerequisiteTree($program);
 			echo json_encode($result);
 			break;
 		case 'timeTable':
+
 			$courses = explode(";", $variable['courseCompleted']);
 			$program = $variable['program'];
-			$prerequisiteTree = $db->getPrerequisiteTree($variable['program']);
-			// $avaiableCourse = $db->getAvaiableCourse
 
-			print_r($courses);
-			echo "<br>$program"; 
+			$prerequisiteTree = $db->getPrerequisiteTree($program);
 
-			$db->getClasses();
+
+			$classes = $db->getClasses();
+			// generate TimetablesHere
+			$generatedTimetables = array();
+
+
+
+			// redirect to timetable
+			$_SESSION['timetables'] = json_encode($generatedTimetables);
+			header('Location: ' . ROOT_PATH . '/timetable.php');
+			
 			break;
 		default:
 			break;
 	}
+
 
 	function stringToClassArray($value='')
 	{

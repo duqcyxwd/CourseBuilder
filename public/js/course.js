@@ -4,13 +4,14 @@
  * representation of a single course
  */
 
-function course (obj, courseName, courseNumber, courseYear, courseTerm, htmlBody) {
+function course (obj, courseName, courseNumber, courseYear, courseTerm, htmlBody, isPrerequisite, listOfElectives) {
 
   var name     = courseName,
   		number   = courseNumber,
   		body     = htmlBody,
   		element  = obj,
-  		selected = false;
+  		selected = false
+      isPrereq = isPrerequisite;
 
   this.year = courseYear;
   this.term = courseTerm;
@@ -26,6 +27,14 @@ function course (obj, courseName, courseNumber, courseYear, courseTerm, htmlBody
   function addListener() {
 		element.onclick = function() {
 	    toggleSelection();
+
+      if (isPrereq && isSelected()) {
+        // add code to show electives popup
+        document.getElementById('light').style.display='block';
+        document.getElementById('fade').style.display='block';
+
+        // add innerHTML for list of electives
+      }
 	  }
   }
 
@@ -57,8 +66,18 @@ function course (obj, courseName, courseNumber, courseYear, courseTerm, htmlBody
   	return selected;
   }
 
+  function getName() {
+    return name;
+  }
+
+  function getNumber() {
+    return courseNumber;
+  }
+
   // public methods
   this.init = init;
+  this.getName = getName;
+  this.getNumber = getNumber;
   this.getJSON = getJSON;
   this.toggleSelection = toggleSelection;
   this.select = select;

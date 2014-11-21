@@ -73,12 +73,12 @@
 
 			CREATE TABLE IF NOT EXISTS ProgramsRequirement(
 				AutoId integer PRIMARY KEY NOT NULL AUTO_INCREMENT,
-				Name varchar(30) NOT NULL,
+				Program varchar(30) NOT NULL,
 				Subject varchar(10)  NOT NULL,
 				CourseNumber int(4)  NOT NULL,
 				YearRequirement tinyint(1),
 				FOREIGN KEY (Subject, CourseNumber) references Courses (Subject,CourseNumber)
-				-- PRIMARY KEY(Name, Subject, CourseNumber)
+				-- PRIMARY KEY(Program, Subject, CourseNumber)
 			);
 
 			--
