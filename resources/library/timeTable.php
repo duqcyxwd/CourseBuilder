@@ -101,26 +101,40 @@
 
 		// get the combination of labs and lectures
 		public function getCourseCombination(){
-			d($this->courseClasses);
 			$result = [];
 
 			$lectures = [];
+			$sectionCode = [];
 			$labs = [];
+
 			foreach ($this->courseClasses as $class) {
 				if ($class->isLecture()) {
-					array_push($labs, $class);
-				} else {
 					array_push($lectures, $class);
+					$sectionCode[] = $class->section;
 				}
 			}
 
-			d(sizeof($lectures));
-			d(sizeof($labs));
+			foreach ($this->courseClasses as $key =>$class) {
+				if (!$class->isLecture()) {
+					// $sec = preg_replace('/[0-9]+/', '', $class->section);
+					$labSection = $class->section[0];
+					
+					if (in_array($labSection, $sectionCode) or $labSection == 'L') {
+						array_push($labs, $class);
+					} else {
+						unset($this->courseClasses[$key]);
+					}
+				} 
+			}
 
 			foreach ($lectures as $lecture) {
 				foreach ($labs as $lab) {
-					array_push($result, [$lectures, $class]);
-					$this->courseCombination++;
+					// $labSection = preg_replace('/[0-9]+/', '', $lab->section);
+					$labSection = $lab->section[0];
+					if ($labSection == 'L' or ($lecture->section) == $labSection) {
+						array_push($result, [$lecture, $lab]);
+						$this->courseCombination++;
+					}
 				}
 			}
 
@@ -128,6 +142,10 @@
 				$result = [$labs];
 				$this->courseCombination = sizeof($labs);
 			}
+
+			d($this->courseClasses);
+			d($result);
+
 
 			return $result;
 		}
@@ -156,6 +174,8 @@
 			}
 			return true;
 		}
+
+
 
 		public function checkConflict($compareCourse)
 		{
