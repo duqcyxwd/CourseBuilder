@@ -129,6 +129,7 @@ function Timetable(id) {
 				amPm = (currTime < 12) ? ' am' : ' pm'
 				times[i].innerHTML = (currTime % 12 || 12) + amPm;
 				currTime += 1;
+
 			}
 		}
 	}
@@ -144,15 +145,20 @@ function Timetable(id) {
 
 	function appendCourse(days, startTime, endTime, courseInfo) {
 
-		var splitStartTime = startTime.split(":");
-		var splitEndTime = endTime.split(":");
+		// var splitStartTime = startTime;
+		// var splitEndTime = endTime
 
-		if (splitStartTime.length != 3 || splitEndTime.length != 3) return;
+		// if (splitStartTime.length != 3 || splitEndTime.length != 3) return;
 
-		var startHour = parseInt(splitStartTime[1]),
-		 		startMin  = parseInt(splitStartTime[2]),
-		 		endHour		= parseInt(splitEndTime[1]),
-		 		endMin		= parseInt(splitEndTime[2]);
+		var startHour = Math.floor(parseInt(startTime)/100),
+		 		startMin  = parseInt(startTime)%100,
+		 		endHour		= parseInt(endTime)/100,
+		 		endMin		= Math.floor(parseInt(endTime)%100);
+
+		// var startHour = parseInt(splitStartTime[1]),
+		//  		startMin  = parseInt(splitStartTime[2]),
+		//  		endHour		= parseInt(splitEndTime[1]),
+		//  		endMin		= parseInt(splitEndTime[2]);
 
 
 		var startRow = (startHour - 7) * 2 + (startMin - 5) / 30;
@@ -178,6 +184,7 @@ function Timetable(id) {
 			newCell.rowSpan   = diffTime;
 			newCell.className = prevClass;
 			newCell.innerHTML = courseInfo;
+			newCell.style.backgroundColor = "#00A5FB";
 
 			// get the first cell
 			var rows = row[startRow].cells;
@@ -218,10 +225,30 @@ var timetable;
 window.onload = function() {
 	timetable = new Timetable('timetable');
 
-	// test methods
-	// timetable.appendCourse('TWR', '00:12:05', '00:14:55', 'info about course');
-	// timetable.appendCourse('MF', '00:14:05', '00:15:55', 'fix friday');
-	// timetable.appendCourse('TR', '00:10:35', '00:12:25', 'should be between 10 and 12:30'); // FIX!
+	var page = DB_CONNECTION_URL,
+		selectedProgram = "Communication Engineering";
+		//TODO:
+	    params = { action: "timeTable", program: selectedProgram, max: 3, courseCompleted: "" };
 
+
+	// request 
+	AJAXRequest( function(response) {
+	  var json = JSON.parse(response);
+	  console.log(json);
+
+	  // Loop through terms
+	  for (var solution = 0; solution < json.length; solution++) {
+	  	var courseArray = json[solution];
+	  	for (var i = courseArray.length - 1; i >= 0; i--) {
+	  		var info = courseArray[i][0] + " " + courseArray[i][1];
+	  		var days = courseArray[i][2];
+	  		var startTime = courseArray[i][3];
+	  		var endTime = courseArray[i][4];
+			timetable.appendCourse(days, startTime, endTime, info);
+
+	  	};
+
+	  }
+	}, page, params);
 
 }

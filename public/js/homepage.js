@@ -1,4 +1,3 @@
-var DB_CONNECTION_URL = "../resources/library/dbConnection.php";
 var prerequisiteTable; // global declaration of table
 
 var stringToYear = {

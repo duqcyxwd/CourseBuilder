@@ -1,3 +1,4 @@
+var DB_CONNECTION_URL = "../resources/library/dbConnection.php";
 // utilities
 
 /**
@@ -129,6 +130,7 @@ function createTable(tableID, selectedProgram, numOfYears) {
 function AJAXRequest(callback, page, params) {
   var httpRequest = new XMLHttpRequest();
   var postRequest = objectToParameters(params);
+  console.log(postRequest);
 
   httpRequest.onreadystatechange = function() {
     if (httpRequest.readyState === 4 && httpRequest.status === 200)
