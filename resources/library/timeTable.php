@@ -127,7 +127,7 @@
 			} else {
 				echo "table for this numberOfCourses is not implement yet";
 			}
-			return $resultInArray;
+			return $result;
 		}
 
 		public function getATableInArray()
