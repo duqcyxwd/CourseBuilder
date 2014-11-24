@@ -1,15 +1,13 @@
 /* Admin Style Sheet */
 
 #centered-box {
-	display: block;
 	position: absolute;
 	top: 20%;
-	left: 35%;
-	width: 30%;
-	height: 45%;
+	left: 25%;
+	width: 50%;
+	height: 30%;
 	padding: 16px;
 	background-color: white;
-	z-index:1003;
 	overflow: auto;
 	text-align: right;
 }
@@ -42,4 +40,12 @@
 .loginSubmit {
 	margin-top: 10px;
 	font-size: 18pt;
+}
+
+#loginFailed {
+	border: solid #A23C3C 1px;
+	background-color: #E17979;
+	color: #A23C3C;
+	padding: 10px 10px 10px 10px;
+	font-size: 12pt;
 }

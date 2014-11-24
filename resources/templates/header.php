@@ -4,7 +4,7 @@
 	<title><?php echo $pageTitle; ?></title>
 	<link rel="stylesheet" href="<?php echo ROOT_PATH; ?>/css/main.css" type="text/css">
 
-	<?php if ($pageTitle == "Administrator") : ?>
+	<?php if ($pageTitle == "Administrator Login") : ?>
 		<link rel="stylesheet" href="<?php echo ROOT_PATH; ?>/css/admin.css" type="text/css">	
 	<?php endif; ?>
 

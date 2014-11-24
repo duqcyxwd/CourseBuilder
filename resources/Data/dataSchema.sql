@@ -118,4 +118,15 @@ CREATE TABLE IF NOT EXISTS Classes(
 
 );
 
+--
+-- Table structure for table `Administrators`
+--
+
+CREATE TABLE IF NOT EXISTS `Administrators` (
+id integer PRIMARY KEY NOT NULL AUTO_INCREMENT,
+Username varchar(16) NOT NULL,
+Password varchar(16) NOT NULL
+);
+
+
 select * from Classes;
