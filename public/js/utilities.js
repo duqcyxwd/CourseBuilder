@@ -1,4 +1,5 @@
 var DB_CONNECTION_URL = "../resources/library/dbConnection.php";
+var TIMETABLE_URL = "timetable.php";
 // utilities
 
 /**
@@ -103,4 +104,32 @@ function objectToParameters(obj) {
   for (var key in obj)
     retval += key + "=" + obj[key] + "&";
   return retval.slice(0, -1);
+}
+
+/**
+ * SetCookie
+ *
+ * Set the value to cookie
+ * param obj : cookieName,cookieValue,minutes
+**/
+function SetCookie(cookieName, cookieValue, minutes) {
+  var currentTime = new Date();
+  var expiresTime = new Date();
+  if (minutes==null || minutes==0) minutes=5;
+  expiresTime.setTime(currentTime.getTime() + 60000*minutes);
+  var cookie = cookieName+"="+JSON.stringify(cookieValue);
+  document.cookie = cookie + ";expires="+expiresTime.toGMTString();
+}
+
+/**
+ * ReadCookie
+ *
+ * read the value to cookie
+ * param obj : cookieName
+**/
+function ReadCookie(cookieName) {
+  var result = document.cookie.match(new RegExp(cookieName + '=([^;]+)'));
+  console.log(result); 
+  result && (result = JSON.parse(result[1]));
+  return result;
 }

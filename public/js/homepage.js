@@ -20,25 +20,21 @@ function submitTable() {
 
   if (prerequisiteTable == null) return;
   var selectedCourses = prerequisiteTable.getStringFormat();
-  var page = DB_CONNECTION_URL,
-      params = { action: "timeTable", 
+  var maxCourseTaking = document.getElementById('max').value;
+  var page = TIMETABLE_URL;
+  var params = { action: "timeTable", 
                  courseCompleted: selectedCourses, 
-                 program: prerequisiteTable.getProgramName()
+                 program: prerequisiteTable.getProgramName(),
+                 max: maxCourseTaking
                };
 
-    var form = document.getElementById("submit");
-    form.setAttribute("method", "post");
-    form.setAttribute("action", page);
+  var form = document.getElementById("submit");
+  form.setAttribute("action", page);
 
-    for (var key in params) {
-      var hiddenField = document.createElement("input");
-      hiddenField.setAttribute("type", "hidden");
-      hiddenField.setAttribute("name", key);
-      hiddenField.setAttribute("value", params[key]);
-      form.appendChild(hiddenField);
-    }
-
-    form.submit();
+  SetCookie("TimeTableInfo", params);
+  console.log(prerequisiteTable.getStringFormat());
+  // form.submit();
+  // window.location.href = TIMETABLE_URL;
 }
 
 
@@ -81,17 +77,17 @@ function createTable(tableID, selectedProgram, numOfYears) {
         term = 'WINTER';
       }
 
-      var isElective = false;
+      var isPrereq = false;
       var listOfElectives = [];
 
       // Loop through courses within this term
       for (var course = 0; course < json[termNumber].length; course++) {
         courseLabel = json[termNumber][course];
         courseDetails = courseLabel.split(/[ ,]+/);
-        // TODO CHANGE THIS TO ELECTIVE [IMPORTANT!!!]
-        isElective = (courseDetails[name] === "SYSC") ? true : false;
+        // TODO CHANGE THIS TO ELECTIVE
+        isPrereq = (courseDetails[name] === "FIX") ? true : false;
 
-        prerequisiteTable.appendCourse(year, term, courseDetails[name], courseDetails[code], courseLabel, isElective, listOfElectives);
+        prerequisiteTable.appendCourse(year, term, courseDetails[name], courseDetails[code], courseLabel, isPrereq, listOfElectives);
       }
 
     }
@@ -189,7 +185,7 @@ window.onload = function() {
 
   var submit = document.getElementById('submitButton');
   submit.onclick = function() {
-    alert(prerequisiteTable.getStringFormat());
     submitTable();
   }
 }
+
