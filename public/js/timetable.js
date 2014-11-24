@@ -145,21 +145,10 @@ function Timetable(id) {
 
 	function appendCourse(days, startTime, endTime, courseInfo) {
 
-		// var splitStartTime = startTime;
-		// var splitEndTime = endTime
-
-		// if (splitStartTime.length != 3 || splitEndTime.length != 3) return;
-
 		var startHour = Math.floor(parseInt(startTime)/100),
 		 		startMin  = parseInt(startTime)%100,
-		 		endHour		= parseInt(endTime)/100,
+		 		endHour		= Math.floor(parseInt(endTime)/100),
 		 		endMin		= Math.floor(parseInt(endTime)%100);
-
-		// var startHour = parseInt(splitStartTime[1]),
-		//  		startMin  = parseInt(splitStartTime[2]),
-		//  		endHour		= parseInt(splitEndTime[1]),
-		//  		endMin		= parseInt(splitEndTime[2]);
-
 
 		var startRow = (startHour - 7) * 2 + (startMin - 5) / 30;
 		var endRow = (endHour - 7) * 2 + (endMin + 5) / 30 - 1;
@@ -220,12 +209,13 @@ function Timetable(id) {
 	init();
 }
 
+
+
 var timetable;
 window.onload = function() {
 	timetable = new Timetable('timetable');
 
 	var timeTableInfo = ReadCookie("TimeTableInfo");
-	// console.log(JSON.parse(params.max));
 
 	if (!(typeof timeTableInfo === 'undefined' || timeTableInfo === null)){
 		var page = DB_CONNECTION_URL,
@@ -243,7 +233,8 @@ window.onload = function() {
 		  		var days = courseArray[i][2];
 		  		var startTime = courseArray[i][3];
 		  		var endTime = courseArray[i][4];
-				timetable.appendCourse(days, startTime, endTime, info);
+
+					timetable.appendCourse(days, startTime, endTime, info);
 		  	};
 		  }
 		}, page, params);
