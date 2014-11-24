@@ -125,7 +125,8 @@
 				}
 
 			} else {
-				echo "table for this numberOfCourses is not implement yet";
+				// TODO: handle this case
+				echo "table for this number of courses (". $numberOfCourses.") is not implement yet";
 			}
 			return $result;
 		}

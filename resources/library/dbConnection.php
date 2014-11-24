@@ -1,6 +1,7 @@
 <?php
 	require"../config.php";
-	require "timetable.php";
+	require "timeTable.class.php";
+	require_once ("/Users/SuperiMan/repo/kint/Kint.class.php");
 
 	if (isset($_POST['action'])){
 		$variable = $_POST;
@@ -19,7 +20,7 @@
 		case 'timeTable':
 
 			$prerequisiteTree = $db->getPrerequisiteTree($variable['program']);
-			$courseCompleted = explode(";", $variable['courseCompleted']);
+			$courseCompleted = explode(",", $variable['courseCompleted']);
 			$program = $variable['program'];
 
 			if (isset($variable['max'])) {
@@ -32,9 +33,9 @@
 			$unCompletedCourses = getUnCompletedCourses($courseCompleted, $prerequisiteTree, $openingClasses);
 			$coursesInfo = $db->getCourseInfoByCourseArray(flatArray($unCompletedCourses));
 
-
 			$timeTables = [];
 			$courseArray = createCourseArray($unCompletedCourses, $coursesInfo);
+
 			$singleTimeTable = getTimeTable($courseArray, $maxNumOfCourse);
 			$table = $singleTimeTable->getATableInArray();
 			echo json_encode($table);
@@ -68,7 +69,6 @@
 
 			// getTimeTables($timeTables, $courseArray, 0, new TimeTable());
 			// $singleTimeTable = getTimeTable($courseArray);
-			echo "Result: <br>";
 
 			// $openingClasses = $db->getOpeningClasses();
 			$eligibleCourses = $db->getEligibleCourses($courseCompleted, $program, 3); // change the 3
@@ -183,35 +183,23 @@
 		foreach ($requiredCourses as $term => $coursesOfOneTerm) {
 			foreach ($coursesOfOneTerm as $number => $singleCourse) {
 				foreach ($coursesCompleted as $c) {
-
 					// TODO: ... 
 					if ($c != "") {
-						$ccourse = explode(" ", $c);
-						if ($singleCourse == $ccourse[0]." ".$ccourse[1]){
+						if ($singleCourse == $c){
 							$numOfCourseCompledInTree++;
 							unset($requiredCourses[$term][$number]);
 							break;
 						} 
 					}
-					
-					$ccourse = explode(" ", $c);
-					if (count($ccourse) < 2) return; // WHAT IF THE STUDENT HASN'T TAKEN ANY CLASSES?
-
-					if ($singleCourse == $ccourse[0]." ".$ccourse[1]){
-						$numOfCourseCompledInTree++;
-						unset($requiredCourses[$term][$number]);
-						break;
-					} 
 				}
 			}
 			
 		}
 
 		// get course that unCompletedCourses open in current term
-		// check if this course opening
+		// check if this course open or not
 		foreach ($requiredCourses as $term => $coursesOfOneTerm) {
 			foreach ($coursesOfOneTerm as $number => $singleCourse) {
-
 				$courseOpen = false;
 				foreach ($openingClasses as $class) {
 					if ($singleCourse == $class[0]." ".$class[1]){

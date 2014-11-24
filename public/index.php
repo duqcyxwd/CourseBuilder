@@ -32,6 +32,7 @@
 			<input type="submit" value="Submit" id="submitButton"/>
 			<label for="submitButton">Submit</label>
 		</form>
+
 	
 		
 		<div id="year-select-dd" class="wrapper-dropdown" tabindex="1" onclick="selectProgram(this);" style="display:none">
@@ -46,7 +47,10 @@
 			<?php endforeach ?>
 			</ul>
 		</div>
-  	<div id="program-select-onpattern">
+		
+		<input type="int" value="3" id='max'/>
+
+	  	<div id="program-select-onpattern">
 			<div class="checkbox">
 		 		<input type="checkbox" value="1" id="checkboxInput" name="" />
 				<label for="checkboxInput"></label>
