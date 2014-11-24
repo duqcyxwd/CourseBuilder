@@ -20,12 +20,10 @@ function submitTable() {
 
   if (prerequisiteTable == null) return;
   var selectedCourses = prerequisiteTable.getStringFormat();
-  var maxCourseTaking = document.getElementById('max').value;
   var page = TIMETABLE_URL;
   var params = { action: "timeTable", 
                  courseCompleted: selectedCourses, 
-                 program: prerequisiteTable.getProgramName(),
-                 max: maxCourseTaking
+                 program: prerequisiteTable.getProgramName()
                };
 
   var form = document.getElementById("submit");
@@ -33,7 +31,7 @@ function submitTable() {
 
   SetCookie("TimeTableInfo", params);
   console.log(prerequisiteTable.getStringFormat());
-  // form.submit();
+  form.submit();
   // window.location.href = TIMETABLE_URL;
 }
 
@@ -77,7 +75,7 @@ function createTable(tableID, selectedProgram, numOfYears) {
         term = 'WINTER';
       }
 
-      var isPrereq = false;
+      var isElective = false;
       var listOfElectives = [];
 
       // Loop through courses within this term
@@ -85,9 +83,9 @@ function createTable(tableID, selectedProgram, numOfYears) {
         courseLabel = json[termNumber][course];
         courseDetails = courseLabel.split(/[ ,]+/);
         // TODO CHANGE THIS TO ELECTIVE
-        isPrereq = (courseDetails[name] === "FIX") ? true : false;
+        isElective = (courseDetails[name] === "FIX") ? true : false;
 
-        prerequisiteTable.appendCourse(year, term, courseDetails[name], courseDetails[code], courseLabel, isPrereq, listOfElectives);
+        prerequisiteTable.appendCourse(year, term, courseDetails[name], courseDetails[code], courseLabel, isElective, listOfElectives);
       }
 
     }
@@ -188,4 +186,3 @@ window.onload = function() {
     submitTable();
   }
 }
-
