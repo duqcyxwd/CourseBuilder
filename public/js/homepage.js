@@ -4,8 +4,7 @@ var prerequisiteTable; // global declaration of table
 var stringToYear = {
       'First'  : 1,
       'Second' : 2,
-      'Third'  : 3,
-      'Fourth' : 4,
+      'Third'  : 3
     };
 
 
