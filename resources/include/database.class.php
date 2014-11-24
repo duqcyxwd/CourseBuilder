@@ -48,6 +48,37 @@
 			return mysqli_query($this->mysqli,"SELECT `Subject`,`CourseNumber`, `YearRequirement`, `Program` FROM `ProgramsRequirement` WHERE `Program` = '$program'");
 		}
 
+		function getYearStanding($completedCourses, $program)
+		{
+			$sql = "SELECT YearRequirement 
+							FROM ProgramsRequirement 
+							WHERE Program = '$program' 
+							AND concat(Subject, ' ', CourseNumber)
+							NOT IN (";
+
+			foreach ($completedCourses as $course) {
+				$sql .= "'$course',";
+			}
+
+			$sql = trim($sql, ",") . ") LIMIT 1";
+
+			$result = $this->execute($sql);
+
+			if ($row = mysqli_fetch_array($result)) {
+				$term = $row['YearRequirement'];
+
+				// convert term to year status
+				if ($term % 2 == 0) // even
+					return ($term + 2) / 2;
+				else // odd
+					return ($term + 1) / 2;
+
+			} else {
+				return 0;
+			}
+
+		}
+
 
 		function getEligibleCourses($completedCourses, $program, $yearStanding) {
 

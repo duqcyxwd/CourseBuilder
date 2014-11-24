@@ -57,9 +57,7 @@ function createTable(tableID, selectedProgram, numOfYears) {
   // request 
   AJAXRequest( function(response) {
 
-    // console.log(response);
     var json = JSON.parse(response);
-    // console.log(json);
     prerequisiteTable = new table(tableID, numOfYears, selectedProgram);
 
     var term, 

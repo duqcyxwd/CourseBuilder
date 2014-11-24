@@ -1,4 +1,4 @@
-.black_overlay {
+.blackOverlay {
 	display: none;
 	position: absolute;
 	top: 0%;
@@ -6,13 +6,13 @@
 	width: 100%;
 	height: 1000px;
 	background-color: black;
-	z-index:1001;
+	z-index:1002;
 	-moz-opacity: 0.8;
 	opacity:.80;
 	filter: alpha(opacity=80);
 }
 
-.popup_content {
+.popupContent {
 	display: none;
 	position: absolute;
 	top: 25%;
@@ -20,8 +20,51 @@
 	width: 50%;
 	height: 50%;
 	padding: 16px;
-	/*border: 16px solid orange;*/
 	background-color: white;
-	z-index:1002;
+	z-index:1003;
 	overflow: auto;
+}
+
+.popupHeader {
+	float: left;
+	font-size: 32pt;
+	font-weight: bold;
+	width: 100%;
+	color: #444; 
+}
+
+.popupSubHeader {
+	float: left;
+	width: 100%;
+	padding-bottom: 5px;
+}
+
+.electivesList {
+	width: 100%;
+	height: 70%;
+	overflow-y: scroll;
+	background-color: #EEEEEE;
+}
+
+.elective {
+	color: #666;
+	font-size: 12pt;
+	padding: 5px 0px 5px 5px;
+}
+
+.elective:hover {
+	color: #FFF;
+	cursor: pointer;
+	background-color: #C0392B;
+}
+
+.closeButton {
+	margin-top: 2px;
+	float: right;
+}
+
+.closeButton:hover {
+	color: #000;
+	font-weight: bold;
+	cursor: pointer;
 }

@@ -247,6 +247,5 @@ window.onload = function() {
 		  	};
 		  }
 		}, page, params);
-
 	}
 }
