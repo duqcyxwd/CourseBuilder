@@ -63,6 +63,8 @@
 							AND ProgramsRequirement.CourseNumber=Prerequisite.CourseNumber
 							WHERE YearRequirement >= $yearStanding AND Program = '$program'";
 
+			var_dump($sql);
+			print_r($yearStanding);
 			$result = $this->execute($sql);
 
 			while ($row = mysqli_fetch_array($result)){
@@ -80,22 +82,47 @@
 					if (strpos($requirement, '-year status')) {
 						preg_match('/(\w+)-year status in Engineering/', $requirement, $matches);
 
-						if (count($matches) > 1) {
-							// todo
+						if(strcmp($matches[1],"first") == 0){
+							if($yearStanding >= 1){
+								$isEligible = true;
+							}
 						}
+						elseif(strcmp($matches[1],"second") == 0){
+							if($yearStanding >= 2){
+								$isEligible = true;
+							}
+						}
+						elseif(strcmp($matches[1],"third") == 0){
+							if($yearStanding >= 3){
+								$isEligible = true;
+							}
+						}
+						elseif(strcmp($matches[1],"fourth") == 0) {
+							if($yearStanding == 4){
+								$isEligible = true;
+							}
+						}
+
+						continue;
 					}
 
-					// split by 'and'
-					$requirement = preg_split('/(and)/', $requirement);
+					// check for 'and'
+					if(strpos($requirement, 'and')!== false){
+						$requirement = preg_split('/(and)/', $requirement);
+						
+						
 
-					// evaluate each and
-					foreach ($requirement as $courses) {
-						// split by 'or'
-						$courses = preg_split('/(or)/', $courses);
+						// evaluate each and
+						foreach ($requirement as $courses) {
+							// split by 'or'
+							$courses = preg_split('/(or)/', $courses);
 
-						foreach ($courses as $course) {
-							if (in_array(trim($course), $completedCourses)) {
-								$isEligible = true;
+							echo "<br/>";
+							print_r($requirement);
+							foreach ($courses as $course) {
+								if (in_array(trim($course), $completedCourses)) {
+									$isEligible = true;
+								}
 							}
 						}
 					}
@@ -105,8 +132,10 @@
 					array_push($eligibleCourses, $row['Subject'] . " " . $row['CourseNumber']);
 				}
 			}
-
+			echo "<br/>";
+			print_r($eligibleCourses);
 			return $eligibleCourses;
+
 		}
 
 
