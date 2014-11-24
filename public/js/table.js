@@ -172,7 +172,7 @@ function table(id, numOfYears, progName) {
 
     for (var i = listOfCourses.length - 1; i >= 0; i--)
       if (listOfCourses[i].isSelected())
-        stringFormat += listOfCourses[i].getName() + " " + listOfCourses[i].getNumber() + ";";
+        stringFormat += listOfCourses[i].getName() + " " + listOfCourses[i].getNumber() + ",";
 
     // remove trailing comma
     return stringFormat.substring(0, stringFormat.length - 1);

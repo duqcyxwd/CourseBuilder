@@ -22,26 +22,20 @@ function submitTable() {
   if (prerequisiteTable == null) return;
   var selectedCourses = prerequisiteTable.getStringFormat();
   var maxCourseTaking = document.getElementById('max').value;
-  var page = DB_CONNECTION_URL,
-      params = { action: "timeTable", 
+  var page = TIMETABLE_URL;
+  var params = { action: "timeTable", 
                  courseCompleted: selectedCourses, 
                  program: prerequisiteTable.getProgramName(),
                  max: maxCourseTaking
                };
 
-    var form = document.getElementById("submit");
-    form.setAttribute("method", "post");
-    form.setAttribute("action", page);
+  var form = document.getElementById("submit");
+  form.setAttribute("action", page);
 
-    for (var key in params) {
-      var hiddenField = document.createElement("input");
-      hiddenField.setAttribute("type", "hidden");
-      hiddenField.setAttribute("name", key);
-      hiddenField.setAttribute("value", params[key]);
-      form.appendChild(hiddenField);
-    }
-
-    form.submit();
+  SetCookie("TimeTableInfo", params);
+  console.log(prerequisiteTable.getStringFormat());
+  // form.submit();
+  // window.location.href = TIMETABLE_URL;
 }
 
 
@@ -63,9 +57,9 @@ function createTable(tableID, selectedProgram, numOfYears) {
   // request 
   AJAXRequest( function(response) {
 
-    console.log(response);
+    // console.log(response);
     var json = JSON.parse(response);
-    console.log(json);
+    // console.log(json);
     prerequisiteTable = new table(tableID, numOfYears, selectedProgram);
 
     var term, 
@@ -197,3 +191,4 @@ window.onload = function() {
     submitTable();
   }
 }
+

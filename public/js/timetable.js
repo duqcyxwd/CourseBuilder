@@ -188,7 +188,6 @@ function Timetable(id) {
 
 			// get the first cell
 			var rows = row[startRow].cells;
-			console.log(row[startRow]);
 			var firstRow;
 
 			// loop to find first cell that will be replaced
@@ -225,30 +224,29 @@ var timetable;
 window.onload = function() {
 	timetable = new Timetable('timetable');
 
-	var page = DB_CONNECTION_URL,
-		selectedProgram = "Communication Engineering";
-		//TODO:
-	    params = { action: "timeTable", program: selectedProgram, max: 3, courseCompleted: "" };
+	var timeTableInfo = ReadCookie("TimeTableInfo");
+	// console.log(JSON.parse(params.max));
 
+	if (!(typeof timeTableInfo === 'undefined' || timeTableInfo === null)){
+		var page = DB_CONNECTION_URL,
+		    params = timeTableInfo
 
-	// request 
-	AJAXRequest( function(response) {
-	  var json = JSON.parse(response);
-	  console.log(json);
+		// request 
+		AJAXRequest( function(response) {
+		  var json = JSON.parse(response);
 
-	  // Loop through terms
-	  for (var solution = 0; solution < json.length; solution++) {
-	  	var courseArray = json[solution];
-	  	for (var i = courseArray.length - 1; i >= 0; i--) {
-	  		var info = courseArray[i][0] + " " + courseArray[i][1];
-	  		var days = courseArray[i][2];
-	  		var startTime = courseArray[i][3];
-	  		var endTime = courseArray[i][4];
-			timetable.appendCourse(days, startTime, endTime, info);
+		  // Loop through terms
+		  for (var solution = 0; solution < json.length; solution++) {
+		  	var courseArray = json[solution];
+		  	for (var i = courseArray.length - 1; i >= 0; i--) {
+		  		var info = courseArray[i][0] + " " + courseArray[i][1];
+		  		var days = courseArray[i][2];
+		  		var startTime = courseArray[i][3];
+		  		var endTime = courseArray[i][4];
+				timetable.appendCourse(days, startTime, endTime, info);
+		  	};
+		  }
+		}, page, params);
 
-	  	};
-
-	  }
-	}, page, params);
-
+	}
 }

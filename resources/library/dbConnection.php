@@ -20,7 +20,7 @@
 		case 'timeTable':
 
 			$prerequisiteTree = $db->getPrerequisiteTree($variable['program']);
-			$courseCompleted = explode(";", $variable['courseCompleted']);
+			$courseCompleted = explode(",", $variable['courseCompleted']);
 			$program = $variable['program'];
 
 			if (isset($variable['max'])) {
