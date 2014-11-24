@@ -21,10 +21,12 @@ function submitTable() {
 
   if (prerequisiteTable == null) return;
   var selectedCourses = prerequisiteTable.getStringFormat();
+  var maxCourseTaking = document.getElementById('max').value;
   var page = DB_CONNECTION_URL,
       params = { action: "timeTable", 
                  courseCompleted: selectedCourses, 
-                 program: prerequisiteTable.getProgramName()
+                 program: prerequisiteTable.getProgramName(),
+                 max: maxCourseTaking
                };
 
     var form = document.getElementById("submit");
