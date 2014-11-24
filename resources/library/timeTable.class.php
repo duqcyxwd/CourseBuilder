@@ -8,7 +8,9 @@
 		{
 			$this->courses = [];
 			$this->maxmiumCourseTaking = $max;
+			// TODO: Deleted this if not needed
 			$this->limit = 100; // limit the operation that program will loop
+			$this->numOfSulotion = 10; // 
 
 		}
 
@@ -67,81 +69,115 @@
 			}
 
 			$result = [];
-			if ($numberOfCourses ==6) {
-				foreach ($combination[0] as $key0 => $value0) {
-					foreach ($combination[1] as $key1 => $value1) {
-						foreach ($combination[2] as $key2 => $value2) {
-							foreach ($combination[3] as $key3 => $value3) {
-								foreach ($combination[4] as $key4 => $value4) {
-									foreach ($combination[5] as $key5 => $value5) {
-										$possibleSolution = [$value0, $value1, $value2, $value3, $value4, $value5];
-										$possibleSolution = flatArray($possibleSolution);
-										
-										$this->limit--;
-										if ($this->limit == 0) 
-											return $result;
-
-										if (!hasTimeConflictArray($possibleSolution)) {
-											$result[] = $possibleSolution;
-											return $result;
-										} else {
-											// pprint("timeconflict");
-											// return $result;
-										}
-										
-									}
-								}
-							}
-						}
-					}
-				}
-			} else if ($numberOfCourses ==3) {
-				// 	echo "table size: ".
-				// 	sizeof($combination[0])."*".
-				// 	sizeof($combination[1])."*".
-				// 	sizeof($combination[2])."=".
-				// 	sizeof($combination[0])* sizeof($combination[1])* sizeof($combination[2]);
-
-				foreach ($combination[0] as $key0 => $value0) {
-					foreach ($combination[1] as $key1 => $value1) {
-						foreach ($combination[2] as $key2 => $value2) {
-							$possibleSolution = [$value0, $value1, $value2];
-							$possibleSolution = flatArray($possibleSolution);
-							
-							$this->limit--;
-							if ($this->limit == 0) 
-								return $result;
-
-							if (!hasTimeConflictArray($possibleSolution)) {
-								$result = $possibleSolution;
-								return $result;
-							} else {
-								// pprint("timeconflict");
-								// return $result;
-							}
-										
-						}
-					}
-				}
-
-			} else {
-				// TODO: handle this case
+			if ($numberOfCourses > 6) {
 				echo "table for this number of courses (". $numberOfCourses.") is not implement yet";
+			}
+
+			$this->getAlotOfTableTable($result, $combination, [], 0, 0);
+
+			return $result;
+		}
+
+		/**
+		 * [getAlotOfTableTable description]
+		 * @param  [type] $combination Courses combination to pick
+		 * @param  [type] &$result     result
+		 * @param  [type] $path        path to store solution path
+		 * @param  [type] $x           start point in array
+		 * @param  [type] $y           start point in sub-array
+		 * @return [type]              [description]
+		 */
+		public function getAlotOfTableTable(&$result, $combination, $path, $x, $y){
+			if (isset($combination[$x]) and isset($combination[$x][$y])) {
+
+				if(!hasTimeConflictArrayToClass($this->getArrayByPath($path, $combination), $combination[$x][$y])) {
+					$path[] = [$x, $y];
+					if ($x == sizeof($combination)-1) {
+						// Find one solution
+						$this->numOfSulotion--;
+						$result[] = flatArray($this->getArrayByPath($path, $combination));
+
+						if ($this->numOfSulotion!= 0) {
+							// next solution
+							$this->getAlotOfTableTable($result, $combination, $path, $x, $y+1);
+						}
+					} else {
+						// Keep working
+						$this->getAlotOfTableTable($result, $combination, $path, $x+1, 0);
+					}
+					return;
+				}
+
+				$this->getAlotOfTableTable($result, $combination, $path, $x, $y+1);
+			} else {
+				if ($x == 0  and $y > sizeof($combination[$x])-1) {
+					// Seach End
+					return;
+				} 
+
+				if ($y > sizeof($combination[$x])-1) {
+					// back Search
+					$postion = array_pop($path);
+					$this->getAlotOfTableTable($result, $combination, $path, $postion[0], $postion[1]+1);
+				}
+			}
+		}
+
+		public function getArrayByPath($path, $array) {
+			$result = [];
+			foreach ($path as $p) {
+				$result[] = $array[$p[0]][$p[1]];
 			}
 			return $result;
 		}
 
 		public function getATableInArray()
 		{
-			$result = $this->getATable();
+			$result = $this->getATable()[0];
 			$resultInArray = [];
+
 			foreach ($result as $class) {
 				$resultInArray[] = ($class->toArray());
 			}
 			return [$resultInArray];
 		}
+
+		public function getTablesInArray()
+		{
+			$result = $this->getATable();
+			$resultInArray = [];
+			foreach ($result as $key => $solution) {
+				$resultInArray[] = [];
+				foreach ($solution as $class) {
+					$resultInArray[$key][] = ($class->toArray());
+				}
+			}
+			return $resultInArray;
+		}
 	}
 
+
+	/**
+	 * check if there is a conflict between a  list of class and a class
+	 * @param  list  		$classArray list of CourseClass Object
+	 * @param  list  		$class      list of CourseClass Object
+	 * @return true : there is conflict
+	 *         false: there is no conflict	
+	 */
+	function hasTimeConflictArrayToClass($classArrayA, $classArrayB)
+	{
+		$flat_classArrayA = flatArray($classArrayA);
+		$flat_classArrayB = flatArray($classArrayB);
+
+		foreach ($flat_classArrayA as $keyA => $classA) {
+			foreach ($flat_classArrayB as $keyB => $classB) {
+				if (hasClassTimeConflict($classA, $classB)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 
 
 	/*
@@ -161,12 +197,12 @@
 	}
 
 	/**
-	 * 
-	 * taking two courseClasses
+	 * Check the time conflict between two classes
+	 * @param  CourseClass  $classA CourseClass Object
+	 * @param  CourseClass  $classB CourseClass Object
 	 * @return true : there is conflict
 	 *         false: there is no conflict
-	 * @author 
-	 **/
+	 */
 	function hasClassTimeConflict($classA, $classB) {
 		$daysA = str_split($classA->days);
 		$daysB = str_split($classB->days);

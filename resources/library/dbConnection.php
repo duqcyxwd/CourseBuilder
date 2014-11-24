@@ -1,6 +1,7 @@
 <?php
 	require"../config.php";
 	require "timeTable.class.php";
+	require '/Users/SuperiMan/repo/kint/Kint.class.php';
 
 	if (isset($_POST['action'])){
 		$variable = $_POST;
@@ -25,7 +26,7 @@
 			if (isset($variable['max'])) {
 				$maxNumOfCourse=$variable['max'];
 			} else {
-				$maxNumOfCourse = 3;
+				$maxNumOfCourse = 5;
 			}
 
 			$openingClasses = $db->getOpeningClasses();
@@ -36,7 +37,7 @@
 			$courseArray = createCourseArray($unCompletedCourses, $coursesInfo);
 
 			$singleTimeTable = getTimeTable($courseArray, $maxNumOfCourse);
-			$table = $singleTimeTable->getATableInArray();
+			$table = $singleTimeTable->getTablesInArray();
 			echo json_encode($table);
 
 			if ($testing) {
