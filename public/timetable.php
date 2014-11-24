@@ -5,7 +5,9 @@
 	session_start();
 	// TODO: handle php stuff from dbConnection
 	// TODO: if no sessions, return to index page
-	$generatedTables = $_SESSION['timetables'];
+	if (isset($_SESSION['timetables'])) {
+		$generatedTables = $_SESSION['timetables'];
+	}
 ?>
 
 <div id="timetable">
