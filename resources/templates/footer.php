@@ -4,15 +4,9 @@
 			<ul class="col-1-5">
 					Quick Links
 			    <li><a href="<?php echo ROOT_PATH; ?>">Home</a></li>
-			    <li><a href="#">Programs</a></li>
+			    <li><a href="<?php echo ROOT_PATH; ?>">Programs</a></li>
+			    <li><a href="<?php echo ROOT_PATH . '/admin.php'; ?>">Administrator</a></li>
 			    <li><a href="<?php echo ROOT_PATH . '/about.php'; ?>">About</a></li>
-			</ul>
-			<ul class="col-1-5">
-					Other Stuff
-			    <li><a href="#">Change</a></li>
-			    <li><a href="#">These</a></li>
-			    <li><a href="#">Links</a></li>
-			    <li><a href="<?php echo ROOT_PATH . '/about.php'; ?>">About Us</a></li>
 			</ul>
 			<ul class="col-1-5">
 					Help and Support

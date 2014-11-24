@@ -3,6 +3,12 @@
 <head>
 	<title><?php echo $pageTitle; ?></title>
 	<link rel="stylesheet" href="<?php echo ROOT_PATH; ?>/css/main.css" type="text/css">
+
+	<?php if ($pageTitle == "Administrator") : ?>
+		<link rel="stylesheet" href="<?php echo ROOT_PATH; ?>/css/admin.css" type="text/css">	
+	<?php endif; ?>
+
+
 </head>
 
 <noscript><link rel="stylesheet" type="text/css" href="<?php echo ROOT_PATH . '/css/noJS.css'; ?>"/></noscript>
@@ -17,9 +23,14 @@
 <?php endif; ?>
 
 <body>
+
 	<header>
-		<a href="<?php echo ROOT_PATH; ?>">
+		<a id="course-builder-header" href="<?php echo ROOT_PATH; ?>">
 			<h3>Course Builder</h3>
+		</a>
+
+		<a id="login" href="<?php echo ROOT_PATH . '/admin.php'; ?>">
+			Admin
 		</a>
 	</header>
 
