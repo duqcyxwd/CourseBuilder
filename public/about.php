@@ -5,9 +5,6 @@
 ?>
 
 
-	<div id="container">
-		<h2>UNDER CONSTRUCTION</h2>
-	</div>
-
+	<h2>UNDER CONSTRUCTION</h2>
 
 <?php require_once(TEMPLATES_PATH . "/footer.php"); ?>
