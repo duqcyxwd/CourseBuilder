@@ -9,8 +9,6 @@
 			$this->courses = [];
 			$this->numberOfCourses = 0;
 			$this->maxmiumCourseTaking = $max;
-			// TODO: Deleted this if not needed
-			$this->limit = 100; // limit the operation that program will loop
 			$this->numOfSulotion = 10; // 
 
 		}
@@ -64,7 +62,7 @@
 
 
 		/**
-		 * [getAlotOfTableTable description]
+		 * [recursiveGetTimeTables description]
 		 * @param  [type] $combination Courses combination to pick
 		 * @param  [type] &$result     result
 		 * @param  [type] $path        path to store solution path
@@ -72,7 +70,7 @@
 		 * @param  [type] $y           start point in sub-array
 		 * @return [type]              [description]
 		 */
-		public function getAlotOfTableTable(&$result, $combination, $path, $x, $y){
+		public function recursiveGetTimeTables(&$result, $combination, $path, $x, $y){
 			if (isset($combination[$x]) and isset($combination[$x][$y])) {
 
 				if(!hasTimeConflictArrayToClass($this->getArrayByPath($path, $combination), $combination[$x][$y])) {
@@ -90,16 +88,16 @@
 
 						if ($this->numOfSulotion!= 0) {
 							// next solution
-							$this->getAlotOfTableTable($result, $combination, $path, $x, $y+1);
+							$this->recursiveGetTimeTables($result, $combination, $path, $x, $y+1);
 						}
 					} else {
 						// Keep working
-						$this->getAlotOfTableTable($result, $combination, $path, $x+1, 0);
+						$this->recursiveGetTimeTables($result, $combination, $path, $x+1, 0);
 					}
 					return;
 				}
 
-				$this->getAlotOfTableTable($result, $combination, $path, $x, $y+1);
+				$this->recursiveGetTimeTables($result, $combination, $path, $x, $y+1);
 			} else {
 				if ($x == 0  and $y > sizeof($combination[$x])-1) {
 					// Seach End
@@ -109,7 +107,7 @@
 				if ($y > sizeof($combination[$x])-1) {
 					// back Search
 					$postion = array_pop($path);
-					$this->getAlotOfTableTable($result, $combination, $path, $postion[0], $postion[1]+1);
+					$this->recursiveGetTimeTables($result, $combination, $path, $postion[0], $postion[1]+1);
 				}
 			}
 		}
@@ -134,7 +132,7 @@
 				$combination[] = $couse->getCourseCombination();
 			}
 			$result = [];
-			$this->getAlotOfTableTable($result, $combination, [], 0, 0);
+			$this->recursiveGetTimeTables($result, $combination, [], 0, 0);
 			return $result;
 		}
 	}
