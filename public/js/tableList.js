@@ -29,7 +29,7 @@ function TableList(id, timeTableObj) {
 		var formattedBody = formatBody(courses);
 
 		item.className = id + '-item';
-		item.innerHTML = "<div class='item-header'>Option " + (courseList.length + 1) + "</div>"
+		item.innerHTML = "<div class='item-header'>Timetable " + (courseList.length + 1) + "</div>"
 								   + "<div class='item-body'>" + formattedBody + "</div>";
 
 		// append course list and timeTable to item
