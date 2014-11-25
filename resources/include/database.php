@@ -187,6 +187,74 @@
 			return $electives;
 		}
 
+		function getElectivesByProgram($program)
+		{
+			$electives = [];
+			$sql = "SELECT DISTINCT CourseNumber FROM `ProgramsRequirement` where Subject = 'Elective'";
+			//$sql = "SELECT DISTINCT CourseNumber FROM `ProgramsRequirement` where Subject = 'Elective' and Program ='$program'";
+			$result = $this->execute($sql);
+			while ($row = mysqli_fetch_array($result)){
+				$electiveTypes[] = $row['CourseNumber'];
+			}
+			foreach ($electiveTypes as $key => $electiveType) {
+				$electives = array_merge($electives, ($this->getElectivesByType($electiveType)));
+			}
+			return $electives;
+		}
+
+		function getElectivesByType($electiveType, $tureElectiveType="", $trueElectiveName="")
+		{
+			$sql = "SELECT * FROM Electives WHERE ElectiveType='$electiveType'";
+			$result = $this->execute($sql);
+			$electives = [];
+			while ($row = mysqli_fetch_array($result)){
+				if ($row['Subject'] != "Elective") {
+					if ($tureElectiveType == "") {
+						$electives[] = [$electiveType, $row['Subject']." ".$row["CourseNumber"], $row['ElectiveName']];
+					} else {
+						$electives[] = [$tureElectiveType, $row['Subject']." ".$row["CourseNumber"], "hi"];
+					}
+				} else {
+					// pprint($row);
+					if ($row['CourseNumber'] == 3001) {
+						$electives = array_merge($electives, $this->getElectivesByType($row['CourseNumber'], $electiveType, $row['ElectiveName']));
+					} else if ($row['CourseNumber'] == 8883) {
+						// 'SYSC at 3000 or 4000 level'
+						$sql2 = "SELECT DISTINCT Subject, CourseNumber FROM `Classes` where Subject = 'SYSC' and CourseNumber > 3000";
+						$result2 = $this->execute($sql2);
+						while ($row2 = mysqli_fetch_array($result2)){
+							if ($tureElectiveType == "") {
+								$electives[] = [$row['CourseNumber'], $row2['Subject']." ".$row2["CourseNumber"], $row['ElectiveName']];
+							} else {
+								$electives[] = [$tureElectiveType, $row2['Subject']." ".$row2["CourseNumber"], $trueElectiveName];
+							}
+						}
+						
+					} else if ($row['CourseNumber'] == 7773) {
+						// 'SYSC at 3000 or 4000 level'
+						$sql2 = "SELECT DISTINCT Subject, CourseNumber FROM `Classes` where Subject = 'ELEC' and CourseNumber > 3000";
+						$result2 = $this->execute($sql2);
+						while ($row2 = mysqli_fetch_array($result2)){
+							if ($tureElectiveType == "") {
+								$electives[] = [$row['CourseNumber'], $row2['Subject']." ".$row2["CourseNumber"], $row['ElectiveName']];
+							} else {
+								$electives[] = [$tureElectiveType, $row2['Subject']." ".$row2["CourseNumber"], $trueElectiveName];
+							}
+						}
+					}else if($row['CourseNumber'] == 9993) {
+						$electives = array_merge($electives, $this->getElectivesByType($row['CourseNumber'], $electiveType, $row['ElectiveName']));
+					}
+
+
+					// (9993, 'Elective', 8883, 'SYSC at 3000 or 4000 level'),
+					// (9993, 'Elective', 7773, 'ELEC at 3000 or 4000 level'),
+					// (3002, 'Elective', 3001, 'SE Note B'),
+					// (2001, 'Elective', 9993, 'Computer System Engineering Elective B');
+				}
+			}
+			// d($electives);
+			return $electives;
+		}
 
 		function getListOfPrograms()
 		{

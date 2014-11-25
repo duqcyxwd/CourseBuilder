@@ -33,8 +33,8 @@ CREATE TABLE IF NOT EXISTS ProgramsRequirement(
 	Program varchar(30) NOT NULL,
 	Subject varchar(10)  NOT NULL,
 	CourseNumber int(4)  NOT NULL,
-	YearRequirement tinyint(1),
-	FOREIGN KEY (Subject, CourseNumber) references Courses (Subject,CourseNumber)
+	YearRequirement tinyint(1)
+	-- FOREIGN KEY (Subject, CourseNumber) references Courses (Subject,CourseNumber)
 	-- PRIMARY KEY(Name, Subject, CourseNumber)
 );
 
@@ -48,6 +48,7 @@ CREATE TABLE IF NOT EXISTS Electives(
 	ElectiveType int(4)  NOT NULL,
 	Subject varchar(10)  NOT NULL,
 	CourseNumber int(4)  NOT NULL,
+	ElectiveName varchar(60) NOT NULL,
 	FOREIGN KEY (Subject, CourseNumber) references Courses (Subject,CourseNumber)
 	-- PRIMARY KEY(Name, Subject, CourseNumber)
 );

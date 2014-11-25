@@ -143,14 +143,28 @@ INSERT INTO `ProgramsRequirement` (`Program`, `Subject`, `CourseNumber`, `YearRe
 
 -- Elective
 INSERT INTO `ProgramsRequirement` (`Program`, `Subject`, `CourseNumber`, `YearRequirement`) VALUES
-('Biomedical and Electrical Engineering', 'Elective', 5001, 9),
-('Biomedical and Electrical Engineering', 'Elective', 5002, 9),
-('Biomedical and Electrical Engineering', 'Elective', 5002, 9),
-('Biomedical and Electrical Engineering', 'Elective', 9993, 9),
-('Computer Systems Engineering', 'Elective', 2001, 9),
-('Software Engineering', 'Elective', 3001, 9),
-('Software Engineering', 'Elective', 3002, 9),
-('communication engineering', 'Elective', 1111, 9),
-('communication engineering', 'Elective', 4003, 9),
-('Communication Engineering', 'Elective', 9993, 9);
+('Biomedical and Electrical Engineering', 'Elective', 5002, 7),
+('Biomedical and Electrical Engineering', 'Elective', 5002, 7),
+('Biomedical and Electrical Engineering', 'Elective', 9999, 7),
+('Biomedical and Electrical Engineering', 'Elective', 9993, 7),
+('Computer Systems Engineering', 'Elective', 2001, 6),
+('Software Engineering', 'Elective', 3001, 4),
+('Software Engineering', 'Elective', 9999, 3),
+('Communication Engineering', 'Elective', 4003, 6),
+('Communication Engineering', 'Elective', 4003, 7),
+('Communication Engineering', 'Elective', 9993, 5),
+('Communication Engineering', 'Elective', 9993, 6),
+('Communication Engineering', 'Elective', 9999, 0),
+('Communication Engineering', 'Elective', 9999, 1),
+('Communication Engineering', 'Elective', 9999, 7),
+('Software Engineering', 'Elective', 3001, 6),
+('Software Engineering', 'Elective', 3001, 7),
+('Software Engineering', 'Elective', 3002, 6),
+('Software Engineering', 'Elective', 9999, 2),
+('Biomedical and Electrical Engineering', 'Elective', 9999, 6),
+('Computer Systems Engineering', 'Elective', 2001, 6),
+('Computer Systems Engineering', 'Elective', 2001, 7),
+('Computer Systems Engineering', 'Elective', 2001, 7),
+('Computer Systems Engineering', 'Elective', 9999, 2),
+('Computer Systems Engineering', 'Elective', 9999, 6);
 

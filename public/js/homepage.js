@@ -53,6 +53,9 @@ function createTable(tableID, selectedProgram, numOfYears) {
   AJAXRequest( function(response) {
 
     var json = JSON.parse(response);
+    var listOfElectives = json[1];
+
+    json = json[0];
     prerequisiteTable = new table(tableID, numOfYears, selectedProgram);
 
     var term, 
@@ -74,7 +77,6 @@ function createTable(tableID, selectedProgram, numOfYears) {
       }
 
       var isElective = false;
-      var listOfElectives = [];
 
 
       // Loop through courses within this term

@@ -1,7 +1,7 @@
 <?php
 	require"../config.php";
 	require "timeTable.class.php";
-	// require '/Users/SuperiMan/repo/kint/Kint.class.php';
+	require '/Users/SuperiMan/repo/kint/Kint.class.php';
 
 	if (isset($_POST['action'])){
 		$variable = $_POST;
@@ -15,7 +15,8 @@
 		case 'prereqTree':
 			$program = $variable['program'];
 			$result = $db->getPrerequisiteTree($program);
-			echo json_encode($result);
+			$elective = $db->getElectivesByProgram($program);
+			echo json_encode([$result, $elective]);
 			break;
 
 		case 'timeTable2':
@@ -27,14 +28,14 @@
 
 			$singleTimeTable = getATimeTable($courseArray, $maxNumOfCourse);
 			$table = $singleTimeTable->getTablesInArray();
+			$elective = $db->getElectivesByProgram($program);
+
 
 			$result = [];
 			$result[] = [$singleTimeTable->toString()];
 			$result[] = $table;
 			$result[] = [$singleTimeTable->message];
 			$result[] = $unCompletedCourses;
-			//TODO: remove this
-			$elective = $unCompletedCourses;
 			$result[] = $elective;  // 
 
 			echo json_encode($result);
@@ -59,14 +60,13 @@
 
 			$singleTimeTable = getATimeTable($courseArray, $maxNumOfCourse);
 			$table = $singleTimeTable->getTablesInArray();
+			$elective = $db->getElectivesByProgram($program);
 			
 			$result = [];
 			$result[] = [$singleTimeTable->toString()];
 			$result[] = $table;
 			$result[] = [$singleTimeTable->message];
 			$result[] = $unCompletedCourses;
-			//TODO: remove this
-			$elective = $unCompletedCourses;
 			$result[] = $elective;  // 
 
 			echo json_encode($result);
