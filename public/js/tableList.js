@@ -8,7 +8,7 @@
 function TableList(id, timeTableObj) {
 
 	var listID = id;
-	var listFrame = document.createElement('div');
+	var listFrame;
 	var courseList = [];
 	var timeTable = timeTableObj;
 
@@ -19,8 +19,7 @@ function TableList(id, timeTableObj) {
 
 
 	function initFrame() {
-		var list = document.getElementById(listID);
-		list.appendChild(listFrame);
+		listFrame = document.getElementById(listID);
 	}
 
 	function appendTable(courses) {
@@ -29,7 +28,7 @@ function TableList(id, timeTableObj) {
 
 		var formattedBody = formatBody(courses);
 
-		item.className = 'sidebar-item';
+		item.className = id + '-item';
 		item.innerHTML = "<div class='item-header'>Option " + (courseList.length + 1) + "</div>"
 								   + "<div class='item-body'>" + formattedBody + "</div>";
 
@@ -65,12 +64,12 @@ function TableList(id, timeTableObj) {
 			this.table.clearTable();
 
 			// unhighlight all other items
-			var items = document.getElementsByClassName('sidebar-item');
+			var items = document.getElementsByClassName(id + '-item');
 			for (var i = items.length - 1; i >= 0; i--) {
 				items[i].id = '';
 			};
 
-			this.id = 'sidebar-highlight';
+			this.id = id + '-highlight';
 
 			var courses = this.courses;
 

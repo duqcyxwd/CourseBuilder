@@ -233,7 +233,7 @@ var timetable;
 var tableList;
 window.onload = function() {
 	timetable = new Timetable('timetable');
-	tableList = new TableList('sidebar', timetable);
+	tableList = new TableList('alt-table', timetable);
 
 	var timeTableInfo = ReadCookie("TimeTableInfo");
 
@@ -245,7 +245,20 @@ window.onload = function() {
 		// request 
 		AJAXRequest( function(response) {
 		  	var json = JSON.parse(response);
+
+		  	// add courses to sidebar
+		  	listSelectedCourses('selected-courses', 'selected-course', json[0][0].split(","));
+
+		  	// add electives to sidebar
+		  	addElectives('add-elective', json[4]);
+
+		  	// add courses to sidebar
+		  	addCourses('add-course', json[3]);
+
+		  	// add timetables to sidebar
 		  	storeTables(json[1], tableList);
+
+
 		  	console.log("Courses " + json[0]); 
 		  	console.log("Message " + json[2]); 
 		  	console.log("Available Course " + json[3]); 
