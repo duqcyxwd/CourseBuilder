@@ -59,11 +59,11 @@
 
 			$openingClasses = $db->getOpeningClasses();
 			$elective = $db->getElectivesByProgram($program);
-			$unCompletedCourses = getUnCompletedCourses($courseCompleted, $prerequisiteTree, $openingClasses);
-			$coursesInfo = $db->getCourseInfoByCourseArray($unCompletedCourses);
+			$unCompletedAndAvaiableCourses = getUnCompletedCourses($courseCompleted, $prerequisiteTree, $openingClasses);
+			$coursesInfo = $db->getCourseInfoByCourseArray($unCompletedAndAvaiableCourses);
 			
 			
-			$courseArray = createCourseArray($unCompletedCourses, $coursesInfo);
+			$courseArray = createCourseArray($unCompletedAndAvaiableCourses, $coursesInfo);
 
 
 
@@ -71,11 +71,11 @@
 			$table = $singleTimeTable->getTablesInArray();
 			
 			$result = [];
-			$result[] = [$singleTimeTable->toString()];
-			$result[] = $table;
-			$result[] = [$singleTimeTable->message];
-			$result[] = $db->getCouseTitleByCourseArray($unCompletedCourses);
-			$result[] = $elective;  // 
+			$result[] = [$singleTimeTable->toString()];     // 1-6 Courses that we scheduled
+			$result[] = $table;								// Combination of time table that available
+			$result[] = [$singleTimeTable->message];		//Message From Backend
+			$result[] = $db->getCouseTitleByCourseArray($unCompletedAndAvaiableCourses); // A list of course that available and unCompleted
+			$result[] = $elective;  						// A list of Avaiable Elective
 
 			echo json_encode($result);
 
