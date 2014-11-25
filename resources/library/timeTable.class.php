@@ -29,6 +29,14 @@
 			return $r;
 		}
 
+		public function toArray(){
+			$r = [];
+			foreach ($this->courses as $var) {
+				$r[] = [$var->name, $var->courseTitle];
+			}
+			return $r;
+		}
+
 		public function addCourse($c)
 		{
 			if ($this->isFull()) {
@@ -195,16 +203,20 @@
 	*/
 	class Course
 	{
-		function __construct($nameString = "")
+		function __construct($name = "", $title ="")
 		{
 			$this->courseClasses = [];
-			$this->name = $nameString;
+			$this->name = $name;
 			$this->courseCombination = 0;
+			$this->courseTitle = $title;
 		}
 
 		public function addClass($course)
 		{
 			array_push($this->courseClasses, new CourseClass($course));
+			if ($this->courseTitle ="") {
+				$this->name = $course['CourseTitle'];
+			}
 		}
 
 		public function checkConflict($compareCourse)
@@ -274,6 +286,7 @@
 		{
 			// $this->c = $course;
 			$this->courseName = $course['Subject']." ".$course['CourseNumber'];
+			$this->title = $course['CourseTitle'];
 			$this->section = $course['Section'];
 			$this->days = $course['Days'];
 			$this->start_Time = intval($course['Start_Time']);

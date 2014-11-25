@@ -10,6 +10,13 @@
 	}
 
 	session_start();
+	
+	if (isset($variable['max'])) {
+		$maxNumOfCourse=$variable['max'];
+	} else {
+		$maxNumOfCourse = 5;
+	}
+
 	$action = $variable['action'];
 	switch ($action) {
 		case 'prereqTree':
@@ -25,6 +32,8 @@
 
 			$coursesInfo = $db->getCourseInfoByCourseArray($courseSelect);
 			$courseArray = createCourseArray($courseSelect, $coursesInfo);
+
+
 
 			$singleTimeTable = getATimeTable($courseArray, $maxNumOfCourse);
 			$table = $singleTimeTable->getTablesInArray();
@@ -46,27 +55,26 @@
 			$courseCompleted = explode(",", $variable['courseCompleted']);
 			$program = $variable['program'];
 
-			if (isset($variable['max'])) {
-				$maxNumOfCourse=$variable['max'];
-			} else {
-				$maxNumOfCourse = 5;
-			}
+
 
 			$openingClasses = $db->getOpeningClasses();
+			$elective = $db->getElectivesByProgram($program);
 			$unCompletedCourses = getUnCompletedCourses($courseCompleted, $prerequisiteTree, $openingClasses);
-			
 			$coursesInfo = $db->getCourseInfoByCourseArray($unCompletedCourses);
+			
+			
 			$courseArray = createCourseArray($unCompletedCourses, $coursesInfo);
+
+
 
 			$singleTimeTable = getATimeTable($courseArray, $maxNumOfCourse);
 			$table = $singleTimeTable->getTablesInArray();
-			$elective = $db->getElectivesByProgram($program);
 			
 			$result = [];
 			$result[] = [$singleTimeTable->toString()];
 			$result[] = $table;
 			$result[] = [$singleTimeTable->message];
-			$result[] = $unCompletedCourses;
+			$result[] = $db->getCouseTitleByCourseArray($unCompletedCourses);
 			$result[] = $elective;  // 
 
 			echo json_encode($result);

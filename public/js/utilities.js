@@ -244,15 +244,14 @@ function addPopupToElement(elem, headerText, subheaderText, listOfItems, callbac
 
       var item = document.createElement("div");
       item.className = "elective";
-      var course = listOfItems[i].split(" ");
+      var course = listOfItems[i];
       item.name = course[0];
-      item.number = course[1];
-      item.innerHTML = listOfItems[i];
+      item.innerHTML = item.name + " (" + course[1] + ")";
 
       item.onclick = function() {
 
         // update elective
-        body = this.name + " " + this.number;
+        body = course;
         
         if (callback != undefined) {
           callback(body);

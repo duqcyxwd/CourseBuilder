@@ -202,46 +202,42 @@
 			return $electives;
 		}
 
-		function getElectivesByType($electiveType, $tureElectiveType="", $trueElectiveName="")
+		function getElectivesByType($electiveType, $trueElectiveType="", $trueElectiveName="", $sql="")
 		{
-			$sql = "SELECT * FROM Electives WHERE ElectiveType='$electiveType'";
+			if ($sql == "") {
+				$sql = "SELECT * FROM Electives WHERE ElectiveType='$electiveType'";
+			}
 			$result = $this->execute($sql);
 			$electives = [];
 			while ($row = mysqli_fetch_array($result)){
 				if ($row['Subject'] != "Elective") {
-					if ($tureElectiveType == "") {
-						$electives[] = [$electiveType, $row['Subject']." ".$row["CourseNumber"], $row['ElectiveName']];
+					if ($trueElectiveType == "") {
+						$electives[] = [$row['Subject']." ".$row["CourseNumber"], $row['ElectiveName'], $electiveType];
 					} else {
-						$electives[] = [$tureElectiveType, $row['Subject']." ".$row["CourseNumber"], "hi"];
+						$electives[] = [$row['Subject']." ".$row["CourseNumber"], $trueElectiveName, $trueElectiveType];
 					}
 				} else {
 					// pprint($row);
 					if ($row['CourseNumber'] == 3001) {
 						$electives = array_merge($electives, $this->getElectivesByType($row['CourseNumber'], $electiveType, $row['ElectiveName']));
-					} else if ($row['CourseNumber'] == 8883) {
-						// 'SYSC at 3000 or 4000 level'
-						$sql2 = "SELECT DISTINCT Subject, CourseNumber FROM `Classes` where Subject = 'SYSC' and CourseNumber > 3000";
-						$result2 = $this->execute($sql2);
-						while ($row2 = mysqli_fetch_array($result2)){
-							if ($tureElectiveType == "") {
-								$electives[] = [$row['CourseNumber'], $row2['Subject']." ".$row2["CourseNumber"], $row['ElectiveName']];
-							} else {
-								$electives[] = [$tureElectiveType, $row2['Subject']." ".$row2["CourseNumber"], $trueElectiveName];
-							}
+					} else if ($row['CourseNumber'] == 8883 || $row['CourseNumber'] == 7773) {
+						if ($row['CourseNumber'] == 8883) {
+							// 'SYSC at 3000 or 4000 level'
+							$Subject = "SYSC";
+						} else  {
+							$Subject = "ELEC";
+							// 'ELEC at 3000 or 4000 level'
+						}
+						$sql2 = "SELECT DISTINCT Subject, CourseNumber FROM `Classes` where Subject = '$Subject' and CourseNumber > 3000";
+						
+						if ($trueElectiveType == "") {
+							$electives = array_merge($electives, $this->getElectivesByType($row['CourseNumber'], $electiveType, $row['ElectiveName'], $sql2));
+						} else {
+							$electives = array_merge($electives, $this->getElectivesByType($row['CourseNumber'], $trueElectiveType, $trueElectiveName, $sql2));
 						}
 						
-					} else if ($row['CourseNumber'] == 7773) {
-						// 'SYSC at 3000 or 4000 level'
-						$sql2 = "SELECT DISTINCT Subject, CourseNumber FROM `Classes` where Subject = 'ELEC' and CourseNumber > 3000";
-						$result2 = $this->execute($sql2);
-						while ($row2 = mysqli_fetch_array($result2)){
-							if ($tureElectiveType == "") {
-								$electives[] = [$row['CourseNumber'], $row2['Subject']." ".$row2["CourseNumber"], $row['ElectiveName']];
-							} else {
-								$electives[] = [$tureElectiveType, $row2['Subject']." ".$row2["CourseNumber"], $trueElectiveName];
-							}
-						}
-					}else if($row['CourseNumber'] == 9993) {
+
+					} else if($row['CourseNumber'] == 9993) {
 						$electives = array_merge($electives, $this->getElectivesByType($row['CourseNumber'], $electiveType, $row['ElectiveName']));
 					}
 
@@ -252,7 +248,6 @@
 					// (2001, 'Elective', 9993, 'Computer System Engineering Elective B');
 				}
 			}
-			// d($electives);
 			return $electives;
 		}
 
@@ -280,12 +275,37 @@
 			return $classes;
 		}
 
+		function getCouseTitleByCourseArray($courseArray) {
+			$result = [];
+			$term = getCurrentTerm();
+			if (sizeof($courseArray) >0) {
+				$sql = "SELECT * FROM Courses WHERE( 0 ";
+				foreach ($courseArray as $course) {
+					$courseTemp = explode(" ", $course);
+
+					if (count($courseTemp) < 2) return; // TODO: NEED TO HANDLE THIS
+
+					$sql .= "OR (`Subject` = \"".$courseTemp[0]."\" AND "
+						."`CourseNumber` = \"".$courseTemp[1]."\") ";
+				}
+
+				$sql .= ")";
+
+				$queryResult = mysqli_query($this->mysqli, $sql);
+				while ($row = mysqli_fetch_array($queryResult)){
+					$result[] = [$row['Subject']." ".$row['CourseNumber'], $row['CourseTitle']];
+				}
+			}
+			return $result;
+		}
+
 
 		function getCourseInfoByCourseArray($courseArray) {
 			$result = [];
 			$term = getCurrentTerm();
 			if (sizeof($courseArray) >0) {
-				$sql = "SELECT * FROM Classes WHERE `TERM` = \"".$term."\" AND ( 0 ";
+				$sql = "SELECT * FROM (SELECT Classes.CourseNumber, Classes.Subject, Classes.Start_Time, Classes.End_Time, Classes.Days, Classes.RoomCap, Classes.Type, Classes.Section, Classes.Term, Courses.CourseTitle FROM Classes INNER JOIN Courses ON Classes.Subject = Courses.Subject AND Classes.CourseNumber = Courses.CourseNumber) AS p WHERE `TERM` = \"".$term."\" AND ( 0 ";
+				// $sql = "SELECT * FROM Classes WHERE `TERM` = \"".$term."\" AND ( 0 ";
 				foreach ($courseArray as $course) {
 					$courseTemp = explode(" ", $course);
 
