@@ -31,7 +31,7 @@
 			$result = [];
 			$result[] = [$singleTimeTable->toString()];
 			$result[] = $table;
-			$result[] = ["Message from table"];
+			$result[] = [$singleTimeTable->message];
 			$result[] = $unCompletedCourses;
 			//TODO: remove this
 			$elective = $unCompletedCourses;
@@ -63,7 +63,7 @@
 			$result = [];
 			$result[] = [$singleTimeTable->toString()];
 			$result[] = $table;
-			$result[] = ["Message from table"];
+			$result[] = [$singleTimeTable->message];
 			$result[] = $unCompletedCourses;
 			//TODO: remove this
 			$elective = $unCompletedCourses;

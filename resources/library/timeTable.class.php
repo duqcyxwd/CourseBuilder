@@ -10,6 +10,7 @@
 			$this->numberOfCourses = 0;
 			$this->maxmiumCourseTaking = $max;
 			$this->numOfSulotion = 10; // 
+			$this->message = "";
 
 		}
 
@@ -133,6 +134,16 @@
 			}
 			$result = [];
 			$this->recursiveGetTimeTables($result, $combination, [], 0, 0);
+
+
+
+			$size = $this->numberOfCourses;
+			while ($result == []) {
+				array_pop($combination);
+				$size--;
+				$this->message .= $this->courses[$size-1]->name." has non-fixable time conflict\n";
+				$this->recursiveGetTimeTables($result, $combination, [], 0, 0);
+			}
 			return $result;
 		}
 	}

@@ -244,6 +244,7 @@ window.onload = function() {
 
 		// request 
 		AJAXRequest( function(response) {
+		  	// alert(response);
 		  	var json = JSON.parse(response);
 		  	storeTables(json[1], tableList);
 		  	console.log("Courses " + json[0]); 
