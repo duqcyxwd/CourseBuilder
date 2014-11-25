@@ -39,10 +39,11 @@
 
 			$openingClasses = $db->getOpeningClasses();
 			$unCompletedCourses = getUnCompletedCourses($courseCompleted, $prerequisiteTree, $openingClasses);
-			$coursesInfo = $db->getCourseInfoByCourseArray(flatArray($unCompletedCourses));
+			$coursesInfo = $db->getCourseInfoByCourseArray($unCompletedCourses);
 
 			$courseArray = createCourseArray($unCompletedCourses, $coursesInfo);
 
+			// d($courseArray);
 			$singleTimeTable = getATimeTable($courseArray, $maxNumOfCourse);
 			$table = $singleTimeTable->getTablesInArray();
 			
@@ -50,8 +51,10 @@
 			$result[] = [$singleTimeTable->toString()];
 			$result[] = $table;
 			$result[] = ["Message"];
-			$result[] = flatArray($unCompletedCourses);
-			$result[] = flatArray($unCompletedCourses);
+			$result[] = $unCompletedCourses;
+			//TODO: remove this
+			$elective = $unCompletedCourses;
+			$result[] = $elective;  // 
 
 			echo json_encode($result);
 
@@ -105,16 +108,14 @@
 
 		if (count($unCompletedCourses) == 0) return []; // TODO: WHAT IF NO COURSES SELECTED?
 
-		foreach ($unCompletedCourses as $term => $coursesOfOneTerm) {
-			foreach ($coursesOfOneTerm as $number => $singleCourse) {
-				$course = new Course($singleCourse);
-				foreach ($classesInfo as $classInfo) {
-					if ($singleCourse == $classInfo["Subject"]." ".$classInfo["CourseNumber"]){
-						$course->addClass($classInfo);
-					} 
-				}
-				array_push($result, $course);
+		foreach ($unCompletedCourses as $number => $singleCourse) {
+			$course = new Course($singleCourse);
+			foreach ($classesInfo as $classInfo) {
+				if ($singleCourse == $classInfo["Subject"]." ".$classInfo["CourseNumber"]){
+					$course->addClass($classInfo);
+				} 
 			}
+			array_push($result, $course);
 		}
 
 		return $result;
@@ -237,7 +238,7 @@
 				}
 			}
 		}
-		return $requiredCourses;
+		return flatArray($requiredCourses);
 	}
 
 	function checkPrerequisites($value='')
