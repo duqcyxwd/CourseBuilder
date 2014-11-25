@@ -26,9 +26,12 @@ function TableList(id, timeTableObj) {
 	function appendTable(courses) {
 
 		var item = document.createElement('div');
+
+		var formattedBody = formatBody(courses);
+
 		item.className = 'sidebar-item';
 		item.innerHTML = "<div class='item-header'>Option " + (courseList.length + 1) + "</div>"
-								   + "<div class='item-body'>" + JSON.stringify(courses).substring(0,100) + "</div>";
+								   + "<div class='item-body'>" + formattedBody + "</div>";
 
 		// append course list and timeTable to item
 		item.courses = courses;
@@ -38,6 +41,19 @@ function TableList(id, timeTableObj) {
 		listFrame.appendChild(item);
 		
 		courseList.push(courses);
+	}
+
+
+	function formatBody(courses) {
+
+		var formattedString = "";
+		for (var i = 0; i < courses.length; i++) {
+			if (formattedString.indexOf(courses[i][0]) == -1 ) {
+				formattedString += courses[i][0] + ", ";
+			}
+		}
+
+		return formattedString;
 	}
 
 

@@ -186,8 +186,8 @@ function Timetable(id) {
 			newCell = document.createElement('td');
 			newCell.rowSpan   = diffTime;
 			newCell.className = prevClass;
+			newCell.id				= 'course';
 			newCell.innerHTML = courseInfo;
-			newCell.style.backgroundColor = "#00A5FB";
 
 
 			// get the first cell
@@ -228,7 +228,7 @@ function Timetable(id) {
 }
 
 
-
+// MOVE THIS CODE OUTSIDE OF THE TIMETABLE CLASS
 var timetable;
 var tableList;
 window.onload = function() {
