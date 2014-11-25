@@ -40,32 +40,6 @@
 			$table = $singleTimeTable->getTablesInArray();
 			echo json_encode($table);
 
-			if ($testing) {
-				echo "hi";
-				// for ($i=0; $i < sizeof($openingClasses); $i++) { 
-				// 	pprint($openingClasses[$i]);
-				// }
-
-				// echo "CourseCompleted";
-				// pprint($courseCompleted);
-
-				// echo "<br>Program: $program<br>"; 
-
-				// echo "prerequisiteTree: <br>";
-				// print_r($prerequisiteTree);
-
-			echo "<br>";
-			$unCompletedCourses = getUnCompletedCourses($courseCompleted, $prerequisiteTree, $openingClasses);
-			$coursesInfo = $db->getCourseInfoByCourseArray(flatArray($unCompletedCourses));
-
-				// getTimeTables($timeTables, $courseArray, 0, new TimeTable());
-				echo "Result: <br>";
-				// d($singleTimeTable->toString());
-
-				echo "Time table: <br>";
-				// d($table);
-				// pprint($table);
-			}
 
 			// getTimeTables($timeTables, $courseArray, 0, new TimeTable());
 			// $singleTimeTable = getTimeTable($courseArray);

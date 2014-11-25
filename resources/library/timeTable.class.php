@@ -4,9 +4,10 @@
 	*/
 	class TimeTable
 	{
-		function __construct($max="3")
+		function __construct($max="5")
 		{
 			$this->courses = [];
+			$this->numberOfCourses = 0;
 			$this->maxmiumCourseTaking = $max;
 			// TODO: Deleted this if not needed
 			$this->limit = 100; // limit the operation that program will loop
@@ -38,6 +39,7 @@
 			if ($this->checkTimeConflict($c)) {
 				// TODO:add..........
 				array_push($this->courses, $c);
+				$this->numberOfCourses ++;
 				return true;
 			} else {
 				return false;
@@ -46,7 +48,7 @@
 
 		public function isFull()
 		{
-			return sizeof($this->courses) >= $this->maxmiumCourseTaking;
+			return $this->numberOfCourses >= $this->maxmiumCourseTaking;
 		}
 
 		public function checkTimeConflict($value='')
@@ -59,24 +61,7 @@
 			return true;
 		}
 
-		public function getATable()
-		{
-			$numberOfCourses = sizeof($this->courses);
-			$combination = [];
-			foreach ($this->courses as $couse) {
-				$combination[] = $couse->getCourseCombination();
-				// d($couse->getCourseCombination());
-			}
 
-			$result = [];
-			if ($numberOfCourses > 6) {
-				echo "table for this number of courses (". $numberOfCourses.") is not implement yet";
-			}
-
-			$this->getAlotOfTableTable($result, $combination, [], 0, 0);
-
-			return $result;
-		}
 
 		/**
 		 * [getAlotOfTableTable description]
@@ -93,9 +78,15 @@
 				if(!hasTimeConflictArrayToClass($this->getArrayByPath($path, $combination), $combination[$x][$y])) {
 					$path[] = [$x, $y];
 					if ($x == sizeof($combination)-1) {
-						// Find one solution
+						// Found one solution
 						$this->numOfSulotion--;
-						$result[] = flatArray($this->getArrayByPath($path, $combination));
+
+						$oneSolution = flatArray($this->getArrayByPath($path, $combination));
+						$resultInArray = [];
+						foreach ($oneSolution as $class) {
+							$resultInArray[] = ($class->toArray());
+						}
+						$result[] = $resultInArray;
 
 						if ($this->numOfSulotion!= 0) {
 							// next solution
@@ -133,26 +124,18 @@
 
 		public function getATableInArray()
 		{
-			$result = $this->getATable()[0];
-			$resultInArray = [];
-
-			foreach ($result as $class) {
-				$resultInArray[] = ($class->toArray());
-			}
-			return [$resultInArray];
+			return getTablesInArray()[0];
 		}
 
 		public function getTablesInArray()
 		{
-			$result = $this->getATable();
-			$resultInArray = [];
-			foreach ($result as $key => $solution) {
-				$resultInArray[] = [];
-				foreach ($solution as $class) {
-					$resultInArray[$key][] = ($class->toArray());
-				}
+			$combination = [];
+			foreach ($this->courses as $couse) {
+				$combination[] = $couse->getCourseCombination();
 			}
-			return $resultInArray;
+			$result = [];
+			$this->getAlotOfTableTable($result, $combination, [], 0, 0);
+			return $result;
 		}
 	}
 
@@ -165,13 +148,13 @@
 	 *         false: there is no conflict	
 	 */
 	function hasTimeConflictArrayToClass($classArrayA, $classArrayB)
-	{
+	{	
 		$flat_classArrayA = flatArray($classArrayA);
 		$flat_classArrayB = flatArray($classArrayB);
 
 		foreach ($flat_classArrayA as $keyA => $classA) {
 			foreach ($flat_classArrayB as $keyB => $classB) {
-				if (hasClassTimeConflict($classA, $classB)) {
+				if ($classA->hasConflictWith($classB)) {
 					return true;
 				}
 			}
@@ -188,7 +171,7 @@
 	{
 		foreach ($classArray as $keyA => $classA) {
 			foreach ($classArray as $keyB => $classB) {
-				if ($keyA != $keyB and hasClassTimeConflict($classA, $classB)) {
+				if ($keyA != $keyB and $classA->hasConflictWith($classB)) {
 					return true;
 				}
 			}
@@ -196,31 +179,7 @@
 		return false;
 	}
 
-	/**
-	 * Check the time conflict between two classes
-	 * @param  CourseClass  $classA CourseClass Object
-	 * @param  CourseClass  $classB CourseClass Object
-	 * @return true : there is conflict
-	 *         false: there is no conflict
-	 */
-	function hasClassTimeConflict($classA, $classB) {
-		$daysA = str_split($classA->days);
-		$daysB = str_split($classB->days);
 
-		if (array_intersect($daysA, $daysB) == []) {
-			return false;
-		} else {
-			$A = $classA->start_Time;
-			$B = $classA->end_Time;
-			$C = $classB->start_Time;
-			$D = $classB->end_Time;
-
-			if (($A < $D and $D <= $B) or ($A <= $C and $C < $B)) {
-				return true;
-			}
-			return false;
-		}
-	}
 
 	/**
 	* 
@@ -324,6 +283,31 @@
 				return false;
 			}
 			return true;
+		}
+
+		/**
+		 * Check the time conflict between two classes
+		 * @param  CourseClass  $classB CourseClass Object
+		 * @return true : there is conflict
+		 *         false: there is no conflict
+		 */
+		function hasConflictWith($classB) {
+			$daysA = str_split($this->days);
+			$daysB = str_split($classB->days);
+
+			if (array_intersect($daysA, $daysB) == []) {
+				return false;
+			} else {
+				$A = $this->start_Time;
+				$B = $this->end_Time;
+				$C = $classB->start_Time;
+				$D = $classB->end_Time;
+
+				if (($A < $D and $D <= $B) or ($A <= $C and $C < $B)) {
+					return true;
+				}
+				return false;
+			}
 		}
 	}
 
