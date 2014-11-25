@@ -21,7 +21,21 @@
 		case 'timeTable2':
 			$program = $variable['program'];
 			$courseSelect = $variable['course'];
+
 			$coursesInfo = $db->getCourseInfoByCourseArray($courseSelect);
+			$courseArray = createCourseArray($courseSelect, $coursesInfo);
+
+			$singleTimeTable = getATimeTable($courseArray, $maxNumOfCourse);
+			$table = $singleTimeTable->getTablesInArray();
+
+			$result = [];
+			$result[] = [$singleTimeTable->toString()];
+			$result[] = $table;
+			$result[] = ["Message from table"];
+			$result[] = $unCompletedCourses;
+			//TODO: remove this
+			$elective = $unCompletedCourses;
+			$result[] = $elective;  // 
 
 			echo json_encode($result);
 			break;
@@ -39,18 +53,17 @@
 
 			$openingClasses = $db->getOpeningClasses();
 			$unCompletedCourses = getUnCompletedCourses($courseCompleted, $prerequisiteTree, $openingClasses);
+			
 			$coursesInfo = $db->getCourseInfoByCourseArray($unCompletedCourses);
-
 			$courseArray = createCourseArray($unCompletedCourses, $coursesInfo);
 
-			// d($courseArray);
 			$singleTimeTable = getATimeTable($courseArray, $maxNumOfCourse);
 			$table = $singleTimeTable->getTablesInArray();
 			
 			$result = [];
 			$result[] = [$singleTimeTable->toString()];
 			$result[] = $table;
-			$result[] = ["Message"];
+			$result[] = ["Message from table"];
 			$result[] = $unCompletedCourses;
 			//TODO: remove this
 			$elective = $unCompletedCourses;
@@ -116,29 +129,6 @@
 				} 
 			}
 			array_push($result, $course);
-		}
-
-		return $result;
-	}
-
-	/*
-		return an array of Course Object
-	 */
-	function createCourseArrayFromInfoList($classesInfo){
-		$result = [];
-
-		if (count($unCompletedCourses) == 0) return []; // TODO: WHAT IF NO COURSES SELECTED?
-
-		foreach ($unCompletedCourses as $term => $coursesOfOneTerm) {
-			foreach ($coursesOfOneTerm as $number => $singleCourse) {
-				$course = new Course($singleCourse);
-				foreach ($classesInfo as $classInfo) {
-					if ($singleCourse == $classInfo["Subject"]." ".$classInfo["CourseNumber"]){
-						$course->addClass($classInfo);
-					} 
-				}
-				array_push($result, $course);
-			}
 		}
 
 		return $result;
