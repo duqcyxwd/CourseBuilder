@@ -1,7 +1,7 @@
 <?php
 	require"../config.php";
 	require "timeTable.class.php";
-	require '/Users/SuperiMan/repo/kint/Kint.class.php';
+	// require '/Users/SuperiMan/repo/kint/Kint.class.php';
 
 	if (isset($_POST['action'])){
 		$variable = $_POST;

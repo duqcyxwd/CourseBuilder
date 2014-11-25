@@ -8,7 +8,7 @@ function Timetable(id) {
 
 	var DAYS_IN_A_WEEK = 7;
 	var TOTAL_ROWS = 25; // 30 minute blocks
-	var TOTAL_COLS = 8;
+	var TOTAL_COLS = 9;
 
 	var weekdays = {
 			1 : 'Sunday',
@@ -214,7 +214,9 @@ function Timetable(id) {
 				}
 			}
 
-			firstRow.parentNode.replaceChild(newCell, firstRow);
+			if (firstRow != null) {
+				firstRow.parentNode.replaceChild(newCell, firstRow);
+			}
 		}
 	}
 
@@ -243,11 +245,11 @@ window.onload = function() {
 		// request 
 		AJAXRequest( function(response) {
 		  	var json = JSON.parse(response);
-		  	storeTables(json, tableList);
+		  	storeTables(json[1], tableList);
 		  	console.log("Courses " + json[0]); 
 		  	console.log("Message " + json[2]); 
-		  	console.log("Available Course " + json[2]); 
-		  	console.log("Available Elective " + json[3]); 
+		  	console.log("Available Course " + json[3]); 
+		  	console.log("Available Elective " + json[4]); 
 		  	var courseArray = json[1][0];
 		  	for (var i = courseArray.length - 1; i >= 0; i--) {
 		  		var info = courseArray[i][0] + " " + courseArray[i][1];
