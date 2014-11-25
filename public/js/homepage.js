@@ -20,18 +20,22 @@ function submitTable() {
 
   if (prerequisiteTable == null) return;
   var selectedCourses = prerequisiteTable.getStringFormat();
+  var maxCourseTaking = document.getElementById('max').value;
   var page = TIMETABLE_URL;
   var params = { action: "timeTable", 
                  courseCompleted: selectedCourses, 
-                 program: prerequisiteTable.getProgramName()
+                 program: prerequisiteTable.getProgramName(),
+                 max: maxCourseTaking
                };
-
-  var form = document.getElementById("submit");
-  form.setAttribute("action", page);
 
   SetCookie("TimeTableInfo", params);
   console.log(prerequisiteTable.getStringFormat());
-  form.submit();
+
+  // TODO: Don't use form.. else It will go to page even without form.submit
+  var form = document.getElementById("submit");
+  form.setAttribute("action", page);
+
+  // form.submit();
   // window.location.href = TIMETABLE_URL;
 }
 

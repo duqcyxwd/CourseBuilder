@@ -33,6 +33,7 @@
 			<label for="submitButton">Submit</label>
 		</form>
 
+		<input type="int" value="3" id='max'/>
 		
 		<div id="year-select-dd" class="wrapper-dropdown" tabindex="1" onclick="selectProgram(this);" style="display:none">
 			<div id="year-select-subtitle">Select a year</div>
