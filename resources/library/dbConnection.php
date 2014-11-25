@@ -33,16 +33,18 @@
 			$unCompletedCourses = getUnCompletedCourses($courseCompleted, $prerequisiteTree, $openingClasses);
 			$coursesInfo = $db->getCourseInfoByCourseArray(flatArray($unCompletedCourses));
 
-			$timeTables = [];
 			$courseArray = createCourseArray($unCompletedCourses, $coursesInfo);
 
-			$singleTimeTable = getTimeTable($courseArray, $maxNumOfCourse);
+			$singleTimeTable = getATimeTable($courseArray, $maxNumOfCourse);
 			$table = $singleTimeTable->getTablesInArray();
 			echo json_encode($table);
 
 
-			// getTimeTables($timeTables, $courseArray, 0, new TimeTable());
-			// $singleTimeTable = getTimeTable($courseArray);
+			// $timeTables = [];
+			// getTimeTables($timeTables, $courseArray, 0, new TimeTable($maxNumOfCourse));
+			// echo json_encode($timeTables);
+
+
 
 			// $openingClasses = $db->getOpeningClasses();
 			$eligibleCourses = $db->getEligibleCourses($courseCompleted, $program, 3); // change the 3
@@ -61,7 +63,7 @@
 			// $courseArray = createCourseArray($unCompletedCourses, $coursesInfo);
 
 			// getTimeTables($timeTables, $courseArray, 0, new TimeTable());
-			// $singleTimeTable = getTimeTable($courseArray);
+			// $singleTimeTable = getATimeTable($courseArray);
 			// echo "Result: <br>";
 
 			// d($singleTimeTable);
@@ -108,8 +110,11 @@
 		$timeTables : the final result
 		$courseArray : Array of courses Object that we can choice
 	 */
-	function getTimeTables($timeTables, $courseArray, $startPoint, $timeTable)
+	function getTimeTables(&$timeTables, $courseArray, $startPoint, $timeTable)
 	{
+		if (sizeof($timeTables) > 2) {
+			return true;
+		}
 		if ($timeTable->isFull()) {
 			array_push($timeTables, $timeTable);
 			pprint("find solution");
@@ -117,17 +122,15 @@
 			return true;
 		}
 		for ($i=$startPoint; $i < sizeof($courseArray); $i++) { 
-			$temp = $timeTable->duplicate();
-			if ($temp->addCourse($courseArray[$i])) {
-				// pprint("called");
-				// d($temp);
-				getTimeTables($timeTables, $courseArray, $i + 1, $temp);
+			// $temp = $timeTable->duplicate();
+			if ($timeTable->addCourse($courseArray[$i])) {
+				getTimeTables($timeTables, $courseArray, $i + 1, $timeTable);
 			}
 		}
 	}
 
 	// get all the single of timeTable
-	function getTimeTable($courseArray, $maxNumOfCourse)
+	function getATimeTable($courseArray, $maxNumOfCourse)
 	{
 		$timeTable = new TimeTable($maxNumOfCourse);
 		for ($i=0; $i < sizeof($courseArray); $i++) { 

@@ -115,7 +115,7 @@ function objectToParameters(obj) {
 function SetCookie(cookieName, cookieValue, minutes) {
   var currentTime = new Date();
   var expiresTime = new Date();
-  if (minutes==null || minutes==0) minutes=5;
+  if (minutes==null || minutes==0) minutes=1000;
   expiresTime.setTime(currentTime.getTime() + 60000*minutes);
   var cookie = cookieName+"="+JSON.stringify(cookieValue);
   document.cookie = cookie + ";expires="+expiresTime.toGMTString();
@@ -129,7 +129,7 @@ function SetCookie(cookieName, cookieValue, minutes) {
 **/
 function ReadCookie(cookieName) {
   var result = document.cookie.match(new RegExp(cookieName + '=([^;]+)'));
-  console.log(result); 
+  // console.log(result); 
   result && (result = JSON.parse(result[1]));
   return result;
 }
