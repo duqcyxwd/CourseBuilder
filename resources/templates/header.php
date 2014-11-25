@@ -37,4 +37,8 @@
 		</a>
 	</header>
 
+	<!-- Popup Messages -->
+	<div id="light" class="popupContent"></div>
+	<div id="fade" class="blackOverlay"></div>
+
 	<div id="container">
