@@ -151,19 +151,40 @@
 
 			foreach ($courses as $key => $course) {
 				$term = '' . $course['YearRequirement'];
-				if (isset($courseArray[$term]))
-					array_push($courseArray[$term], $course['Subject'] . " " . $course['CourseNumber']);
-				else
-					$courseArray[$term] = array($course['Subject'] . " " . $course['CourseNumber']);
+				$courseTitle = $course['Subject'] . " " . $course['CourseNumber'];
+
+				// CLEAN THIS UP
+
+				// if ($course['Subject'] == 'Elective') {
+				// 	$courseTitle = $this->getElectives($course['CourseNumber']);
+				// }
+
+				if (isset($courseArray[$term])) {
+					array_push($courseArray[$term], $courseTitle);
+				} else {
+					$courseArray[$term] = array($courseTitle);
+				}
 			}
 
 			return $courseArray;
 		}
 
 
-		function getElectives($program)
+		function getElectives($electiveType, $coureTitle)
 		{
-			// todo
+			$electives = $courseTitle . " : [";
+			// $electives = array();
+
+			$sql = "SELECT * FROM Electives WHERE ElectiveType='$electiveType'";
+			$result = $this->execute($sql);
+			while ($row = mysqli_fetch_array($result)){
+				$electives .= $row['Subject'] . " " . $row['CourseNumber'] . ",";
+				// array_push($electives, $row['Subject'] . $row['CourseNumber']);
+			}
+
+			$electives = trim($electives, ",") . "]";
+			// print_r($electives);
+			return $electives;
 		}
 
 

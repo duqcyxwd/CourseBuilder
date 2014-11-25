@@ -136,6 +136,20 @@ function Timetable(id) {
 
 
 	/**
+	 * clearTable
+	 *
+	 * remove all elements from the table
+	 *
+	 */
+
+	function clearTable() {
+		table.innerHTML = "";
+		tableBody.innerHTML = "";
+		init();
+	}
+
+
+	/**
 	 * appendCourse
 	 *
 	 * adds a new course to the timetable
@@ -206,16 +220,21 @@ function Timetable(id) {
 
 
 	this.appendCourse = appendCourse;
+	this.clearTable = clearTable;
+
 	init();
 }
 
 
 
 var timetable;
+var tableList;
 window.onload = function() {
 	timetable = new Timetable('timetable');
+	tableList = new TableList('sidebar', timetable);
 
 	var timeTableInfo = ReadCookie("TimeTableInfo");
+
 
 	if (!(typeof timeTableInfo === 'undefined' || timeTableInfo === null)){
 		var page = DB_CONNECTION_URL,
@@ -224,6 +243,7 @@ window.onload = function() {
 		// request 
 		AJAXRequest( function(response) {
 		  	var json = JSON.parse(response);
+		  	storeTables(json, tableList);
 		  	var courseArray = json[0];
 		  	for (var i = courseArray.length - 1; i >= 0; i--) {
 		  		var info = courseArray[i][0] + " " + courseArray[i][1];

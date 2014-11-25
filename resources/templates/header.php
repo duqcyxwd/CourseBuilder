@@ -6,6 +6,8 @@
 
 	<?php if ($pageTitle == "Administrator Login") : ?>
 		<link rel="stylesheet" href="<?php echo ROOT_PATH; ?>/css/admin.css" type="text/css">	
+	<?php elseif ($pageTitle == "Timetable") : ?>
+		<link rel="stylesheet" href="<?php echo ROOT_PATH; ?>/css/tableList.css" type="text/css">	
 	<?php endif; ?>
 
 
@@ -20,6 +22,7 @@
 	<script src="<?php echo ROOT_PATH . '/js/homepage.js'; ?>"></script>
 <?php elseif ($pageTitle == "Timetable") : ?>
 	<script src="<?php echo ROOT_PATH . '/js/timetable.js'; ?>"></script>
+	<script src="<?php echo ROOT_PATH . '/js/tableList.js'; ?>"></script>
 <?php endif; ?>
 
 <body>

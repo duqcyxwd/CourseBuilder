@@ -28,10 +28,10 @@
 			</ul>
 		</div>
 
-		<form class='submit' id='submit'>
+		<div class='submit' id='submit'>
 			<input type="submit" value="Submit" id="submitButton"/>
 			<label for="submitButton">Submit</label>
-		</form>
+		</div>
 
 		<input type="int" value="5" id='max'/>
 		

@@ -30,13 +30,7 @@ function submitTable() {
 
   SetCookie("TimeTableInfo", params);
   console.log(prerequisiteTable.getStringFormat());
-
-  // TODO: Don't use form.. else It will go to page even without form.submit
-  var form = document.getElementById("submit");
-  form.setAttribute("action", page);
-
-  // form.submit();
-  // window.location.href = TIMETABLE_URL;
+  window.location.href = TIMETABLE_URL;
 }
 
 
@@ -82,12 +76,13 @@ function createTable(tableID, selectedProgram, numOfYears) {
       var isElective = false;
       var listOfElectives = [];
 
+
       // Loop through courses within this term
       for (var course = 0; course < json[termNumber].length; course++) {
         courseLabel = json[termNumber][course];
         courseDetails = courseLabel.split(/[ ,]+/);
-        // TODO CHANGE THIS TO ELECTIVE
-        isElective = (courseDetails[name] === "FIX") ? true : false;
+
+        isElective = (courseDetails[name] === "Elective") ? true : false;
 
         prerequisiteTable.appendCourse(year, term, courseDetails[name], courseDetails[code], courseLabel, isElective, listOfElectives);
       }

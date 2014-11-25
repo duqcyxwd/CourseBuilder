@@ -129,7 +129,19 @@ function SetCookie(cookieName, cookieValue, minutes) {
 **/
 function ReadCookie(cookieName) {
   var result = document.cookie.match(new RegExp(cookieName + '=([^;]+)'));
-  // console.log(result); 
   result && (result = JSON.parse(result[1]));
   return result;
+}
+
+
+/**
+ * storeTables
+ *
+ * stores all tables in tableList object
+ */
+function storeTables(tables, tableListObj) {
+
+  for (var i = 0; i < tables.length; i++) {
+    tableListObj.appendTable(tables[i]);
+  }
 }
