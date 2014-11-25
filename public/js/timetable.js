@@ -159,8 +159,8 @@ function Timetable(id) {
 		var daysArray = days.split("");
 
 		var row,
-				newCell,
-				prevClass;
+			newCell,
+			prevClass;
 
 
 		// loop through days string
@@ -174,6 +174,7 @@ function Timetable(id) {
 			newCell.className = prevClass;
 			newCell.innerHTML = courseInfo;
 			newCell.style.backgroundColor = "#00A5FB";
+
 
 			// get the first cell
 			var rows = row[startRow].cells;
@@ -205,7 +206,6 @@ function Timetable(id) {
 
 
 	this.appendCourse = appendCourse;
-
 	init();
 }
 
@@ -223,20 +223,17 @@ window.onload = function() {
 
 		// request 
 		AJAXRequest( function(response) {
-		  var json = JSON.parse(response);
-
-		  // Loop through terms
-		  for (var solution = 0; solution < json.length; solution++) {
-		  	var courseArray = json[solution];
+		  	var json = JSON.parse(response);
+		  	var courseArray = json[0];
 		  	for (var i = courseArray.length - 1; i >= 0; i--) {
 		  		var info = courseArray[i][0] + " " + courseArray[i][1];
 		  		var days = courseArray[i][2];
 		  		var startTime = courseArray[i][3];
 		  		var endTime = courseArray[i][4];
 
-					timetable.appendCourse(days, startTime, endTime, info);
+				timetable.appendCourse(days, startTime, endTime, info);
 		  	};
-		  }
+		  
 		}, page, params);
 	}
 }
