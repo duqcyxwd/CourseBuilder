@@ -2,7 +2,7 @@
 -- ("Elective", 9999, "Complementary studies electives"),
 -- ("Elective", 1111, "Basic science electives"),
 -- ("Elective", 2001, "Computer System Engineering Elective B"),
--- ("Elective", 3001, "Software Engkneering Elective A"),
+-- ("Elective", 3001, "Software Engineering Elective A"),
 -- ("Elective", 3002, "Software Engineering Elective B"),
 -- ("Elective", 4003, "Communications Engineering Elective C"),
 -- ("Elective", 5001, "Biomedical & Electrical Engineering Elective A"),

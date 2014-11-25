@@ -14,6 +14,7 @@
 		case 'prereqTree':
 			$program = $variable['program'];
 			$result = $db->getPrerequisiteTree($program);
+
 			echo json_encode($result);
 			break;
 		case 'timeTable':

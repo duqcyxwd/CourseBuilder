@@ -1,0 +1,46 @@
+#sidebar-wrapper {
+	overflow: scroll;
+}
+
+#sidebar {
+ 	width: 100%;
+}
+
+#sidebar-header {
+	font-weight: thin;
+	text-align: center;
+	font-size: 14pt;
+	background: #000;
+	padding: 12px;
+
+	color: #999;
+}
+
+.sidebar-item {
+	height: 80px;
+	padding: 8px;
+	/*width: 100%;*/
+	background-color: #9C9C9C;
+	color: #000;
+	border-bottom: solid #CCC 1px;
+}
+
+.item-header {
+	font-weight: bold;
+	font-size: 14pt;
+
+}
+
+.item-body {
+	font-size: 8pt;	
+}
+
+#sidebar-highlight {
+	background-color: #C0C0C0;
+}
+
+.sidebar-item:hover {
+	background-color: black;
+	color: white;
+	cursor: pointer;
+}

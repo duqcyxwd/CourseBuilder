@@ -54,6 +54,7 @@ function createTable(tableID, selectedProgram, numOfYears) {
   // request 
   AJAXRequest( function(response) {
 
+    console.log(response);
     var json = JSON.parse(response);
     prerequisiteTable = new table(tableID, numOfYears, selectedProgram);
 
@@ -64,6 +65,7 @@ function createTable(tableID, selectedProgram, numOfYears) {
         name = 0,
         code = 1;
     
+    console.log(json);
     // Loop through terms
     for (var termNumber = 0; termNumber < json.length; termNumber++) {
 
@@ -78,12 +80,13 @@ function createTable(tableID, selectedProgram, numOfYears) {
       var isElective = false;
       var listOfElectives = [];
 
+
       // Loop through courses within this term
       for (var course = 0; course < json[termNumber].length; course++) {
         courseLabel = json[termNumber][course];
         courseDetails = courseLabel.split(/[ ,]+/);
-        // TODO CHANGE THIS TO ELECTIVE
-        isElective = (courseDetails[name] === "FIX") ? true : false;
+
+        isElective = (courseDetails[name] === "Elective") ? true : false;
 
         prerequisiteTable.appendCourse(year, term, courseDetails[name], courseDetails[code], courseLabel, isElective, listOfElectives);
       }

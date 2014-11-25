@@ -204,7 +204,7 @@ header {
 						SIDEBAR
 ******************************/
 
-#sidebar {
+#sidebar-wrapper {
 	margin: 0 auto;
 	width: 20%;
 	float: right;
@@ -214,13 +214,6 @@ header {
 	
 	/*margin: 5px 5px 5px 5px;*/
 }
-
-#inner-sb {
-	padding: 5px 5px 5px 5px;
-
-	color: black;
-}
-
 
 /******************************
 						FOOTER
