@@ -190,8 +190,8 @@
 		function getElectivesByProgram($program)
 		{
 			$electives = [];
-			$sql = "SELECT DISTINCT CourseNumber FROM `ProgramsRequirement` where Subject = 'Elective'";
-			//$sql = "SELECT DISTINCT CourseNumber FROM `ProgramsRequirement` where Subject = 'Elective' and Program ='$program'";
+			// $sql = "SELECT DISTINCT CourseNumber FROM `ProgramsRequirement` where Subject = 'Elective'";
+			$sql = "SELECT DISTINCT CourseNumber FROM `ProgramsRequirement` where Subject = 'Elective' and Program ='$program'";
 			$result = $this->execute($sql);
 			while ($row = mysqli_fetch_array($result)){
 				$electiveTypes[] = $row['CourseNumber'];
