@@ -23,7 +23,7 @@
 		public function toString(){
 			$r = "";
 			foreach ($this->courses as $var) {
-				$r .= $var->name."; ";
+				$r .= $var->name.",";
 			}
 			return $r;
 		}

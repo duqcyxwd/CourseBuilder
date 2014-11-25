@@ -17,6 +17,14 @@
 			$result = $db->getPrerequisiteTree($program);
 			echo json_encode($result);
 			break;
+
+		case 'timeTable2':
+			$program = $variable['program'];
+			$courseSelect = $variable['course'];
+			$coursesInfo = $db->getCourseInfoByCourseArray($courseSelect);
+
+			echo json_encode($result);
+			break;
 		case 'timeTable':
 
 			$prerequisiteTree = $db->getPrerequisiteTree($variable['program']);
@@ -37,7 +45,15 @@
 
 			$singleTimeTable = getATimeTable($courseArray, $maxNumOfCourse);
 			$table = $singleTimeTable->getTablesInArray();
-			echo json_encode($table);
+			
+			$result = [];
+			$result[] = [$singleTimeTable->toString()];
+			$result[] = $table;
+			$result[] = ["Message"];
+			$result[] = flatArray($unCompletedCourses);
+			$result[] = flatArray($unCompletedCourses);
+
+			echo json_encode($result);
 
 
 			// $timeTables = [];
@@ -102,7 +118,29 @@
 		}
 
 		return $result;
+	}
 
+	/*
+		return an array of Course Object
+	 */
+	function createCourseArrayFromInfoList($classesInfo){
+		$result = [];
+
+		if (count($unCompletedCourses) == 0) return []; // TODO: WHAT IF NO COURSES SELECTED?
+
+		foreach ($unCompletedCourses as $term => $coursesOfOneTerm) {
+			foreach ($coursesOfOneTerm as $number => $singleCourse) {
+				$course = new Course($singleCourse);
+				foreach ($classesInfo as $classInfo) {
+					if ($singleCourse == $classInfo["Subject"]." ".$classInfo["CourseNumber"]){
+						$course->addClass($classInfo);
+					} 
+				}
+				array_push($result, $course);
+			}
+		}
+
+		return $result;
 	}
 
 	/*

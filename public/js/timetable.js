@@ -244,7 +244,11 @@ window.onload = function() {
 		AJAXRequest( function(response) {
 		  	var json = JSON.parse(response);
 		  	storeTables(json, tableList);
-		  	var courseArray = json[0];
+		  	console.log("Courses " + json[0]); 
+		  	console.log("Message " + json[2]); 
+		  	console.log("Available Course " + json[2]); 
+		  	console.log("Available Elective " + json[3]); 
+		  	var courseArray = json[1][0];
 		  	for (var i = courseArray.length - 1; i >= 0; i--) {
 		  		var info = courseArray[i][0] + " " + courseArray[i][1];
 		  		var days = courseArray[i][2];
