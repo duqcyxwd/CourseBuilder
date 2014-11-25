@@ -5,10 +5,6 @@
 	$programList = $db->getListOfPrograms();
 ?>
 	
-	<!-- Electives Popup -->
-	<div id="light" class="popupContent"></div>
-	<div id="fade" class="blackOverlay"></div>
-	
 	<section class="program-select">
 		<div id="program-select-title">
 			Please select a program from the dropdown menu

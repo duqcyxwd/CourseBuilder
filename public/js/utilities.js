@@ -112,6 +112,7 @@ function objectToParameters(obj) {
  * Set the value to cookie
  * param obj : cookieName,cookieValue,minutes
 **/
+
 function SetCookie(cookieName, cookieValue, minutes) {
   var currentTime = new Date();
   var expiresTime = new Date();
@@ -127,6 +128,7 @@ function SetCookie(cookieName, cookieValue, minutes) {
  * read the value to cookie
  * param obj : cookieName
 **/
+
 function ReadCookie(cookieName) {
   var result = document.cookie.match(new RegExp(cookieName + '=([^;]+)'));
   result && (result = JSON.parse(result[1]));
@@ -139,9 +141,143 @@ function ReadCookie(cookieName) {
  *
  * stores all tables in tableList object
  */
+
 function storeTables(tables, tableListObj) {
 
   for (var i = 0; i < tables.length; i++) {
     tableListObj.appendTable(tables[i]);
+  }
+}
+
+
+/**
+ * listSelectedCourses
+ *
+ * list all courses selected in the
+ * given DOM element
+ *
+ * param id: element ID
+ * param childClass: className of child element to be created
+ * param courses: array of courses to append to id
+ */
+
+function listSelectedCourses(id, childClass, courses) {
+
+  var elem = document.getElementById(id);
+
+  for (var i = 0; i < courses.length; i++) {
+    if (courses[i].length > 2) { // skip empty strings
+      var course = document.createElement('div');
+      course.innerHTML = courses[i];
+      course.className = childClass;
+      elem.appendChild(course);
+    }
+  }
+}
+
+
+
+/**
+ * addElectives
+ *
+ * add list of electives to id and
+ * display pop-up when user clicks
+ * on the id.
+ *
+ * param id: object to add electives to
+ * param electives: list of electives
+ */
+
+function addElectives(id, electives, callback) {
+
+  var elem = document.getElementById(id);
+  var header = "Select Elective";
+  var subheader = "Please select the elective that you wish to add to your timetable";
+
+  addPopupToElement(elem, header, subheader, electives, callback);
+}
+
+function addCourses(id, courses, callback) {
+
+  var elem = document.getElementById(id);
+  var header = "Select Course";
+  var subheader = "Please select the course that you wish to add to your timetable";
+
+  addPopupToElement(elem, header, subheader, courses, callback);
+}
+
+
+
+/**
+ * addPopupToElement
+ *
+ * add popup with callback to a given element
+ *
+ */
+
+function addPopupToElement(elem, headerText, subheaderText, listOfItems, callback) {
+
+  elem.onclick = function() {
+
+    var content = document.getElementById('light');
+    content.innerHTML = ""; // reset content
+    content.style.display='block';
+    document.getElementById('fade').style.display='block';
+
+    var header = document.createElement("div");
+    header.className = "popupHeader";
+    header.innerHTML = headerText;
+
+    var subheader = document.createElement("div");
+    subheader.className = "popupSubHeader";
+    subheader.innerHTML = subheaderText;
+
+    var electives = document.createElement("div");
+    electives.className = "electivesList";
+
+    // var items = elem.items;
+    // console.log(elem.items);
+
+    for (var i = listOfItems.length - 1; i >= 0; i--) {
+
+      if (listOfItems[i].length < 2) continue; // ignore empty
+
+      var item = document.createElement("div");
+      item.className = "elective";
+      var course = listOfItems[i].split(" ");
+      item.name = course[0];
+      item.number = course[1];
+      item.innerHTML = listOfItems[i];
+
+      item.onclick = function() {
+
+        // update elective
+        body = this.name + " " + this.number;
+        
+        if (callback != undefined) {
+          callback(body);
+        }
+
+        // close pop-up
+        document.getElementById('light').style.display = 'none';
+        document.getElementById('fade').style.display = 'none';
+      }
+
+      electives.appendChild(item);
+    }
+
+    var closeButton = document.createElement("div");
+    closeButton.className = "closeButton";
+    closeButton.innerHTML = "Close";
+    closeButton.onclick = function() {
+      document.getElementById('light').style.display = 'none';
+      document.getElementById('fade').style.display = 'none';
+    }
+
+    // append elements
+    content.appendChild(header);
+    content.appendChild(subheader);
+    content.appendChild(electives);
+    content.appendChild(closeButton);
   }
 }
