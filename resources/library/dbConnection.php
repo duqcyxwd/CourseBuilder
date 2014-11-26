@@ -1,6 +1,7 @@
 <?php
 	require"../config.php";
-	require "timetable.php";
+	require "timeTable.class.php";
+	require '/Users/SuperiMan/repo/kint/Kint.class.php';
 
 	if (isset($_POST['action'])){
 		$variable = $_POST;
@@ -9,66 +10,81 @@
 	}
 
 	session_start();
+	
+	if (isset($variable['max'])) {
+		$maxNumOfCourse=$variable['max'];
+	} else {
+		$maxNumOfCourse = 5;
+	}
+
 	$action = $variable['action'];
 	switch ($action) {
 		case 'prereqTree':
 			$program = $variable['program'];
 			$result = $db->getPrerequisiteTree($program);
+			$elective = $db->getElectivesByProgram($program);
+			echo json_encode([$result, $elective]);
+			break;
+
+		case 'timeTable2':
+			$program = $variable['program'];
+			$courseSelect = $variable['course'];
+
+			$coursesInfo = $db->getCourseInfoByCourseArray($courseSelect);
+			$courseArray = createCourseArray($courseSelect, $coursesInfo);
+
+
+
+			$singleTimeTable = getATimeTable($courseArray, $maxNumOfCourse);
+			$table = $singleTimeTable->getTablesInArray();
+			$elective = $db->getElectivesByProgram($program);
+
+
+			$result = [];
+			$result[] = [$singleTimeTable->toString()];
+			$result[] = $table;
+			$result[] = [$singleTimeTable->message];
+			$result[] = $unCompletedCourses;
+			$result[] = $elective;  // 
+
 			echo json_encode($result);
 			break;
 		case 'timeTable':
 
 			$prerequisiteTree = $db->getPrerequisiteTree($variable['program']);
-			$courseCompleted = explode(";", $variable['courseCompleted']);
+			$courseCompleted = explode(",", $variable['courseCompleted']);
 			$program = $variable['program'];
 
-			if (isset($variable['max'])) {
-				$maxNumOfCourse=$variable['max'];
-			} else {
-				$maxNumOfCourse = 3;
-			}
+
 
 			$openingClasses = $db->getOpeningClasses();
+			$elective = $db->getElectivesByProgram($program);
 			$unCompletedCourses = getUnCompletedCourses($courseCompleted, $prerequisiteTree, $openingClasses);
-			$coursesInfo = $db->getCourseInfoByCourseArray(flatArray($unCompletedCourses));
-
-
-			$timeTables = [];
+			$coursesInfo = $db->getCourseInfoByCourseArray($unCompletedCourses);
+			
+			
 			$courseArray = createCourseArray($unCompletedCourses, $coursesInfo);
-			$singleTimeTable = getTimeTable($courseArray, $maxNumOfCourse);
-			$table = $singleTimeTable->getATableInArray();
-			echo json_encode($table);
 
-			if ($testing) {
-				echo "hi";
-				// for ($i=0; $i < sizeof($openingClasses); $i++) { 
-				// 	pprint($openingClasses[$i]);
-				// }
 
-				// echo "CourseCompleted";
-				// pprint($courseCompleted);
 
-				// echo "<br>Program: $program<br>"; 
+			$singleTimeTable = getATimeTable($courseArray, $maxNumOfCourse);
+			$table = $singleTimeTable->getTablesInArray();
+			
+			$result = [];
+			$result[] = [$singleTimeTable->toString()];
+			$result[] = $table;
+			$result[] = [$singleTimeTable->message];
+			$result[] = $db->getCouseTitleByCourseArray($unCompletedCourses);
+			$result[] = $elective;  // 
 
-				// echo "prerequisiteTree: <br>";
-				// print_r($prerequisiteTree);
+			echo json_encode($result);
 
-			echo "<br>";
-			$unCompletedCourses = getUnCompletedCourses($courseCompleted, $prerequisiteTree, $openingClasses);
-			$coursesInfo = $db->getCourseInfoByCourseArray(flatArray($unCompletedCourses));
 
-				// getTimeTables($timeTables, $courseArray, 0, new TimeTable());
-				echo "Result: <br>";
-				// d($singleTimeTable->toString());
+			// $timeTables = [];
+			// getTimeTables($timeTables, $courseArray, 0, new TimeTable($maxNumOfCourse));
+			// echo json_encode($timeTables);
 
-				echo "Time table: <br>";
-				// d($table);
-				// pprint($table);
-			}
 
-			// getTimeTables($timeTables, $courseArray, 0, new TimeTable());
-			// $singleTimeTable = getTimeTable($courseArray);
-			echo "Result: <br>";
 
 			// $openingClasses = $db->getOpeningClasses();
 			$eligibleCourses = $db->getEligibleCourses($courseCompleted, $program, 3); // change the 3
@@ -87,7 +103,7 @@
 			// $courseArray = createCourseArray($unCompletedCourses, $coursesInfo);
 
 			// getTimeTables($timeTables, $courseArray, 0, new TimeTable());
-			// $singleTimeTable = getTimeTable($courseArray);
+			// $singleTimeTable = getATimeTable($courseArray);
 			// echo "Result: <br>";
 
 			// d($singleTimeTable);
@@ -113,20 +129,17 @@
 
 		if (count($unCompletedCourses) == 0) return []; // TODO: WHAT IF NO COURSES SELECTED?
 
-		foreach ($unCompletedCourses as $term => $coursesOfOneTerm) {
-			foreach ($coursesOfOneTerm as $number => $singleCourse) {
-				$course = new Course($singleCourse);
-				foreach ($classesInfo as $classInfo) {
-					if ($singleCourse == $classInfo["Subject"]." ".$classInfo["CourseNumber"]){
-						$course->addClass($classInfo);
-					} 
-				}
-				array_push($result, $course);
+		foreach ($unCompletedCourses as $number => $singleCourse) {
+			$course = new Course($singleCourse);
+			foreach ($classesInfo as $classInfo) {
+				if ($singleCourse == $classInfo["Subject"]." ".$classInfo["CourseNumber"]){
+					$course->addClass($classInfo);
+				} 
 			}
+			array_push($result, $course);
 		}
 
 		return $result;
-
 	}
 
 	/*
@@ -134,8 +147,11 @@
 		$timeTables : the final result
 		$courseArray : Array of courses Object that we can choice
 	 */
-	function getTimeTables($timeTables, $courseArray, $startPoint, $timeTable)
+	function getTimeTables(&$timeTables, $courseArray, $startPoint, $timeTable)
 	{
+		if (sizeof($timeTables) > 2) {
+			return true;
+		}
 		if ($timeTable->isFull()) {
 			array_push($timeTables, $timeTable);
 			pprint("find solution");
@@ -143,17 +159,15 @@
 			return true;
 		}
 		for ($i=$startPoint; $i < sizeof($courseArray); $i++) { 
-			$temp = $timeTable->duplicate();
-			if ($temp->addCourse($courseArray[$i])) {
-				// pprint("called");
-				// d($temp);
-				getTimeTables($timeTables, $courseArray, $i + 1, $temp);
+			// $temp = $timeTable->duplicate();
+			if ($timeTable->addCourse($courseArray[$i])) {
+				getTimeTables($timeTables, $courseArray, $i + 1, $timeTable);
 			}
 		}
 	}
 
 	// get all the single of timeTable
-	function getTimeTable($courseArray, $maxNumOfCourse)
+	function getATimeTable($courseArray, $maxNumOfCourse)
 	{
 		$timeTable = new TimeTable($maxNumOfCourse);
 		for ($i=0; $i < sizeof($courseArray); $i++) { 
@@ -183,35 +197,23 @@
 		foreach ($requiredCourses as $term => $coursesOfOneTerm) {
 			foreach ($coursesOfOneTerm as $number => $singleCourse) {
 				foreach ($coursesCompleted as $c) {
-
 					// TODO: ... 
 					if ($c != "") {
-						$ccourse = explode(" ", $c);
-						if ($singleCourse == $ccourse[0]." ".$ccourse[1]){
+						if ($singleCourse == $c){
 							$numOfCourseCompledInTree++;
 							unset($requiredCourses[$term][$number]);
 							break;
 						} 
 					}
-					
-					$ccourse = explode(" ", $c);
-					if (count($ccourse) < 2) return; // WHAT IF THE STUDENT HASN'T TAKEN ANY CLASSES?
-
-					if ($singleCourse == $ccourse[0]." ".$ccourse[1]){
-						$numOfCourseCompledInTree++;
-						unset($requiredCourses[$term][$number]);
-						break;
-					} 
 				}
 			}
 			
 		}
 
 		// get course that unCompletedCourses open in current term
-		// check if this course opening
+		// check if this course open or not
 		foreach ($requiredCourses as $term => $coursesOfOneTerm) {
 			foreach ($coursesOfOneTerm as $number => $singleCourse) {
-
 				$courseOpen = false;
 				foreach ($openingClasses as $class) {
 					if ($singleCourse == $class[0]." ".$class[1]){
@@ -234,7 +236,7 @@
 				}
 			}
 		}
-		return $requiredCourses;
+		return flatArray($requiredCourses);
 	}
 
 	function checkPrerequisites($value='')

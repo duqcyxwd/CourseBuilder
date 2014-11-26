@@ -12,7 +12,7 @@ function course (obj, courseName, courseNumber, courseYear, courseTerm, htmlBody
   		element  = obj,
   		selected = false,
       isElect  = false,
-      listOfElectives = electives;
+      listOfElectives = [];
 
   this.year = courseYear;
   this.term = courseTerm;
@@ -27,9 +27,15 @@ function course (obj, courseName, courseNumber, courseYear, courseTerm, htmlBody
       isElect = true;
 
     // TODO REMOVE THIS
-    listOfElectives = ["BIOL 1902", "CHEM 1003", "CHEM 1004", "ERTH 2402", "ERTH 2403", 
-    "ERTH 2415", "ENSC 2001", "FOOD 1001", "NEUR 1201", "PHYS 1001", "PHYS 1003", 
-    "PHYS 1901", "PHYS 1902", "PHYS 2004", "AFRI 1001", "AFRI 1002", "AFRI 2001"];
+    // 
+    // ["9999","PHIL 1000","Complementary Studies Elective"]
+    // 
+    
+    for (var i = electives.length - 1; i >= 0; i--) {
+      if (electives[i][0] == number) {
+        listOfElectives.push(electives[i][1]);
+      }
+    };
 
   }
 

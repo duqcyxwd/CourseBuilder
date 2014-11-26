@@ -8,7 +8,7 @@ function Timetable(id) {
 
 	var DAYS_IN_A_WEEK = 7;
 	var TOTAL_ROWS = 25; // 30 minute blocks
-	var TOTAL_COLS = 8;
+	var TOTAL_COLS = 9;
 
 	var weekdays = {
 			1 : 'Sunday',
@@ -136,6 +136,20 @@ function Timetable(id) {
 
 
 	/**
+	 * clearTable
+	 *
+	 * remove all elements from the table
+	 *
+	 */
+
+	function clearTable() {
+		table.innerHTML = "";
+		tableBody.innerHTML = "";
+		init();
+	}
+
+
+	/**
 	 * appendCourse
 	 *
 	 * adds a new course to the timetable
@@ -145,21 +159,10 @@ function Timetable(id) {
 
 	function appendCourse(days, startTime, endTime, courseInfo) {
 
-		// var splitStartTime = startTime;
-		// var splitEndTime = endTime
-
-		// if (splitStartTime.length != 3 || splitEndTime.length != 3) return;
-
 		var startHour = Math.floor(parseInt(startTime)/100),
 		 		startMin  = parseInt(startTime)%100,
-		 		endHour		= parseInt(endTime)/100,
+		 		endHour		= Math.floor(parseInt(endTime)/100),
 		 		endMin		= Math.floor(parseInt(endTime)%100);
-
-		// var startHour = parseInt(splitStartTime[1]),
-		//  		startMin  = parseInt(splitStartTime[2]),
-		//  		endHour		= parseInt(splitEndTime[1]),
-		//  		endMin		= parseInt(splitEndTime[2]);
-
 
 		var startRow = (startHour - 7) * 2 + (startMin - 5) / 30;
 		var endRow = (endHour - 7) * 2 + (endMin + 5) / 30 - 1;
@@ -170,8 +173,8 @@ function Timetable(id) {
 		var daysArray = days.split("");
 
 		var row,
-				newCell,
-				prevClass;
+			newCell,
+			prevClass;
 
 
 		// loop through days string
@@ -183,8 +186,9 @@ function Timetable(id) {
 			newCell = document.createElement('td');
 			newCell.rowSpan   = diffTime;
 			newCell.className = prevClass;
+			newCell.id				= 'course';
 			newCell.innerHTML = courseInfo;
-			newCell.style.backgroundColor = "#00A5FB";
+
 
 			// get the first cell
 			var rows = row[startRow].cells;
@@ -210,43 +214,66 @@ function Timetable(id) {
 				}
 			}
 
-			firstRow.parentNode.replaceChild(newCell, firstRow);
+			if (firstRow != null) {
+				firstRow.parentNode.replaceChild(newCell, firstRow);
+			}
 		}
 	}
 
 
 	this.appendCourse = appendCourse;
+	this.clearTable = clearTable;
 
 	init();
 }
 
+
+// MOVE THIS CODE OUTSIDE OF THE TIMETABLE CLASS
 var timetable;
+var tableList;
 window.onload = function() {
 	timetable = new Timetable('timetable');
+	tableList = new TableList('alt-table', timetable);
 
-	var page = DB_CONNECTION_URL,
-		selectedProgram = "Communication Engineering";
-		//TODO:
-	    params = { action: "timeTable", program: selectedProgram, max: 3, courseCompleted: "" };
+	var timeTableInfo = ReadCookie("TimeTableInfo");
 
 
-	// request 
-	AJAXRequest( function(response) {
-	  var json = JSON.parse(response);
+	if (!(typeof timeTableInfo === 'undefined' || timeTableInfo === null)){
+		var page = DB_CONNECTION_URL,
+		    params = timeTableInfo
 
-	  // Loop through terms
-	  for (var solution = 0; solution < json.length; solution++) {
-	  	var courseArray = json[solution];
-	  	for (var i = courseArray.length - 1; i >= 0; i--) {
-	  		var info = courseArray[i][0] + " " + courseArray[i][1];
-	  		var days = courseArray[i][2];
-	  		var startTime = courseArray[i][3];
-	  		var endTime = courseArray[i][4];
-			timetable.appendCourse(days, startTime, endTime, info);
+		// request 
+		AJAXRequest( function(response) {
+		  	// alert(response);
+		  	var json = JSON.parse(response);
 
-	  	};
+		  	// add courses to sidebar
+		  	listSelectedCourses('selected-courses', 'selected-course', json[0][0].split(","));
 
-	  }
-	}, page, params);
+		  	// add electives to sidebar
+		  	addElectives('add-elective', json[4]);
 
+		  	// add courses to sidebar
+		  	addCourses('add-course', json[3]);
+
+		  	// add timetables to sidebar
+		  	storeTables(json[1], tableList);
+
+
+		  	console.log("Courses " + json[0]); 
+		  	console.log("Message " + json[2]); 
+		  	console.log("Available Course " + json[3]); 
+		  	console.log("Available Elective " + json[4]); 
+		  	var courseArray = json[1][0];
+		  	for (var i = courseArray.length - 1; i >= 0; i--) {
+		  		var info = courseArray[i][0] + " " + courseArray[i][1];
+		  		var days = courseArray[i][2];
+		  		var startTime = courseArray[i][3];
+		  		var endTime = courseArray[i][4];
+
+				timetable.appendCourse(days, startTime, endTime, info);
+		  	};
+		  
+		}, page, params);
+	}
 }

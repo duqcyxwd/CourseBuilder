@@ -1,0 +1,148 @@
+#sidebar-wrapper {
+	overflow: hidden;
+}
+
+/******************************
+			REGISTRATION BUTTON
+******************************/
+#registration {
+	font-weight: thin;
+	text-align: center;
+	font-size: 14pt;
+	background-color: #FFF;
+	padding: 12px;
+	padding-bottom: 10px;
+	color: #C0392B;
+	overflow: hidden;
+	border-bottom: solid black 1px;
+	/*border-top: solid black 1px;*/
+}
+
+#registration:hover {
+ color: #FFF;
+ background-color: #C0392B;
+ cursor: pointer;
+}
+
+
+/******************************
+			SIDEBAR HEADER
+******************************/
+#sidebar-header {
+	font-weight: bold;
+	padding: 20px 5px 5px 5px;
+	color: #333;
+	background-color: #FFF;
+	border-bottom: solid black 1px;
+}
+
+
+/******************************
+			SELECTED COURSES
+******************************/
+#selected-courses-header {
+	padding-top: 15px;
+	padding-left: 5px;
+	background-color: #FFF;
+	color: #333333;
+}
+
+#selected-courses {
+	min-height: 15%;
+	width: 100%;
+	background-color: #F2F2F2;
+	color: #333333;
+}
+
+.selected-course {
+	padding: 4px;
+	padding-left: 5px;
+	border-top: solid #888 1px;
+}
+
+.selected-course:hover {
+	cursor: pointer;
+	background-color: #333333;
+	color: #F2F2F2;
+}
+
+
+/******************************
+		ADD COURSES/ELECTIVES
+******************************/
+#add-elective {
+	min-height: 2%;
+	text-align: center;
+	padding: 8px;
+	color: #C0392B;
+	background-color: white;
+	border-bottom: solid #888 1px;
+	border-top: solid #888 1px;
+}
+
+#add-elective:hover {
+	cursor: pointer;
+	color: white;
+	background-color: #333333;
+}
+
+#add-course {
+	min-height: 2%;
+	text-align: center;
+	padding: 8px;
+	color: #C0392B;
+	background-color: white;
+	border-bottom: solid #888 1px;
+}
+
+#add-course:hover {
+	cursor: pointer;
+	color: white;
+	background-color: #333333;
+}
+
+
+/******************************
+		  OTHER COURSE OPTIONS
+******************************/
+
+#alt-table-header {
+	padding-top: 15px;
+	color: #333;
+	background-color: white;
+	border-bottom: solid #888 1px;
+}
+
+#alt-table {
+ 	width: 100%;
+ 	overflow: auto;
+ 	height: 60%;
+}
+
+.alt-table-item {
+	height: 80px;
+	padding: 8px;
+	background-color: #F2F2F2;
+	color: #333;
+	border-bottom: solid #CCC 1px;
+}
+
+.item-header {
+	font-weight: bold;
+	font-size: 14pt;
+}
+
+.item-body {
+	font-size: 9pt;
+}
+
+#alt-table-highlight {
+	color: #333;
+	background-color: #CCC;
+}
+
+.alt-table-item:hover {
+	background-color: #333;
+	color: white;
+	cursor: pointer;
+}

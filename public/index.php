@@ -5,10 +5,6 @@
 	$programList = $db->getListOfPrograms();
 ?>
 	
-	<!-- Electives Popup -->
-	<div id="light" class="popupContent"></div>
-	<div id="fade" class="blackOverlay"></div>
-	
 	<section class="program-select">
 		<div id="program-select-title">
 			Please select a program from the dropdown menu
@@ -28,11 +24,12 @@
 			</ul>
 		</div>
 
-		<form class='submit' id='submit'>
+		<div class='submit' id='submit'>
 			<input type="submit" value="Submit" id="submitButton"/>
 			<label for="submitButton">Submit</label>
-		</form>
-	
+		</div>
+
+		<input type="int" value="5" id='max'/>
 		
 		<div id="year-select-dd" class="wrapper-dropdown" tabindex="1" onclick="selectProgram(this);" style="display:none">
 			<div id="year-select-subtitle">Select a year</div>
@@ -46,7 +43,7 @@
 			<?php endforeach ?>
 			</ul>
 		</div>
-  	<div id="program-select-onpattern">
+	  	<div id="program-select-onpattern">
 			<div class="checkbox">
 		 		<input type="checkbox" value="1" id="checkboxInput" name="" />
 				<label for="checkboxInput"></label>

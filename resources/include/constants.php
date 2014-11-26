@@ -14,7 +14,7 @@ $PROGRAM_NAME = array(
 // temporary contants
 // Will later be replaced by data pulled from database
 
-$UNIVERSITY_YEARS = array("First", "Second", "Third", "Fourth");
+$UNIVERSITY_YEARS = array("First", "Second", "Third");
 
 
 

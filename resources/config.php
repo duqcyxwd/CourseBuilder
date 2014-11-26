@@ -1,6 +1,6 @@
 <?php
 
-require_once(realpath(dirname(__FILE__)) . '/include/database.class.php');
+require_once(realpath(dirname(__FILE__)) . '/include/database.php');
 require_once(realpath(dirname(__FILE__)) . '/include/constants.php');
 require_once(realpath(dirname(__FILE__)) . '/library/utilities.php');
 
@@ -19,7 +19,9 @@ defined("INCLUDE_PATH")
 defined("TEMPLATES_PATH")
     or define("TEMPLATES_PATH", realpath(dirname(__FILE__) . '/templates'));
 defined("LIBRARY_PATH")
-    or define("LIBRARY_PATH", realpath(dirname(__FILE__) . '/library'));
+		or define("LIBRARY_PATH", "/CourseBuilder/resources/library");
+    // or define("LIBRARY_PATH", realpath(dirname(__FILE__) . '/library'));
+
 defined("RESOURCE_PATH")
     or define("RESOURCE_PATH", realpath(dirname(__FILE__) . '/'));
 
