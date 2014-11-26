@@ -82,6 +82,8 @@
 
 		function getEligibleCourses($completedCourses, $program, $yearStanding) {
 
+			$yearStanding = 2;
+
 			$eligibleCourses = [];
 
 			// first get all the courses of the entire program
@@ -134,22 +136,22 @@
 							}
 						}
 
-						continue;
+
 					}
 
 					// check for 'and'
 					if(strpos($requirement, 'and')!== false){
 						$requirement = preg_split('/(and)/', $requirement);
 						
-						
+						echo "<br/>";
+						print_r($requirement);
 
 						// evaluate each and
-						foreach ($requirement as $courses) {
+						foreach($requirement as $courses) {
 							// split by 'or'
+							
 							$courses = preg_split('/(or)/', $courses);
 
-							echo "<br/>";
-							print_r($requirement);
 							foreach ($courses as $course) {
 								if (in_array(trim($course), $completedCourses)) {
 									$isEligible = true;
