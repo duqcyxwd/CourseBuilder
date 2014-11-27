@@ -1,8 +1,6 @@
-DROP TABLE IF EXISTS CourseCompleted;
 DROP TABLE IF EXISTS Prerequisite;
 DROP TABLE IF EXISTS SpePrereq;
 DROP TABLE IF EXISTS Classes;
-DROP TABLE IF EXISTS Students;
 DROP TABLE IF EXISTS ProgramsRequirement;
 DROP TABLE IF EXISTS Electives;
 DROP TABLE IF EXISTS Courses;
@@ -52,41 +50,6 @@ CREATE TABLE IF NOT EXISTS Electives(
 	FOREIGN KEY (Subject, CourseNumber) references Courses (Subject,CourseNumber)
 	-- PRIMARY KEY(Name, Subject, CourseNumber)
 );
-
---
--- Table structure for table `Students`
---
-
-CREATE TABLE IF NOT EXISTS Students(
-	Name varchar(30) references ProgramsRequirement (Name),
-	Email varchar(30),
-	Student_number int(9) PRIMARY KEY NOT NULL,
-	Program varchar(30) NOT NULL,
-	User_Name varchar(20) NOT NULL,
-	Password varchar(20) NOT NULL
-);
-
--- INSERT INTO Students (Name, Email, Student_number, Program, User_Name, Password) values 
--- ("Chuan", "duq@gmail.com", '100810219', 'Software Engineering', 'duqcyxwd', '12345');
-
-
-
---
--- Table structure for table `CourseCompleted`
---
-
-
-CREATE TABLE IF NOT EXISTS CourseCompleted(
-	Student_number int(9) NOT NULL,
-	Subject varchar(10)  NOT NULL,
-	CourseNumber int(4)  NOT NULL,
-	FOREIGN KEY (Subject, CourseNumber) references Courses (Subject, CourseNumber),
-	FOREIGN KEY (Student_number) references Students (Student_number),
-	PRIMARY KEY(Student_number, Subject, CourseNumber)
-);
-
--- INSERT INTO CourseCompleted (Student_number, Subject, CourseNumber) values 
--- ("100810219", "SYSC", 3101);
 
 --
 -- Table structure for table `Prerequisite`
