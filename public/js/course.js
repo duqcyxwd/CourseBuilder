@@ -10,27 +10,25 @@ function course (obj, courseName, courseNumber, courseYear, courseTerm, htmlBody
   		number   = courseNumber,
   		body     = htmlBody,
   		element  = obj,
-  		selected = false,
+      selected = false,
       isElect  = false,
+      year     = courseYear,
+      term     = courseTerm,
+      termNum  = 0,
       listOfElectives = [];
-
-  this.year = courseYear;
-  this.term = courseTerm;
 
 
   function init() {
   	// append innerText to element
   	element.innerHTML = body;
   	addListener();
+    setTermNumber();
+
+
 
     if (isElective)
       isElect = true;
 
-    // TODO REMOVE THIS
-    // 
-    // ["9999","PHIL 1000","Complementary Studies Elective"]
-    // 
-    
     for (var i = electives.length - 1; i >= 0; i--) {
       if (electives[i][0] == number) {
         listOfElectives.push(electives[i][1]);
@@ -39,6 +37,14 @@ function course (obj, courseName, courseNumber, courseYear, courseTerm, htmlBody
 
   }
 
+
+  function setTermNumber() {
+    if (term == 'FALL') {
+      termNum = year * 2 - 2;
+    } else { // WINTER
+      termNum = year * 2 - 1;
+    }
+  }
 
   function addListener() {
 		element.onclick = function() {
@@ -144,6 +150,10 @@ function course (obj, courseName, courseNumber, courseYear, courseTerm, htmlBody
     return number;
   }
 
+  function getTermNumber() {
+    return termNum;
+  }
+
   function updateCourse(newName, newNumber, body) {
     name = newName;
     number = newNumber;
@@ -154,6 +164,7 @@ function course (obj, courseName, courseNumber, courseYear, courseTerm, htmlBody
   this.init = init;
   this.getName = getName;
   this.getNumber = getNumber;
+  this.getTermNumber = getTermNumber;
   this.getJSON = getJSON;
   this.toggleSelection = toggleSelection;
   this.select = select;
