@@ -13,9 +13,9 @@
 		$year = date('Y');
 		$month = date('m');
 		if($month < 4)
-			echo $year."w";
+			return $year."w";
 		else 
-			echo $year."f";
+			return $year."f";
 	}
 
 	// flat a multi dimension array
