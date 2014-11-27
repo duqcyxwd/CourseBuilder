@@ -89,7 +89,7 @@ header {
 
 .program-select {
 	padding: 10px;
-	width: 607px;
+	width: 617px;
 	margin: 0 auto;
 }
 
@@ -120,12 +120,12 @@ header {
 ******************************/
 .course-number {
 	font-family: Arial, Sans-Serif;
-	font-size: 30px;
+	font-size: 16pt;
 	color: #222;
 	margin-top: 0px;
 	margin-left: 10px;
 	float: left;
-	padding: 4px;
+	padding: 9px;
 	width: 25px;
 	text-align: center;
 }
