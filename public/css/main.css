@@ -225,6 +225,18 @@ header {
 /******************************
 						SIDEBAR
 ******************************/
+.displayBanner {
+	border: solid #005776 1px;
+	background-color: #00A5DF;
+	color: #005776;
+	padding: 10px 10px 10px 10px;
+	font-size: 12pt;
+}
+
+
+/******************************
+						SIDEBAR
+******************************/
 
 #sidebar-wrapper {
 	margin: 0 auto;
