@@ -17,13 +17,14 @@
 		$maxNumOfCourse = 5;
 	}
 
+	$program = $variable['program'];
+	$prerequisiteTree = $db->getPrerequisiteTree($program);
+	$elective = $db->getElectivesByProgram($program);
+	
 	$action = $variable['action'];
 	switch ($action) {
 		case 'prereqTree':
-			$program = $variable['program'];
-			$result = $db->getPrerequisiteTree($program);
-			$elective = $db->getElectivesByProgram($program);
-			echo json_encode([$result, $elective]);
+			echo json_encode([$prerequisiteTree, $elective]);
 			break;
 
 		case 'timeTable2':
@@ -37,7 +38,6 @@
 
 			$singleTimeTable = getATimeTable($courseArray, $maxNumOfCourse);
 			$table = $singleTimeTable->getTablesInArray();
-			$elective = $db->getElectivesByProgram($program);
 
 
 			$result = [];
@@ -51,14 +51,9 @@
 			break;
 		case 'timeTable':
 
-			$prerequisiteTree = $db->getPrerequisiteTree($variable['program']);
 			$courseCompleted = explode(",", $variable['courseCompleted']);
-			$program = $variable['program'];
-
-
 
 			$openingClasses = $db->getOpeningClasses();
-			$elective = $db->getElectivesByProgram($program);
 			$unCompletedAndAvaiableCourses = getUnCompletedCourses($courseCompleted, $prerequisiteTree, $openingClasses);
 			$coursesInfo = $db->getCourseInfoByCourseArray($unCompletedAndAvaiableCourses);
 			

@@ -15,7 +15,6 @@
 		}
 
 		public function duplicate(){
-			// TODO check if this works
 			$c = new TimeTable();
 			$c->courses = $this->courses;
 			return $c;
