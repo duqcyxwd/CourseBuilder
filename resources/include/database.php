@@ -269,7 +269,7 @@
 			$sql = "SELECT DISTINCT `Subject`, `CourseNumber` FROM Classes WHERE `TERM` = \"".$term."\"";
 			$result = mysqli_query($this->mysqli, $sql);
 			while ($row = mysqli_fetch_array($result)){
-				$classes[] = $row;
+				$classes[] = $row['Subject']." ".$row['CourseNumber'];
 			}
 
 			return $classes;

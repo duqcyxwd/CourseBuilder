@@ -1,12 +1,11 @@
+<?php require '/Users/SuperiMan/repo/kint/Kint.class.php';?>
 <?php
 	require"../config.php";
 	require "timeTable.class.php";
-	require '/Users/SuperiMan/repo/kint/Kint.class.php';
 
 	$variable = (isset($_POST['action']) ? $_POST: $_GET);
 
 	session_start();
-	
 
 	$program = $variable['program'];
 	$prerequisiteTree = $db->getPrerequisiteTree($program);
@@ -18,6 +17,7 @@
 	$action = $variable['action'];
 	switch ($action) {
 		case 'prereqTree':
+			// pprint([$prerequisiteTree, $elective]);
 			echo json_encode([$prerequisiteTree, $elective]);
 			break;
 
@@ -28,7 +28,9 @@
 			// $program = $variable['program'];
 			// $eligibleCourses = $db->getEligibleCourses($courseCompleted, $program, 3); // change the 3
 
-			$courseCompleted = explode(",", $variable['courseCompleted']);
+			// $courseCompleted = explode(",", $variable['courseCompleted']);
+			$courseCompleted = (isset($variable['courseCompleted']) && $variable['courseCompleted'] != '' ? $variable['courseCompleted'] : []);
+
 			$maxNumOfCourse = (isset($variable['max']) ? $variable['max'] : 5);
 
 			if (isset($variable['TimeTableCourse'])) {
@@ -36,12 +38,11 @@
 				$courseForTable = $variable['TimeTableCourse'];
 			} else {
 				// Generate table from completed courses
-				$courseCompleted = explode(",", $variable['courseCompleted']);
 
 				$openingClasses = $db->getOpeningClasses();
-				$unCompletedAndAvaiableCourses = getUnCompletedCourses($courseCompleted, $prerequisiteTree, $openingClasses);
+				$unCompletedOpeningCourses = unCompletedOpeningCourses($courseCompleted, $prerequisiteTree, $openingClasses);
 				
-				$courseForTable = $unCompletedAndAvaiableCourses;
+				$courseForTable = $unCompletedOpeningCourses;
 
 
 			}
@@ -132,56 +133,25 @@
 	 * @return course that not completed and open in current term
 	 * @author 
 	 **/
-	function getUnCompletedCourses($coursesCompleted, $prerequisiteTree, $openingClasses)
+	function unCompletedOpeningCourses($coursesCompleted, $prerequisiteTree, $openingClasses)
 	{
 
-		$requiredCourses = $prerequisiteTree;
-		$numOfCourseCompledInTree = 0;
+		$requiredCourses = flatArray($prerequisiteTree);
 
 		// get courses that uncompleted in prerequisite Tree
-		foreach ($requiredCourses as $term => $coursesOfOneTerm) {
-			foreach ($coursesOfOneTerm as $number => $singleCourse) {
-				foreach ($coursesCompleted as $c) {
-					// TODO: ... 
-					if ($c != "") {
-						if ($singleCourse == $c){
-							$numOfCourseCompledInTree++;
-							unset($requiredCourses[$term][$number]);
-							break;
-						} 
-					}
-				}
-			}
-			
-		}
+		$unCompletedCourse = array_diff($requiredCourses, $coursesCompleted);
 
 		// get course that unCompletedCourses open in current term
 		// check if this course open or not
-		foreach ($requiredCourses as $term => $coursesOfOneTerm) {
-			foreach ($coursesOfOneTerm as $number => $singleCourse) {
-				$courseOpen = false;
-				foreach ($openingClasses as $class) {
-					if ($singleCourse == $class[0]." ".$class[1]){
-						$courseOpen = true;
-					}
-				}
-
-				if ($courseOpen == false){
-					unset($requiredCourses[$term][$number]);
-				}
-
-			}
-		}
+		$unCompletedOpeningCourses = array_diff($unCompletedCourse, array_diff($unCompletedCourse, $openingClasses));
 
 		// filter the courses by prerequisite
-		foreach ($requiredCourses as $term => $coursesOfOneTerm) {
-			foreach ($coursesOfOneTerm as $number => $singleCourse) {
-				if (!checkPrerequisites($singleCourse)) {
-					unset($requiredCourses[$term][$number]);
-				}
+		foreach ($unCompletedOpeningCourses as $term => $singleCourse) {
+			if (!checkPrerequisites($singleCourse)) {
+				unset($unCompletedOpeningCourses[$term]);
 			}
 		}
-		return flatArray($requiredCourses);
+		return $unCompletedOpeningCourses;
 	}
 
 	function checkPrerequisites($value='')
