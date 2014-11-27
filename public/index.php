@@ -24,7 +24,7 @@
 			</ul>
 		</div>
 
-		<input type="int" maxlength="1" size="10" value="5" class='course-number' id='max'/>
+		<input type="number" max='6' min='1' maxlength="1" size="10" value="5" class='course-number' id='max'/>
 
 		<div class='submit' id='submit'>
 			<input type="submit" value="Submit" id="submitButton"/>

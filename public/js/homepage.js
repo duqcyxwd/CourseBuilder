@@ -20,7 +20,8 @@ function submitTable() {
 
   if (prerequisiteTable == null) return;
   var selectedCourses = prerequisiteTable.getStringFormat();
-  var maxCourseTaking = document.getElementById('max').value;
+  var maxCourseTaking = document.getElementById('max').value || 5;
+
   var page = TIMETABLE_URL;
   var params = { action: "timeTable", 
                  courseCompleted: selectedCourses, 

@@ -256,7 +256,7 @@ window.onload = function() {
 		  	storeTables(json[1], tableList);
 
 		  	// display banner for message
-		  	if (json[2] == '') {
+		  	if (json[2] != '') {
 		  		var banner = document.getElementById('messageBanner');
 		  		banner.className = "displayBanner";
 		  		banner.innerHTML = "Notice: " + json[2];
