@@ -1,7 +1,7 @@
 <?php
 	require"../config.php";
 	require "timeTable.class.php";
-	require '/Users/SuperiMan/repo/kint/Kint.class.php';
+	// require '/Users/SuperiMan/repo/kint/Kint.class.php';
 
 	$variable = (isset($_POST['action']) ? $_POST: $_GET);
 
@@ -99,8 +99,8 @@
 		}
 		if ($timeTable->isFull()) {
 			array_push($timeTables, $timeTable);
-			pprint("find solution");
-			d($timeTable);
+			// pprint("find solution");
+			// d($timeTable);
 			return true;
 		}
 		for ($i=$startPoint; $i < sizeof($courseArray); $i++) { 
