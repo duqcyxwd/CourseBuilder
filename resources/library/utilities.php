@@ -10,8 +10,12 @@
 
 	function getCurrentTerm()
 	{
-		// TODO: Add functionality later
-		return "2014w";
+		$year = date('Y');
+		$month = date('m');
+		if($month < 4)
+			echo $year."w";
+		else 
+			echo $year."f";
 	}
 
 	// flat a multi dimension array
