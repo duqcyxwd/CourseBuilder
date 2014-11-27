@@ -30,6 +30,7 @@
 
 			// $courseCompleted = explode(",", $variable['courseCompleted']);
 			$courseCompleted = (isset($variable['courseCompleted']) && $variable['courseCompleted'] != '' ? $variable['courseCompleted'] : []);
+			$openingClasses = $db->getOpeningClasses();
 
 			$maxNumOfCourse = (isset($variable['max']) ? $variable['max'] : 5);
 
@@ -38,13 +39,7 @@
 				$courseForTable = $variable['TimeTableCourse'];
 			} else {
 				// Generate table from completed courses
-
-				$openingClasses = $db->getOpeningClasses();
-				$unCompletedOpeningCourses = unCompletedOpeningCourses($courseCompleted, $prerequisiteTree, $openingClasses);
-				
-				$courseForTable = $unCompletedOpeningCourses;
-
-
+				$courseForTable = unCompletedOpeningCourses($courseCompleted, $prerequisiteTree, $openingClasses);
 			}
 
 			$coursesInfo = $db->getCourseInfoByCourseArray($courseForTable);
@@ -153,6 +148,7 @@
 		}
 		return $unCompletedOpeningCourses;
 	}
+
 
 	function checkPrerequisites($value='')
 	{
