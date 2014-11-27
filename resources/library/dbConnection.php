@@ -9,9 +9,10 @@
 	
 
 	$program = $variable['program'];
-
-	$maxNumOfCourse = (isset($variable['max']) ? $variable['max'] : 5);
 	$prerequisiteTree = $db->getPrerequisiteTree($program);
+
+	// TODO Filter Elective
+	// Need another Ajax for Elective when select form prerequisite table
 	$elective = $db->getElectivesByProgram($program);
 
 	$action = $variable['action'];
@@ -27,41 +28,34 @@
 			// $program = $variable['program'];
 			// $eligibleCourses = $db->getEligibleCourses($courseCompleted, $program, 3); // change the 3
 
+			$courseCompleted = explode(",", $variable['courseCompleted']);
+			$maxNumOfCourse = (isset($variable['max']) ? $variable['max'] : 5);
+
 			if (isset($variable['TimeTableCourse'])) {
 				// Generate table from selected course.
-				$courseSelect = $variable['TimeTableCourse'];
-
-				$coursesInfo = $db->getCourseInfoByCourseArray($courseSelect);
-				$courseArray = createCourseArray($courseSelect, $coursesInfo);
-
-				$singleTimeTable = getATimeTable($courseArray, $maxNumOfCourse);
-				$table = $singleTimeTable->getTablesInArray();
-
+				$courseForTable = $variable['TimeTableCourse'];
 			} else {
 				// Generate table from completed courses
-
 				$courseCompleted = explode(",", $variable['courseCompleted']);
 
 				$openingClasses = $db->getOpeningClasses();
 				$unCompletedAndAvaiableCourses = getUnCompletedCourses($courseCompleted, $prerequisiteTree, $openingClasses);
-				$coursesInfo = $db->getCourseInfoByCourseArray($unCompletedAndAvaiableCourses);
 				
-				
-				$courseArray = createCourseArray($unCompletedAndAvaiableCourses, $coursesInfo);
+				$courseForTable = $unCompletedAndAvaiableCourses;
 
 
-
-				$singleTimeTable = getATimeTable($courseArray, $maxNumOfCourse);
-				$table = $singleTimeTable->getTablesInArray();
-				
-						// A list of Avaiable Elective
 			}
+
+			$coursesInfo = $db->getCourseInfoByCourseArray($courseForTable);
+			$courseArray = createCourseArray($courseForTable, $coursesInfo);
+			$singleTimeTable = getATimeTable($courseArray, $maxNumOfCourse);
+
 
 			$result = [];
 			$result[] = [$singleTimeTable->toString()];     // 1-6 Courses that we scheduled
-			$result[] = $table;								// Combination of time table that available
+			$result[] = $singleTimeTable->getTablesInArray();;								// Combination of time table that available
 			$result[] = [$singleTimeTable->message];		//Message From Backend
-			$result[] = $db->getCouseTitleByCourseArray($unCompletedAndAvaiableCourses); // A list of course that available and unCompleted
+			$result[] = $db->getCouseTitleByCourseArray($courseForTable); // A list of course that available and unCompleted
 			$result[] = $elective;  
 
 			echo json_encode($result);
