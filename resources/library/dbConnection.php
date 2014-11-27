@@ -3,112 +3,68 @@
 	require "timeTable.class.php";
 	require '/Users/SuperiMan/repo/kint/Kint.class.php';
 
-	if (isset($_POST['action'])){
-		$variable = $_POST;
-	} else {
-		$variable = $_GET;
-	}
+	$variable = (isset($_POST['action']) ? $_POST: $_GET);
 
 	session_start();
 	
-	if (isset($variable['max'])) {
-		$maxNumOfCourse=$variable['max'];
-	} else {
-		$maxNumOfCourse = 5;
-	}
 
 	$program = $variable['program'];
+
+	$maxNumOfCourse = (isset($variable['max']) ? $variable['max'] : 5);
 	$prerequisiteTree = $db->getPrerequisiteTree($program);
 	$elective = $db->getElectivesByProgram($program);
-	
+
 	$action = $variable['action'];
 	switch ($action) {
 		case 'prereqTree':
 			echo json_encode([$prerequisiteTree, $elective]);
 			break;
 
-		case 'timeTable2':
-			$program = $variable['program'];
-			$courseSelect = $variable['course'];
-
-			$coursesInfo = $db->getCourseInfoByCourseArray($courseSelect);
-			$courseArray = createCourseArray($courseSelect, $coursesInfo);
-
-
-
-			$singleTimeTable = getATimeTable($courseArray, $maxNumOfCourse);
-			$table = $singleTimeTable->getTablesInArray();
-
-
-			$result = [];
-			$result[] = [$singleTimeTable->toString()];
-			$result[] = $table;
-			$result[] = [$singleTimeTable->message];
-			$result[] = $unCompletedCourses;
-			$result[] = $elective;  // 
-
-			echo json_encode($result);
-			break;
 		case 'timeTable':
 
-			$courseCompleted = explode(",", $variable['courseCompleted']);
 
-			$openingClasses = $db->getOpeningClasses();
-			$unCompletedAndAvaiableCourses = getUnCompletedCourses($courseCompleted, $prerequisiteTree, $openingClasses);
-			$coursesInfo = $db->getCourseInfoByCourseArray($unCompletedAndAvaiableCourses);
-			
-			
-			$courseArray = createCourseArray($unCompletedAndAvaiableCourses, $coursesInfo);
+			//TODO: add eligibleCourses to our function
+			// $program = $variable['program'];
+			// $eligibleCourses = $db->getEligibleCourses($courseCompleted, $program, 3); // change the 3
+
+			if (isset($variable['TimeTableCourse'])) {
+				// Generate table from selected course.
+				$courseSelect = $variable['TimeTableCourse'];
+
+				$coursesInfo = $db->getCourseInfoByCourseArray($courseSelect);
+				$courseArray = createCourseArray($courseSelect, $coursesInfo);
+
+				$singleTimeTable = getATimeTable($courseArray, $maxNumOfCourse);
+				$table = $singleTimeTable->getTablesInArray();
+
+			} else {
+				// Generate table from completed courses
+
+				$courseCompleted = explode(",", $variable['courseCompleted']);
+
+				$openingClasses = $db->getOpeningClasses();
+				$unCompletedAndAvaiableCourses = getUnCompletedCourses($courseCompleted, $prerequisiteTree, $openingClasses);
+				$coursesInfo = $db->getCourseInfoByCourseArray($unCompletedAndAvaiableCourses);
+				
+				
+				$courseArray = createCourseArray($unCompletedAndAvaiableCourses, $coursesInfo);
 
 
 
-			$singleTimeTable = getATimeTable($courseArray, $maxNumOfCourse);
-			$table = $singleTimeTable->getTablesInArray();
-			
+				$singleTimeTable = getATimeTable($courseArray, $maxNumOfCourse);
+				$table = $singleTimeTable->getTablesInArray();
+				
+						// A list of Avaiable Elective
+			}
+
 			$result = [];
 			$result[] = [$singleTimeTable->toString()];     // 1-6 Courses that we scheduled
 			$result[] = $table;								// Combination of time table that available
 			$result[] = [$singleTimeTable->message];		//Message From Backend
 			$result[] = $db->getCouseTitleByCourseArray($unCompletedAndAvaiableCourses); // A list of course that available and unCompleted
-			$result[] = $elective;  						// A list of Avaiable Elective
+			$result[] = $elective;  
 
 			echo json_encode($result);
-
-
-			// $timeTables = [];
-			// getTimeTables($timeTables, $courseArray, 0, new TimeTable($maxNumOfCourse));
-			// echo json_encode($timeTables);
-
-
-
-			// $openingClasses = $db->getOpeningClasses();
-			$eligibleCourses = $db->getEligibleCourses($courseCompleted, $program, 3); // change the 3
-
-
-			// echo "<br>";
-			// $unCompletedCourses = getUnCompletedCourses($courseCompleted, $prerequisiteTree, $openingClasses);
-			// $coursesInfo = $db->getCourseInfoByCourseArray(flatArray($unCompletedCourses));
-			// d(sizeof($coursesInfo));
-
-
-			// only problem left here is time conflict!!!!!!!!.....
-			// now we have $unCompletedCourses and $coursesInfo
-
-			// $timeTables = [];
-			// $courseArray = createCourseArray($unCompletedCourses, $coursesInfo);
-
-			// getTimeTables($timeTables, $courseArray, 0, new TimeTable());
-			// $singleTimeTable = getATimeTable($courseArray);
-			// echo "Result: <br>";
-
-			// d($singleTimeTable);
-			// d($singleTimeTable->getATable());
-
-
-			// redirect to timetable
-			// $generatedTimetables = array();
-			// $_SESSION['timetables'] = json_encode($generatedTimetables);
-			// header('Location: ' . ROOT_PATH . '/timetable.php');
 
 			break;
 		default:
