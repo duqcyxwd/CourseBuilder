@@ -82,13 +82,14 @@ header {
 	width: 100%;
 }
 
+
 /******************************
 				PROGRAM SELECT
 ******************************/
 
 .program-select {
 	padding: 10px;
-	width: 560px;
+	width: 617px;
 	margin: 0 auto;
 }
 
@@ -112,6 +113,23 @@ header {
 #program-select-onpattern {
 	padding-top: 55px;
 }
+
+
+/******************************
+				PROGRAM SELECT
+******************************/
+.course-number {
+	font-family: Arial, Sans-Serif;
+	font-size: 16pt;
+	color: #222;
+	margin-top: 0px;
+	margin-left: 10px;
+	float: left;
+	padding: 9px;
+	width: 25px;
+	text-align: center;
+}
+
 
 /******************************
 					COURSE TABLE
@@ -201,6 +219,18 @@ header {
 
 #course {
 	background-color: #C3C3C3;
+}
+
+
+/******************************
+						SIDEBAR
+******************************/
+.displayBanner {
+	border: solid #005776 1px;
+	background-color: #00A5DF;
+	color: #005776;
+	padding: 10px 10px 10px 10px;
+	font-size: 12pt;
 }
 
 
