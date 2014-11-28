@@ -87,12 +87,12 @@
 			// first get all the courses of the entire program
 			$requirementsTable = "ProgramsRequirement";
 
-			$sql = "SELECT ProgramsRequirement.Subject, ProgramsRequirement.CourseNumber, Requirement 
+			$sql = "SELECT ProgramsRequirement.Subject, ProgramsRequirement.CourseNumber, Requirement, YearReq
 							FROM ProgramsRequirement
 							INNER JOIN Prerequisite
 							ON ProgramsRequirement.Subject=Prerequisite.Subject 
 							AND ProgramsRequirement.CourseNumber=Prerequisite.CourseNumber
-							WHERE YearRequirement >= $yearStanding AND Program = '$program'";
+							WHERE Program = '$program'";
 
 			$result = $this->execute($sql);
 
@@ -100,25 +100,35 @@
 
 				// determine which courses can be taken
 				$requirement = $row['Requirement'];
+				$YearReq = $row['YearReq'];
 
-				if ($requirement == '') { // no requirements
+				// Need it
+				// if ($YearReq > $yearStanding) {
+				// 	$isEligible = false;
+				// } else if ($requirement == '') { // no requirements
+				// 	$isEligible = true;
+				// } 
+				// else if (strpos($requirement, 'credit for')) { // Special requirement
+				// 	$isEligible = true;
+				// }
+
+				if ($YearReq > $yearStanding) {
+					$isEligible = false;
+				}
+				else if ($requirement == '') { // no requirements
+					$isEligible = true;
+				} 
+				else if (strpos($requirement, 'credit for')) { // Special requirement
+					$isEligible = true;
+				}
+				else if (strpos($requirement, 'permission of the department')) { // Special requirement
 					$isEligible = true;
 				} else {
-
 					$isEligible = false;
-
-					// Check if year status requirement TODO: INCOMPLETE
-					if (strpos($requirement, '-year status')) {
-						preg_match('/(\w+)-year status in Engineering/', $requirement, $matches);
-
-						if (count($matches) > 1) {
-							// todo
-						}
-					}
 
 					// split by 'and'
 					$requirement = preg_split('/(and)/', $requirement);
-
+					d($requirement);
 					// evaluate each and
 					foreach ($requirement as $courses) {
 						// split by 'or'
@@ -140,6 +150,36 @@
 			return $eligibleCourses;
 		}
 
+		function CourseMathcing($requirement, $completedCourses)
+		{
+
+			// determine which courses can be taken
+			$YearReq = 1;
+			$requirement = trim($requirement);
+			$isEligible = true;  	// Default value
+
+			if (strpos($requirement, 'permission of the department')) { // Special requirement
+				$isEligible = true;
+			} else {
+				$isEligible = false;
+
+				// split by 'and'
+				$requirement = preg_split('/(and)/', $requirement);
+				d($requirement);
+				// evaluate each and
+				foreach ($requirement as $courses) {
+					// split by 'or'
+					$courses = preg_split('/(or)/', $courses);
+
+					foreach ($courses as $course) {
+						if (in_array(trim($course), $completedCourses)) {
+							$isEligible = true;
+						}
+					}
+				}
+			}
+			return $isEligible;
+		}
 
 		function getPrerequisiteTree($program)
 		{

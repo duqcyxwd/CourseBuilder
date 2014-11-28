@@ -8,7 +8,9 @@ $NUMBER_OF_YEARS = 4;
 
 $UNIVERSITY_YEARS = array("First", "Second", "Third");
 
+define("BRACKETREG", "/(\([^(^)]*\))/");
 
+define("OUTBRACKET", "/^(\(.*\)$)/");
 
 
 ?>

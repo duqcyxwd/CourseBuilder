@@ -1,16 +1,19 @@
 <?php require '/Users/SuperiMan/repo/kint/Kint.class.php';?>
 <?php
-	require"../config.php";
+// <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+	require "../config.php";
 	require "timeTable.class.php";
+	require("../library/PreRequisite.class.php");
+	
+
+	Kint::enabled(true);
+	session_start();
 
 	$variable = (isset($_POST['action']) ? $_POST: $_GET);
-
-	session_start();
 
 	$program = $variable['program'];
 	$prerequisiteTree = $db->getPrerequisiteTree($program);
 
-	// TODO Filter Elective
 	// Need another Ajax for Elective when select form prerequisite table
 	$elective = $db->getElectivesByProgram($program);
 
@@ -22,17 +25,16 @@
 			break;
 
 		case 'timeTable':
-
-
 			//TODO: add eligibleCourses to our function
 			// $program = $variable['program'];
 			// $eligibleCourses = $db->getEligibleCourses($courseCompleted, $program, 3); // change the 3
 
 			// $courseCompleted = explode(",", $variable['courseCompleted']);
-			$courseCompleted = (isset($variable['courseCompleted']) && $variable['courseCompleted'] != '' ? $variable['courseCompleted'] : []);
+			$courseCompleted = (isset($variable['courseCompleted']) && $variable['courseCompleted'] != '' ? explode(",", $variable['courseCompleted']) : []);
 			$openingClasses = $db->getOpeningClasses();
 
 			$maxNumOfCourse = (isset($variable['max']) ? $variable['max'] : 5);
+
 
 			if (isset($variable['TimeTableCourse'])) {
 				// Generate table from selected course.
@@ -40,7 +42,12 @@
 			} else {
 				// Generate table from completed courses
 				$courseForTable = unCompletedOpeningCourses($courseCompleted, $prerequisiteTree, $openingClasses);
+
+				// $eligibleCourses = $db->getEligibleCourses($courseCompleted, $program, 1); // change the 3
+
+				// $courseForTable = unCompletedOpeningCoursestwo($courseCompleted, $openingClasses);
 			}
+
 
 			$coursesInfo = $db->getCourseInfoByCourseArray($courseForTable);
 			$courseArray = createCourseArray($courseForTable, $coursesInfo);
@@ -53,6 +60,7 @@
 			$result[] = [$singleTimeTable->message];		//Message From Backend
 			$result[] = $db->getCouseTitleByCourseArray($courseForTable); // A list of course that available and unCompleted
 			$result[] = $elective;  
+
 
 			echo json_encode($result);
 
@@ -146,9 +154,35 @@
 				unset($unCompletedOpeningCourses[$term]);
 			}
 		}
+
+		// $courseForTable = getEligibleCourses($coursesCompleted, "Communication Engineering", 1)
 		return $unCompletedOpeningCourses;
 	}
 
+
+	/**
+	 * Taking a list of completed list, prerequisiteTree, and openingClasses
+	 *
+	 * @return course that not completed and open in current term
+	 * @author 
+	 **/
+	function unCompletedOpeningCoursestwo($avaiableInprerequisiteTree, $openingClasses)
+	{
+
+		// get course that unCompletedCourses open in current term
+		// check if this course open or not
+		$unCompletedOpeningCourses = array_diff($avaiableInprerequisiteTree, array_diff($avaiableInprerequisiteTree, $openingClasses));
+
+		// filter the courses by prerequisite
+		foreach ($unCompletedOpeningCourses as $term => $singleCourse) {
+			if (!checkPrerequisites($singleCourse)) {
+				unset($unCompletedOpeningCourses[$term]);
+			}
+		}
+
+		// $courseForTable = getEligibleCourses($coursesCompleted, "Communication Engineering", 1)
+		return $unCompletedOpeningCourses;
+	}
 
 	function checkPrerequisites($value='')
 	{
