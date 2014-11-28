@@ -275,7 +275,7 @@ function loadTimetableContent(customParams) {
 
     // request 
     AJAXRequest( function(response) {
-        console.log(response);
+
         var json = JSON.parse(response);
 
         // add courses to sidebar
@@ -418,9 +418,8 @@ function addRegistrationSubmission(id, tableList, params) {
       }
 
     AJAXRequest( function(response) {
-      console.log(response);
-      var json = JSON.parse(response);
 
+      var json = JSON.parse(response);
       displayBannerMessage('messageBanner', json[0]);
 
     }, DB_CONNECTION_URL, customParams);

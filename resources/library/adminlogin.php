@@ -23,7 +23,23 @@
 	include(TEMPLATES_PATH . "/header.php");
 ?>
 
-<p>ADD FUNCTIONALITY TO ADMIN</p>
+<h1>Update Database</h1>
 
+<div id='input-wrapper'>
+	<form id="inputList">
+		<table>
+			<tr>
+				<td>Administrator</td>
+				<td>Classes</td>
+				<td>Courses</td>
+				<td>Electives</td>
+				<td>Prerequisite</td>
+				<td>Program Requirements</td>
+			</tr>
+		</table>
+		<!-- <textarea rows='10' cols='20'></textarea> -->
+		<textarea></textarea>
+	</form>
+</div>
 
 <?php include(TEMPLATES_PATH . "/footer.php"); ?>
