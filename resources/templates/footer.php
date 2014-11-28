@@ -8,7 +8,7 @@
 			    <li><a href="<?php echo ROOT_PATH; ?>">Home</a></li>
 			    <li><a href="<?php echo ROOT_PATH; ?>">Programs</a></li>
 			    <li><a href="<?php echo ROOT_PATH . '/admin.php'; ?>">Administrator</a></li>
-			    <li><a href="<?php echo ROOT_PATH . '/about.php'; ?>">About</a></li>
+			    <li><a href="<?php echo ROOT_PATH . '/help.php'; ?>">Help</a></li>
 			</ul>
 			<ul class="col-1-5">
 					Help and Support

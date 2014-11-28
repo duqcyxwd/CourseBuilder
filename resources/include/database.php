@@ -3,8 +3,7 @@
 	// TODO: factory Queries code to handle sql error
 	{
 
-		function __construct($hostname = NULL, $username = NULL, $password = NULL, $name = NULL)
-		{
+		function __construct($hostname = NULL, $username = NULL, $password = NULL, $name = NULL) {
 			$this->mysqli = new mysqli($hostname, $username, $password, $name);
 
 			if ($this->mysqli->connect_errno) {
@@ -13,43 +12,36 @@
 		}
 
 
-		function getAllRowsFromTable($table)
-		{
+		function getAllRowsFromTable($table) {
 			return mysqli_query($this->mysqli, "SELECT * FROM $table");
 		}
 
 
-		function execute($sql)
-		{
+		function execute($sql) {
 			return mysqli_query($this->mysqli, $sql);
 		}
 		
 
-		function getError()
-		{
+		function getError() {
 			return mysqli_error($this->connection);
 		}
 
 
-		function getDistinctFromTable($rows, $table) 
-		{
+		function getDistinctFromTable($rows, $table) {
 			return mysqli_query($this->mysqli, "SELECT DISTINCT $rows FROM $table");
 		}
 
 
-		function getRowsFromTableWithParms($rows="*", $table, $parms="1") 
-		{
+		function getRowsFromTableWithParms($rows="*", $table, $parms="1") {
 			return mysqli_query($this->mysqli, "SELECT $rows FROM $table WHERE $parms");
 		}
 
 
-		function getCourseInfo($program)
-		{
+		function getCourseInfo($program) {
 			return mysqli_query($this->mysqli,"SELECT `Subject`,`CourseNumber`, `YearRequirement`, `Program` FROM `ProgramsRequirement` WHERE `Program` = '$program'");
 		}
 
-		function getYearStanding($completedCourses, $program)
-		{
+		function getYearStanding($completedCourses, $program) {
 			$first_year = [];
 			$second_year = [];
 			$third_year = [];
@@ -121,7 +113,7 @@
 			return $yearStanding;
 		}
 
-		function yearCompleted($requiredCourses,$completedCourses){
+		function yearCompleted($requiredCourses,$completedCourses) {
 			foreach ($requiredCourses as $course) {
 				if(in_array($course, $completedCourses)){
 					continue;
@@ -135,8 +127,7 @@
 		}
 
 
-		function getPrerequisiteTree($program)
-		{
+		function getPrerequisiteTree($program) {
 			$courses = array();
 			$result = $this->getCourseInfo($program);
 			while ($row = mysqli_fetch_array($result)){
@@ -164,8 +155,7 @@
 		}
 
 
-		function getElectives($electiveType, $coureTitle)
-		{
+		function getElectives($electiveType, $coureTitle) {
 			$electives = $courseTitle . " : [";
 			// $electives = array();
 
@@ -181,8 +171,7 @@
 			return $electives;
 		}
 
-		function getElectivesByProgram($program)
-		{
+		function getElectivesByProgram($program) {
 			$electives = [];
 			// $sql = "SELECT DISTINCT CourseNumber FROM `ProgramsRequirement` where Subject = 'Elective'";
 			$sql = "SELECT DISTINCT CourseNumber FROM `ProgramsRequirement` where Subject = 'Elective' and Program ='$program'";
@@ -196,8 +185,7 @@
 			return $electives;
 		}
 
-		function getElectivesByType($electiveType, $trueElectiveType="", $trueElectiveName="", $sql="")
-		{
+		function getElectivesByType($electiveType, $trueElectiveType="", $trueElectiveName="", $sql="") {
 			if ($sql == "") {
 				$sql = "SELECT * FROM Electives WHERE ElectiveType='$electiveType'";
 			}
@@ -245,8 +233,7 @@
 			return $electives;
 		}
 
-		function getListOfPrograms()
-		{
+		function getListOfPrograms() {
 			$result = $this->getDistinctFromTable("Program", "ProgramsRequirement");
 			$programList = array();
 			while ($row = mysqli_fetch_array($result))
@@ -257,8 +244,7 @@
 
 
 		// return a list of Classes and return a list of classes open in this term
-		function getOpeningClasses()
-		{
+		function getOpeningClasses() {
 			$term = getCurrentTerm();
 			$sql = "SELECT DISTINCT `Subject`, `CourseNumber` FROM Classes WHERE `TERM` = \"".$term."\"";
 			$result = mysqli_query($this->mysqli, $sql);
@@ -317,17 +303,37 @@
 			}
 			return $result;
 		}
-		
-		function registerForClasses($courses){
-			
-			foreach ($courses as $course) {
-				$course_info = explode(" ", $course[0]);
 
-				$sql = "UPDATE Classes
-			        SET RoomCap = RoomCap - 1
-			        WHERE Subject = '$course_info[0]' AND CourseNumber = '$course_info[1]' AND Section='$course[1]'";
-			}
+
+		/*
+		* registers a student for classes in bulk. If a student can register
+		* in all classes it returns TRUE. if there is an error registering for
+		* one of the classes it return FALSE.
+		*/
+
+		function registerForClasses($courseList){
+
+			$array = $this->checkCourseAvailability($courseList);
+			if(count($array) == 0){
 			
+				$courses = explode(";", $courseList);
+				foreach ($courses as $course) {
+
+					if ($course != "") { // ignore empty strings
+						$course_info = explode(" ", $course);
+
+						$sql = "UPDATE Classes
+					        SET RoomCap = RoomCap - 1
+					        WHERE Subject = '$course_info[0]' AND CourseNumber = '$course_info[1]' AND Section='$course_info[2]'";
+
+					    $this->execute($sql);
+					}
+				}
+				return [];
+			}
+			else{
+				return $array;
+			}
 		}
 		
 
@@ -350,7 +356,8 @@
 			// get course that unCompletedCourses open in current term
 			// check if this course open or not
 			$unCompletedOpeningCourses = array_diff($unCompletedCourse, array_diff($unCompletedCourse, $openingClasses));
-			$unCompletedOpeningCourses = $this->filterCourseListByPrerequisite($courseCompleted, $yearStanding, $unCompletedOpeningCourses);
+			// TODO: RECOMMENT BELOW
+			// $unCompletedOpeningCourses = $this->filterCourseListByPrerequisite($courseCompleted, $yearStanding, $unCompletedOpeningCourses);
 
 			// return $unCompletedOpeningCourses;
 
@@ -397,7 +404,7 @@
 		/*
 			return an array of Course Object
 		 */
-		function createCourseArrayBySelectCourse($courseForTable){
+		function createCourseArrayBySelectCourse($courseForTable) {
 			$result = [];
 			$classesInfo = $this->getCourseInfoByCourseArray($courseForTable);
 			if (count($courseForTable) == 0) return []; // TODO: WHAT IF NO COURSES SELECTED?
@@ -414,6 +421,41 @@
 
 			return $result;
 		}
+
+
+		/**
+		 * checkCourseAvailability
+		 *
+		 * determine if list of courses are not full
+	 	 *
+	 	 * @param courseList: list of courses to check
+	 	 * @return array containing courses that are
+	 	 *				 no longer available
+		 */
+		function checkCourseAvailability($courseList) {
+			
+			$coursesNoLongerAvailable = [];
+
+			$courses = explode(";", $courseList);
+			foreach ($courses as $course) {
+
+				if ($course != "") { // ignore empty strings
+					$course_info = explode(" ", $course);
+
+					$sql = "SELECT * FROM Classes
+					        WHERE Subject = '$course_info[0]' AND CourseNumber = '$course_info[1]' AND Section='$course_info[2]'
+					        AND RoomCap = 0 LIMIT 1";
+
+					$queryResult = $this->execute($sql);
+					if (mysqli_num_rows($queryResult) != 0) {
+						$coursesNoLongerAvailable[] = $course; // add course
+					}
+				}
+			}
+
+			return $coursesNoLongerAvailable;
+		}
+
 	}
 
 	/*
@@ -436,6 +478,5 @@
 
 		return $result;
 	}
-
 
 ?>
