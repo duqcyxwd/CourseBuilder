@@ -218,7 +218,22 @@ header {
 }
 
 #course {
-	background-color: #C3C3C3;
+	/*background-color: #EBEBEB;*/
+	background-color: #ecf0f1;
+	vertical-align: top;
+}
+
+#course h1 {
+	font-size: 11pt;
+	font-weight: bold;
+	margin: 0px;
+	padding: 0px;
+}
+
+#course p {
+	font-size: 9pt;
+	margin: 0px;
+	padding: 0px;
 }
 
 
