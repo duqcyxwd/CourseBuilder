@@ -35,9 +35,16 @@ class MyCallBack
 }
 $callback = new MyCallback('True');
 
-// 'MATH 1104'
-// MATH 1003, SYSC 4000 and SYSC 1009
-// (SYSC 1003 and SYSC 1005) and SYSC 4000 and SYSC 1009 or (SYSC 1003 and SYSC 1005)
+/**
+ * checkRequirement taking a String with course Requirements. E.g:
+ * 'MATH 1104'
+ * 'MATH 1003, SYSC 4000 and SYSC 1009'
+ * '(SYSC 1003 and SYSC 1005) and SYSC 4000 and SYSC 1009 or (SYSC 1003 and SYSC 1005)'
+ * 
+ * @param  [String] $requirement      [description]
+ * @param  [List] $completedCourses [description]
+ * @return [type]                   [description]
+ */
 function checkRequirement($requirement, $completedCourses)
 {
 	$requirement = trimAll($requirement);

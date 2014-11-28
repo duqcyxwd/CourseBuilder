@@ -26,11 +26,12 @@
 		case 'timeTable':
 			$courseCompleted = (isset($variable['courseCompleted']) && $variable['courseCompleted'] != '' ? explode(",", $variable['courseCompleted']) : []);
 
-			$courseObjectArray = $db-> getCourseArray($courseCompleted, $prerequisiteTree);
+			$courseObjectArray = $db-> getCourseArray($courseCompleted, $prerequisiteTree, $program);
 
 			if (isset($variable['TimeTableCourse'])) {
 				// Generate table from selected course.
-				$courseForTable = $variable['TimeTableCourse'];
+				$courseForTable = ($variable['TimeTableCourse'] != '' ? explode(",", $variable['TimeTableCourse']) : []);
+
 				$maxNumOfCourse = sizeof($courseForTable);
 				$courseForTable = $db->createCourseArrayBySelectCourse($courseForTable);
 				$singleTimeTable = getATimeTable($courseForTable, $maxNumOfCourse);
