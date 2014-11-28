@@ -206,15 +206,15 @@
 		{
 			$this->courseClasses = [];
 			$this->name = $name;
-			$this->courseCombination = 0;
 			$this->courseTitle = $title;
+			$this->courseCombination = 0;
 		}
 
 		public function addClass($course)
 		{
 			array_push($this->courseClasses, new CourseClass($course));
-			if ($this->courseTitle ="") {
-				$this->name = $course['CourseTitle'];
+			if ($this->courseTitle == "") {
+				$this->courseTitle = $course['CourseTitle'];
 			}
 		}
 

@@ -8,11 +8,11 @@
 // // $completed = ["MATH 2003", 'PHYS 1000', 'SYSC 1000', 'CHEM 1000'];
 // $completed = ["SYSC 2003", 'PHYS 1000', 'SYSC 2004', 'CHEM 1000'];
 // foreach ($requied as $key => $value) {
-// 	// s(checkRequirment($value, $completed));
+// 	// s(checkRequirement($value, $completed));
 // }
 
 // $value = "SYSC 2002 or SYSC 2006 or permission of the department";
-// s(checkRequirment($value, $completed));
+// s(checkRequirement($value, $completed));
 
 
 class MyCallBack
@@ -27,7 +27,7 @@ class MyCallBack
 	// the callback function
 	function callbackFunction($matches)
 	{
-		$res = checkRequirment($matches[0], $this->courseCompleted);
+		$res = checkRequirement($matches[0], $this->courseCompleted);
 		$res = ($res) ? 'True' : 'False';
 
 		return $res;
@@ -35,9 +35,11 @@ class MyCallBack
 }
 $callback = new MyCallback('True');
 
-function checkRequirment($requirement, $completedCourses)
+// 'MATH 1104'
+// MATH 1003, SYSC 4000 and SYSC 1009
+// (SYSC 1003 and SYSC 1005) and SYSC 4000 and SYSC 1009 or (SYSC 1003 and SYSC 1005)
+function checkRequirement($requirement, $completedCourses)
 {
-	d($requirement);
 	$requirement = trimAll($requirement);
 
 	if ($requirement == '') {
@@ -46,7 +48,6 @@ function checkRequirment($requirement, $completedCourses)
 
 	while (findBracket($requirement)) {
 		$callback = new MyCallback($completedCourses);
-		d($requirement);
 		$requirement = preg_replace_callback(BRACKETREG, array($callback, 'callbackFunction'), $requirement);
 	}
 	//No Bracket from here
@@ -67,7 +68,7 @@ function checkRequirment($requirement, $completedCourses)
 		if (strpos($requirement, 'permission of the department')) { // Special requirement
 			$isEligible = true;
 			// Message to .....
-			echo "MEssage";
+			// echo "MEssage";
 		}
 
 	} else if ($checkResult == 'and none') {
@@ -75,7 +76,7 @@ function checkRequirment($requirement, $completedCourses)
 		$arr = preg_split($req, $requirement);
 		foreach ($arr as $a) {
 			$a = trim($a);
-			if ($a == 'False' or (($a != '') and !checkRequirment($a, $completedCourses))) {
+			if ($a == 'False' or (($a != '') and !checkRequirement($a, $completedCourses))) {
 				return False;
 			}
 		}
@@ -85,30 +86,30 @@ function checkRequirment($requirement, $completedCourses)
 		$arr = preg_split($req, $requirement);
 		foreach ($arr as $a) {
 			$a = trim($a);
-			if ($a == 'True' or checkRequirment($a, $completedCourses)) {
+			if ($a == 'True' or checkRequirement($a, $completedCourses)) {
 				return True;
 			}
 		}
 		return False;
 	} else if ($checkResult == 'or and') {
 		$andIndex = strpos($requirement, 'and');
-		$orStatement = checkRequirment(substr($requirement, 0, $andIndex), $completedCourses);
+		$orStatement = checkRequirement(substr($requirement, 0, $andIndex), $completedCourses);
 
 
-		if ($orStatement) {
+		if ($orStatement) 
 			return True;
-		} else 
-			return substr($requirement, $andIndex), $completedCourses;
+		else 
+			return checkRequirement(substr($requirement, $andIndex), $completedCourses);
 
 	} else if ($checkResult == 'and or') {
 		$orIndex = strpos($requirement, "or");
-		$orStatement = checkRequirment(substr($requirement, 0, $orIndex), $completedCourses);
+		$orStatement = checkRequirement(substr($requirement, 0, $orIndex), $completedCourses);
 
-		if (!$orStatement) {
+		if (!$orStatement) 
 			return False;
 
 		$orStatement = ($orStatement) ? 'True' : 'False';
-		return checkRequirment($orStatement." ".substr($requirement, $orIndex), $completedCourses);
+		return checkRequirement($orStatement." ".substr($requirement, $orIndex), $completedCourses);
 	}
 	return True;
 }
@@ -148,9 +149,5 @@ function trimAll($str=''){
 	else 
 		return $str;
 }
-
-
-
-
 
 ?>

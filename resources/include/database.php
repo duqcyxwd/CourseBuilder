@@ -150,37 +150,6 @@
 			return $eligibleCourses;
 		}
 
-		function CourseMathcing($requirement, $completedCourses)
-		{
-
-			// determine which courses can be taken
-			$YearReq = 1;
-			$requirement = trim($requirement);
-			$isEligible = true;  	// Default value
-
-			if (strpos($requirement, 'permission of the department')) { // Special requirement
-				$isEligible = true;
-			} else {
-				$isEligible = false;
-
-				// split by 'and'
-				$requirement = preg_split('/(and)/', $requirement);
-				d($requirement);
-				// evaluate each and
-				foreach ($requirement as $courses) {
-					// split by 'or'
-					$courses = preg_split('/(or)/', $courses);
-
-					foreach ($courses as $course) {
-						if (in_array(trim($course), $completedCourses)) {
-							$isEligible = true;
-						}
-					}
-				}
-			}
-			return $isEligible;
-		}
-
 		function getPrerequisiteTree($program)
 		{
 			$courses = array();
@@ -339,7 +308,6 @@
 			return $result;
 		}
 
-
 		function getCourseInfoByCourseArray($courseArray) {
 			$result = [];
 			$term = getCurrentTerm();
@@ -364,6 +332,79 @@
 			}
 			return $result;
 		}
+
+
+		/*
+			return an array of Course Object
+		 */
+		function getCourseArray($courseCompleted, $prerequisiteTree) {
+			$openingClasses = $this->getOpeningClasses();
+
+			$requiredCourses = flatArray($prerequisiteTree);
+
+			// get courses that uncompleted in prerequisite Tree
+			$unCompletedCourse = array_diff($requiredCourses, $courseCompleted);
+
+			// get course that unCompletedCourses open in current term
+			// check if this course open or not
+			$unCompletedOpeningCourses = array_diff($unCompletedCourse, array_diff($unCompletedCourse, $openingClasses));
+
+			// filter the courses by prerequisite
+			foreach ($unCompletedOpeningCourses as $term => $singleCourse) {
+				if (!checkPrerequisites($singleCourse)) {
+					unset($unCompletedOpeningCourses[$term]);
+				}
+			}
+
+			// return $unCompletedOpeningCourses;
+
+			$classInfo = $this->getCourseInfoByCourseArray($unCompletedOpeningCourses);
+
+			$courseArray = createCourseArray($unCompletedOpeningCourses, $classInfo);
+
+			return $courseArray;
+		}
 	}
 
+	/*
+		return an array of Course Object
+	 */
+	function createCourseArray($unCompletedCourses, $classesInfo){
+		$result = [];
+
+		if (count($unCompletedCourses) == 0) return []; // TODO: WHAT IF NO COURSES SELECTED?
+
+		foreach ($unCompletedCourses as $number => $singleCourse) {
+			$course = new Course($singleCourse);
+			foreach ($classesInfo as $classInfo) {
+				if ($singleCourse == $classInfo["Subject"]." ".$classInfo["CourseNumber"]){
+					$course->addClass($classInfo);
+				} 
+			}
+			array_push($result, $course);
+		}
+
+		return $result;
+	}
+
+	/*
+		return an array of Course Object
+	 */
+	function createCourseArrayBySelectCourse($courseForTable){
+		$result = [];
+
+		if (count($courseForTable) == 0) return []; // TODO: WHAT IF NO COURSES SELECTED?
+
+		foreach ($courseForTable as $number => $singleCourse) {
+			$course = new Course($singleCourse);
+			foreach ($classesInfo as $classInfo) {
+				if ($singleCourse == $classInfo["Subject"]." ".$classInfo["CourseNumber"]){
+					$course->addClass($classInfo);
+				} 
+			}
+			array_push($result, $course);
+		}
+
+		return $result;
+	}
 ?>
