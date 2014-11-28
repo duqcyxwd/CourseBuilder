@@ -27,7 +27,7 @@
 		case 'timeTable':
 			$courseCompleted = (isset($variable['courseCompleted']) && $variable['courseCompleted'] != '' ? explode(",", $variable['courseCompleted']) : []);
 
-			$courseObjectArray = $db-> getCourseArray($courseCompleted, $prerequisiteTree);
+			$courseObjectArray = $db-> getCourseArray($courseCompleted, $prerequisiteTree, $program);
 
 			if (isset($variable['TimeTableCourse'])) {
 				// Generate table from selected course.
