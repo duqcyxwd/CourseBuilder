@@ -6,8 +6,7 @@
 		$username = $_POST['login'];
 		$password = $_POST['password'];
 	} else {
-		// return to login page
-		header('Location: ' . ROOT_PATH . '/admin.php');
+		header('Location: ' . ROOT_PATH . '/admin.php'); // return to login page
 	}
 
 	// Verify Login
