@@ -78,6 +78,7 @@ function Timetable(id) {
 		document.getElementById(tableID).innerHTML = "";
 		document.getElementById(tableID).appendChild(table);
 	}
+	
 
 	/**
 	 * initTableFrame

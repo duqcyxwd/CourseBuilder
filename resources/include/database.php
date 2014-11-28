@@ -329,6 +329,7 @@
 					$sql = "UPDATE Classes
 				        SET RoomCap = RoomCap - 1
 				        WHERE Subject = '$course_info[0]' AND CourseNumber = '$course_info[1]' AND Section='$course_info[2]'";
+
 				}
 			}
 			
