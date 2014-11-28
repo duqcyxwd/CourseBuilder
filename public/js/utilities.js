@@ -218,24 +218,28 @@ function listSelectedCourses(id, childClass, courses, params, page) {
       course.onclick = function() {
 
         var tableCourses = "";
+        var thisCourse = this.innerHTML.slice(0, -9);
 
-        for (var i = 0; i < this.allCourses.length; i++) {
+        if (this.allCourses.length > 1) {
+          for (var i = 0; i < this.allCourses.length; i++) {
+            if (this.allCourses[i][0] !== thisCourse) {
+              tableCourses += this.allCourses[i][0] + ",";
+            }
+          };
 
-          if (this.allCourses[i][0] !== course.innerHTML) {
-            tableCourses += this.allCourses[i][0] + ",";
-          }
-        };
+          tableCourses = tableCourses.replace(/,\s*$/, "")
+          
+          var customParams = {
+              action: 'timeTable',
+              TimeTableCourse: tableCourses,
+              courseCompleted: params['courseCompleted'],
+              program: params['program']
+            }
 
-        tableCourses = tableCourses.replace(/,\s*$/, "")
-   
-        var customParams = {
-            action: 'timeTable',
-            TimeTableCourse: tableCourses,
-            courseCompleted: params['courseCompleted'],
-            program: params['program']
-          }
-
-        loadTimetableContent(customParams);
+          loadTimetableContent(customParams);
+        } else {
+          displayBannerMessage('messageBanner', 'you must have at least one course in the table');
+        }
       }
 
       elem.appendChild(course);
@@ -451,9 +455,6 @@ function addPopupToElement(elem, headerText, subheaderText, listOfItems, selecte
 
     var electives = document.createElement("div");
     electives.className = "electivesList";
-
-    // var items = elem.items;
-    // console.log(elem.items);
 
     for (var i = listOfItems.length - 1; i >= 0; i--) {
 
