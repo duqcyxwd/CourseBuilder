@@ -187,8 +187,12 @@ function Timetable(id) {
 			newCell.rowSpan   = diffTime;
 			newCell.className = prevClass;
 			newCell.id				= 'course';
-			newCell.innerHTML = courseInfo;
 
+			// format course
+			var cellLayout = "<h1>" + courseInfo + "</h1>"
+				+ "<p>" + startTime + "-" + endTime + "</p>";
+
+			newCell.innerHTML = cellLayout;
 
 			// get the first cell
 			var rows = row[startRow].cells;
@@ -258,6 +262,7 @@ window.onload = function() {
 
 		  	// display banner for message
 		  	if (json[2] != "") {
+
 		  		var banner = document.getElementById('messageBanner');
 		  		banner.className = "displayBanner";
 		  		banner.innerHTML = "Notice: " + json[2];

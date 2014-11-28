@@ -23,18 +23,18 @@ html {
 body {
 	font-family: 'Open Sans', sans-serif;
 	min-height: 1000px;
-	height: 100%;
+	height: auto;
 }
 
 a {
 	text-decoration: none;
 }
 
-h2 {
+h2, h3 {
 	margin: 0.5em 0 0.5em 1em;
 }
 
-h3 {
+p {
 	margin: 0.5em 0 0.5em 1em;
 }
 
@@ -51,7 +51,6 @@ header {
 
 #program-name {
 	text-align: center;
-	/*padding-top: 30px;*/
 }
 
 #course-builder-header {
@@ -89,7 +88,7 @@ header {
 
 .program-select {
 	padding: 10px;
-	width: 617px;
+	width: 622px;
 	margin: 0 auto;
 }
 
@@ -126,7 +125,7 @@ header {
 	margin-left: 10px;
 	float: left;
 	padding: 9px;
-	width: 25px;
+	width: 30px;
 	text-align: center;
 }
 
@@ -173,13 +172,18 @@ header {
 
 /* Highlight when selected */
 .highlight {
-	background-color: red;
+	background-color: #C32D1C;
 	color: yellow; 
 }
 
 /******************************
 					TIME TABLE
 ******************************/
+
+#timetable-wrapper {
+	height: 1000px;
+	margin-bottom: -40px; /* footer margin */
+}
 
 #timetable {
 	width: 80%;
@@ -218,12 +222,27 @@ header {
 }
 
 #course {
-	background-color: #C3C3C3;
+	/*background-color: #EBEBEB;*/
+	background-color: #ecf0f1;
+	vertical-align: top;
+}
+
+#course h1 {
+	font-size: 11pt;
+	font-weight: bold;
+	margin: 0px;
+	padding: 0px;
+}
+
+#course p {
+	font-size: 9pt;
+	margin: 0px;
+	padding: 0px;
 }
 
 
 /******************************
-						SIDEBAR
+						BANNER
 ******************************/
 .displayBanner {
 	border: solid #005776 1px;
@@ -254,6 +273,7 @@ header {
 ******************************/
 
 footer {
+	margin-top: 40px;
 	float: left;
 	width: 100%;
 	font-size: 10pt;
@@ -276,6 +296,10 @@ footer {
 	padding: 0.1em;
 	padding-left: 12px;
 	background-color: #202020; /* dark grey */
+}
+
+#footer-force-bottom {
+	height: 800px;
 }
 
 
@@ -336,30 +360,43 @@ footer a {
 
 
 /******************************
-				COURSE COLORS
+			 HELP INSTRUCTIONS
 ******************************/
-/*
-.MATH, .STAT {
-	border: 3px solid green;
+
+#help-container {
+	padding-top: 30px;
+	/*height: 1000px;*/
 }
 
-.PHYS, .CHEM, .COMP {
-	border: 3px solid yellow;
+.help-wrapper {
+	background-color: white;
+	width: 85%;
+	position: center;
+	margin: 0 auto;
 }
 
-.SYSC {
-	border: 3px solid purple;
+.help-instructions {
+	color: black;
+	padding: 15px;
 }
 
-.ECOR, .CCDP {
-	border: 3px solid black;
+.help-instructions h1 {
+	margin-top: 5px;
+	margin-bottom: 0px;
 }
 
-.ELEC {
-	border: 3px solid orange;
-}*/
+.help-instructions h2 {
+	margin-left: 6px;
+}
 
-/* elective */
-/*.ETIV {
-	border: 3px solid gray;
-}*/
+.help-instructions h3 {
+	color: #666;
+	font-size: 22pt;
+	font-weight: normal;
+	margin-top: 0px;
+	margin-left: 0px;
+}
+
+.help-instructions b, em {
+	color: #C0392B;
+}

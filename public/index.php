@@ -24,7 +24,7 @@
 			</ul>
 		</div>
 
-		<input type="int" maxlength="1" size="10" value="5" class='course-number' id='max'/>
+		<input type="number" max='6' min='1' maxlength="1" size="10" value="5" class='course-number' id='max'/>
 
 		<div class='submit' id='submit'>
 			<input type="submit" value="Submit" id="submitButton"/>
@@ -37,7 +37,7 @@
 			<?php foreach ($UNIVERSITY_YEARS as $year): ?>
 
 				<li>
-					<div class='select-year' ><?= $year; ?> Year</div>
+					<div class='select-year' ><?= $year; ?> Year Status</div>
 				</li>
 
 			<?php endforeach ?>

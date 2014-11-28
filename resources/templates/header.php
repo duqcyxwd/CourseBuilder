@@ -32,6 +32,10 @@
 			<h3>Course Builder</h3>
 		</a>
 
+		<a id="login" href="<?php echo ROOT_PATH . '/help.php'; ?>">
+			Help
+		</a>
+
 		<a id="login" href="<?php echo ROOT_PATH . '/admin.php'; ?>">
 			Admin
 		</a>
