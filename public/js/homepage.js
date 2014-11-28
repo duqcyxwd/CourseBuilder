@@ -54,6 +54,7 @@ function createTable(tableID, selectedProgram, numOfYears) {
   // request 
   AJAXRequest( function(response) {
 
+    console.log(response);
     var json = JSON.parse(response);
     
     var allElectives = json[1];
