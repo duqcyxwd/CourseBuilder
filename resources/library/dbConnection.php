@@ -3,10 +3,11 @@
 	require "../config.php";
 	require "timeTable.class.php";
 	require("../library/PreRequisite.class.php");
-	// require '/Users/SuperiMan/repo/kint/Kint.class.php';
+	require '/Users/SuperiMan/repo/kint/Kint.class.php';
 
-	// Kint::enabled(true);
+	Kint::enabled(false);
 	session_start();
+
 
 	$lock = false;
 
@@ -14,6 +15,10 @@
 
 	$program = $variable['program'];
 	$prerequisiteTree = $db->getPrerequisiteTree($program);
+	if ($prerequisiteTree == []) {
+		echo "Can't find info about this program";
+		exit();
+	}
 
 	// Need another Ajax for Elective when select form prerequisite table
 	$elective = $db->getElectivesByProgram($program);
@@ -43,6 +48,8 @@
 				$singleTimeTable = getATimeTable($courseObjectArray, $maxNumOfCourse);
 			}
 
+			
+
 			$avaiableCourses = [];
 			foreach ($courseObjectArray as $key => $value) {
 				$avaiableCourses[] = [$value->name, $value->courseTitle];
@@ -66,6 +73,7 @@
 				if (isset($variable['selectedCourses'])) {
 					$registrationMsg = $db->registerForClasses($variable['selectedCourses']);				
 				}
+				
 				if($registrationMsg == []){
 					$result[] = "All Classes Registered :)";
 				}else{
@@ -132,7 +140,6 @@
 				break;
 			}
 		}
-
 		return $timeTable;
 	}
 
