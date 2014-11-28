@@ -50,104 +50,89 @@
 
 		function getYearStanding($completedCourses, $program)
 		{
-			$sql = "SELECT YearRequirement 
-							FROM ProgramsRequirement 
-							WHERE Program = '$program' 
-							AND concat(Subject, ' ', CourseNumber)
-							NOT IN (";
+			$first_year = [];
+			$second_year = [];
+			$third_year = [];
 
-			foreach ($completedCourses as $course) {
-				$sql .= "'$course',";
-			}
+			$yearStanding = 1;
 
-			$sql = trim($sql, ",") . ") LIMIT 1";
+			$sql = "SELECT * 
+					FROM ProgramsRequirement 
+					WHERE Program = '$program' 
+					AND Subject != 'Elective'";
 
 			$result = $this->execute($sql);
-
-			if ($row = mysqli_fetch_array($result)) {
+			
+			while($row = mysqli_fetch_array($result)){
 				$term = $row['YearRequirement'];
 
-				// convert term to year status
-				if ($term % 2 == 0) // even
-					return ($term + 2) / 2;
-				else // odd
-					return ($term + 1) / 2;
+				$course = $row['Subject']." ".$row['CourseNumber'];
 
-			} else {
-				return 0;
+				if($row['YearRequirement'] < 2 ){
+					array_push($first_year, $course);
+				}
+				elseif($row['YearRequirement'] < 4){
+					array_push($second_year, $course);
+				}
+				elseif($row['YearRequirement'] < 6){
+					array_push($third_year, $course);
+				}
+				else{}
+
 			}
+		
+			if($this->yearCompleted($first_year,$completedCourses) == true){
+				$yearStanding = 2;
+			}
+			else{ 
+				echo $yearStanding;
+				return $yearStanding; 
+			}
+
+			//for second year specifications
+			$count = 0;
+			foreach ($second_year as $course) {
+				if(in_array($course, $completedCourses)){
+					$count++;
+				}
+			}
+			if($count >= 8){
+				$yearStanding = 3;
+			}else{
+				echo $yearStanding;
+				return $yearStanding;
+			}
+
+			if($this->yearCompleted($second_year,$completedCourses)){
+				$count = 0;
+				foreach ($third_year as $course) {
+					if(in_array($course, $completedCourses)){
+						$count++;
+					}
+				}
+				if($count >= 7){
+					$yearStanding = 4;
+				}else{
+					echo $yearStanding;
+					return $yearStanding;
+				}
+			}
+			echo $yearStanding;
+			return $yearStanding;
 
 		}
 
-
-		function getEligibleCourses($completedCourses, $program, $yearStanding) {
-
-			$eligibleCourses = [];
-
-			// first get all the courses of the entire program
-			$requirementsTable = "ProgramsRequirement";
-
-			$sql = "SELECT ProgramsRequirement.Subject, ProgramsRequirement.CourseNumber, Requirement, YearReq
-							FROM ProgramsRequirement
-							INNER JOIN Prerequisite
-							ON ProgramsRequirement.Subject=Prerequisite.Subject 
-							AND ProgramsRequirement.CourseNumber=Prerequisite.CourseNumber
-							WHERE Program = '$program'";
-
-			$result = $this->execute($sql);
-
-			while ($row = mysqli_fetch_array($result)){
-
-				// determine which courses can be taken
-				$requirement = $row['Requirement'];
-				$YearReq = $row['YearReq'];
-
-				// Need it
-				// if ($YearReq > $yearStanding) {
-				// 	$isEligible = false;
-				// } else if ($requirement == '') { // no requirements
-				// 	$isEligible = true;
-				// } 
-				// else if (strpos($requirement, 'credit for')) { // Special requirement
-				// 	$isEligible = true;
-				// }
-
-				if ($YearReq > $yearStanding) {
-					$isEligible = false;
+		function yearCompleted($requiredCourses,$completedCourses){
+			foreach ($requiredCourses as $course) {
+				if(in_array($course, $completedCourses)){
+					continue;
 				}
-				else if ($requirement == '') { // no requirements
-					$isEligible = true;
-				} 
-				else if (strpos($requirement, 'credit for')) { // Special requirement
-					$isEligible = true;
-				}
-				else if (strpos($requirement, 'permission of the department')) { // Special requirement
-					$isEligible = true;
-				} else {
-					$isEligible = false;
-
-					// split by 'and'
-					$requirement = preg_split('/(and)/', $requirement);
-					d($requirement);
-					// evaluate each and
-					foreach ($requirement as $courses) {
-						// split by 'or'
-						$courses = preg_split('/(or)/', $courses);
-
-						foreach ($courses as $course) {
-							if (in_array(trim($course), $completedCourses)) {
-								$isEligible = true;
-							}
-						}
-					}
-				}
-
-				if ($isEligible) {
-					array_push($eligibleCourses, $row['Subject'] . " " . $row['CourseNumber']);
+				else{
+					return false;
 				}
 			}
 
-			return $eligibleCourses;
+			return true;
 		}
 
 		function getPrerequisiteTree($program)
