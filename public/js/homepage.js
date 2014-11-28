@@ -171,7 +171,7 @@ function createYearDropdown() {
 
         var date = new Date();
 
-        if (date.getMonth() < 4) { // winter
+        if (date.getMonth() < 4 || date.getMonth() > 10) { // winter
           prerequisiteTable.selectTerm(year * 2 - 2);
         } else { // fall
           prerequisiteTable.selectTerm(year * 2 - 1);

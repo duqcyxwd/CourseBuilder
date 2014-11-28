@@ -1,4 +1,6 @@
 	</div>
+
+	<div id='footer-force-bottom'> </div>
 	<footer class="page-footer">
 		<div class="page-footer-content">
 			<ul class="col-1-5">
@@ -10,7 +12,7 @@
 			</ul>
 			<ul class="col-1-5">
 					Help and Support
-			    <li><a href="#">FAQ</a></li>
+			    <li><a href="<?php echo ROOT_PATH . '/help.php'; ?>">FAQ</a></li>
 			    <li><a href="#">Terms of Use</a></li>
 			    <li><a href="#">Contact Support</a></li>
 			    <li><a href="<?php echo ROOT_PATH . '/about.php'; ?>">About Us</a></li>
@@ -21,6 +23,5 @@
 		</div>
 			
 	</footer>
-
 </body>
 </html>
