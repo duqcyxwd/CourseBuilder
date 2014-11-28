@@ -9,6 +9,8 @@
 	session_start();
 
 
+	$lock = false;
+
 	$variable = (isset($_POST['action']) ? $_POST: $_GET);
 
 	$program = $variable['program'];
@@ -66,17 +68,24 @@
 		case 'registration':
 
 			$result = [];
-			if (isset($variable['selectedCourses'])) {
-				$registrationMsg = $db->registerForClasses($variable['selectedCourses']);				
-			}
-			if($registrationMsg == []){
-				$result[] = "All Classes Registered :)";
-			}else{
-				foreach ($registrationMsg as $message) {
-					array_push($result, "Could not register for the following courses: ".$message);
+			if($lock == false){
+				$lock = true;
+				if (isset($variable['selectedCourses'])) {
+					$registrationMsg = $db->registerForClasses($variable['selectedCourses']);				
 				}
-				array_push($result, ". Please remove course(s) and try again");
-			}
+				
+				if($registrationMsg == []){
+					$result[] = "All Classes Registered :)";
+				}else{
+					foreach ($registrationMsg as $message) {
+						array_push($result, "Could not register for the following courses: ".$message);
+					}
+					array_push($result, ". Please remove course(s) and try again");
+					$lock = false;
+				}
+			}else{
+				json_encode("please try again");
+			}	
 
 			echo json_encode($result);
 
