@@ -48,9 +48,9 @@
 
 			$result = [];
 			$result[] = [$singleTimeTable->toArray()];     		// 1-6 Courses that we scheduled
-			$result[] = $singleTimeTable->getTablesInArray(); // Combination of time table that available
-			$result[] = [$singleTimeTable->message]; 					// Message From Backend
-			$result[] = $avaiableCourses; 										// A list of course that available and unCompleted
+			$result[] = $singleTimeTable->getTablesInArray(); // Combination of time table that are available
+			$result[] = [$singleTimeTable->message]; 					// Message from Backend
+			$result[] = $avaiableCourses; 										// A list of course that are available and unCompleted
 			$result[] = $elective;  
 			
 			echo json_encode($result);
@@ -68,6 +68,16 @@
 			echo json_encode($result);
 
 			break;
+		case 'checkAvailability':
+
+			$courses = [];
+			if (isset($variable['selectedCourses'])) {
+				$courses = $db->checkCourseAvailability($variable['selectedCourses']);
+			}
+
+			echo json_encode($courses);
+
+			break;
 		default:
 			break;
 	}
@@ -77,8 +87,7 @@
 		$timeTables : the final result
 		$courseArray : Array of courses Object that we can choice
 	 */
-	function getTimeTables(&$timeTables, $courseArray, $startPoint, $timeTable)
-	{
+	function getTimeTables(&$timeTables, $courseArray, $startPoint, $timeTable) {
 		if (sizeof($timeTables) > 2) {
 			return true;
 		}
@@ -97,8 +106,7 @@
 	}
 
 	// get all the single of timeTable
-	function getATimeTable($courseArray, $maxNumOfCourse='')
-	{
+	function getATimeTable($courseArray, $maxNumOfCourse='') {
 		if ($maxNumOfCourse == '' && sizeof($courseArray) <=5) {
 			$maxNumOfCourse = 5;
 		}
@@ -113,17 +121,5 @@
 
 		return $timeTable;
 	}
-
-
-	function checkPrerequisites($value='')
-	{
-		// TODO:
-		return true;
-	}
-
-	function getYearStand(){
-		return 3;
-	}
-
 
 ?>

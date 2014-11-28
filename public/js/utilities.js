@@ -296,7 +296,10 @@ function loadTimetableContent(customParams) {
         // setting the first table
         var firstTable = json[1][0];
         setTable(timetable, firstTable);
-      
+
+        // Check course availability in real-time (every 5 seconds)
+        checkAvailabilityInRealTime(tableList, params, 5000);
+
     }, page, params);
   }
 }
@@ -466,3 +469,42 @@ function addPopupToElement(elem, headerText, subheaderText, listOfItems, callbac
     content.appendChild(closeButton);
   }
 }
+
+
+/**
+ * checkAvailabilityInRealTime
+ *
+ * check if any of the courses have filled up
+ * during user session
+ *
+ * param
+ */
+function checkAvailabilityInRealTime(tableList, params, waitTime) {
+
+  var customParams = {
+      action: 'checkAvailability',
+      program: params['program'],
+      selectedCourses: tableList.getSelectedList()
+    }
+
+  setInterval(function() {
+    AJAXRequest( function(response) {
+
+      var json = JSON.parse(response);
+
+      if (json[0] !== undefined) {
+
+        var message = "The following courses are no longer available: ";
+        for (var i = 0; i < json.length; i++) {
+          message += json[i] + ", ";
+        };
+
+        displayBannerMessage('messageBanner', message);
+      }
+
+    }, DB_CONNECTION_URL, customParams);
+    
+  }, waitTime);
+
+}
+
