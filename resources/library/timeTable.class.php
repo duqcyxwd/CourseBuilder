@@ -15,7 +15,6 @@
 		}
 
 		public function duplicate(){
-			// TODO check if this works
 			$c = new TimeTable();
 			$c->courses = $this->courses;
 			return $c;
@@ -27,7 +26,7 @@
 				$r .= $var->name.",";
 			}
 			return $r;
-		}
+		}		
 
 		public function toArray(){
 			$r = [];
@@ -207,15 +206,15 @@
 		{
 			$this->courseClasses = [];
 			$this->name = $name;
-			$this->courseCombination = 0;
 			$this->courseTitle = $title;
+			$this->courseCombination = 0;
 		}
 
 		public function addClass($course)
 		{
 			array_push($this->courseClasses, new CourseClass($course));
-			if ($this->courseTitle ="") {
-				$this->name = $course['CourseTitle'];
+			if ($this->courseTitle == "") {
+				$this->courseTitle = $course['CourseTitle'];
 			}
 		}
 

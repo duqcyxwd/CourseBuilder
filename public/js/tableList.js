@@ -22,10 +22,9 @@ function TableList(id, timeTableObj) {
 		listFrame = document.getElementById(listID);
 	}
 
-	function appendTable(courses) {
+	function appendTable(courses, courseNames) {
 
 		var item = document.createElement('div');
-
 		var formattedBody = formatBody(courses);
 
 		item.className = id + '-item';
@@ -33,9 +32,16 @@ function TableList(id, timeTableObj) {
 								   + "<div class='item-body'>" + formattedBody + "</div>";
 
 		// append course list and timeTable to item
+		for (var i = courses.length - 1; i >= 0; i--) {
+			for (var j = courseNames.length - 1; j >= 0; j--) {
+				if (courses[i][0] == courseNames[j][0]) {
+					courses[i].push(courseNames[j][1]);
+				}
+			};
+		};
 		item.courses = courses;
 		item.table = timeTable;
-		
+
 		addListener(item);
 		listFrame.appendChild(item);
 		
@@ -60,34 +66,27 @@ function TableList(id, timeTableObj) {
 
 		item.onclick = function() {
 
-			// remove all items from the table
-			this.table.clearTable();
-
 			// unhighlight all other items
 			var items = document.getElementsByClassName(id + '-item');
 			for (var i = items.length - 1; i >= 0; i--) {
-				items[i].id = '';
+			  items[i].id = '';
 			};
 
 			this.id = id + '-highlight';
 
-			var courses = this.courses;
+			setTable(timeTable, this.courses);
+		} 
 
-			// add new elements to the timetable
-	  	for (var i = courses.length - 1; i >= 0; i--) {
-	  		var info = courses[i][0] + " " + courses[i][1];
-	  		var days = courses[i][2];
-	  		var startTime = courses[i][3];
-	  		var endTime = courses[i][4];
+	}
 
-				timeTable.appendCourse(days, startTime, endTime, info);
-	  	};
-		}
+	function clearList() {
+		courseList = [];
+		listFrame.innerHTML = "";
 	}
 
 	this.appendTable = appendTable;
+	this.clearList = clearList;
 
 	init(); // initialize object on creation
-
 }
 

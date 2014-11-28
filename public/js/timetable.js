@@ -157,7 +157,7 @@ function Timetable(id) {
 	 * parm startTime	: string of time. (format: DD:HH:MM)
 	 */
 
-	function appendCourse(days, startTime, endTime, courseInfo) {
+	function appendCourse(days, startTime, endTime, courseInfo, courseTitle) {
 
 		var startHour = Math.floor(parseInt(startTime)/100),
 		 		startMin  = parseInt(startTime)%100,
@@ -190,7 +190,8 @@ function Timetable(id) {
 
 			// format course
 			var cellLayout = "<h1>" + courseInfo + "</h1>"
-				+ "<p>" + startTime + "-" + endTime + "</p>";
+				+ "<h2>" + courseTitle + "</h2>"
+				+ "<p>" + startTime + " - " + endTime + "</p>";
 
 			newCell.innerHTML = cellLayout;
 
@@ -233,64 +234,7 @@ function Timetable(id) {
 
 
 // MOVE THIS CODE OUTSIDE OF THE TIMETABLE CLASS
-var timetable;
-var tableList;
 window.onload = function() {
-	timetable = new Timetable('timetable');
-	tableList = new TableList('alt-table', timetable);
 
-	var timeTableInfo = ReadCookie("TimeTableInfo");
-
-
-	if (!(typeof timeTableInfo === 'undefined' || timeTableInfo === null)){
-		var page = DB_CONNECTION_URL,
-		    params = timeTableInfo
-
-		// request 
-		AJAXRequest( function(response) {
-		  	// alert(response);
-		  	console.log(response);
-		  	var json = JSON.parse(response);
-
-		  	//
-
-		  	// add courses to sidebar
-		  	listSelectedCourses('selected-courses', 'selected-course', json[0][0].split(","));
-
-		  	// add timetables to sidebar
-		  	storeTables(json[1], tableList);
-
-		  	// display banner for message
-		  	if (json[2] != "") {
-
-		  		var banner = document.getElementById('messageBanner');
-		  		banner.className = "displayBanner";
-		  		banner.innerHTML = "Notice: " + json[2];
-		  	}
-
-		  	// add courses to sidebar
-		  	addCourses('add-course', json[3]);
-
-		  	// add electives to sidebar
-		  	addElectives('add-elective', json[4]);
-
-
-
-
-		  	console.log("Courses " + json[0]); 
-		  	console.log("Message " + json[2]); 
-		  	console.log("Available Course " + json[3]); 
-		  	console.log("Available Elective " + json[4]); 
-		  	var courseArray = json[1][0];
-		  	for (var i = courseArray.length - 1; i >= 0; i--) {
-		  		var info = courseArray[i][0] + " " + courseArray[i][1];
-		  		var days = courseArray[i][2];
-		  		var startTime = courseArray[i][3];
-		  		var endTime = courseArray[i][4];
-
-				timetable.appendCourse(days, startTime, endTime, info);
-		  	};
-		  
-		}, page, params);
-	}
+	loadTimetableContent();
 }

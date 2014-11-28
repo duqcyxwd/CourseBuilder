@@ -85,7 +85,6 @@
 				$yearStanding = 2;
 			}
 			else{ 
-				echo $yearStanding;
 				return $yearStanding; 
 			}
 
@@ -99,7 +98,7 @@
 			if($count >= 8){
 				$yearStanding = 3;
 			}else{
-				
+
 				return $yearStanding;
 			}
 
@@ -113,13 +112,13 @@
 				if($count >= 7){
 					$yearStanding = 4;
 				}else{
+
 					
 					return $yearStanding;
 				}
 			}
-			
-			return $yearStanding;
 
+			return $yearStanding;
 		}
 
 		function yearCompleted($requiredCourses,$completedCourses){
@@ -133,96 +132,6 @@
 			}
 
 			return true;
-		}
-
-
-		function getEligibleCourses($completedCourses, $program, $yearStanding) {
-
-			$yearStanding = $this->getYearStanding($completedCourses, $program);
-
-			$eligibleCourses = [];
-
-			// first get all the courses of the entire program
-			$requirementsTable = "ProgramsRequirement";
-
-			$sql = "SELECT ProgramsRequirement.Subject, ProgramsRequirement.CourseNumber, Requirement 
-							FROM ProgramsRequirement
-							INNER JOIN Prerequisite
-							ON ProgramsRequirement.Subject=Prerequisite.Subject 
-							AND ProgramsRequirement.CourseNumber=Prerequisite.CourseNumber
-							WHERE YearRequirement >= $yearStanding AND Program = '$program'";
-
-			$result = $this->execute($sql);
-
-			while ($row = mysqli_fetch_array($result)){
-
-				// determine which courses can be taken
-				$requirement = $row['Requirement'];
-
-				if ($requirement == '') { // no requirements
-					$isEligible = true;
-				} else {
-
-					$isEligible = false;
-
-					// Check if year status requirement TODO: INCOMPLETE
-					if (strpos($requirement, '-year status')) {
-						preg_match('/(\w+)-year status in Engineering/', $requirement, $matches);
-
-						if(strcmp($matches[1],"first") == 0){
-							if($yearStanding >= 1){
-								$isEligible = true;
-							}
-						}
-						elseif(strcmp($matches[1],"second") == 0){
-							if($yearStanding >= 2){
-								$isEligible = true;
-							}
-						}
-						elseif(strcmp($matches[1],"third") == 0){
-							if($yearStanding >= 3){
-								$isEligible = true;
-							}
-						}
-						elseif(strcmp($matches[1],"fourth") == 0) {
-							if($yearStanding == 4){
-								$isEligible = true;
-							}
-						}
-
-
-					}
-
-					// check for 'and'
-					if(strpos($requirement, 'and')!== false){
-						$requirement = preg_split('/(and)/', $requirement);
-						
-						// echo "<br/>";
-						// print_r($requirement);
-
-						// evaluate each and
-						foreach($requirement as $courses) {
-							// split by 'or'
-							
-							$courses = preg_split('/(or)/', $courses);
-
-							foreach ($courses as $course) {
-								if (in_array(trim($course), $completedCourses)) {
-									$isEligible = true;
-								}
-							}
-						}
-					}
-				}
-
-				if ($isEligible) {
-					array_push($eligibleCourses, $row['Subject'] . " " . $row['CourseNumber']);
-				}
-			}
-			// echo "<br/>";
-			// print_r($eligibleCourses);
-			return $eligibleCourses;
-
 		}
 
 
@@ -354,7 +263,7 @@
 			$sql = "SELECT DISTINCT `Subject`, `CourseNumber` FROM Classes WHERE `TERM` = \"".$term."\"";
 			$result = mysqli_query($this->mysqli, $sql);
 			while ($row = mysqli_fetch_array($result)){
-				$classes[] = $row;
+				$classes[] = $row['Subject']." ".$row['CourseNumber'];
 			}
 
 			return $classes;
@@ -383,7 +292,6 @@
 			}
 			return $result;
 		}
-
 
 		function getCourseInfoByCourseArray($courseArray) {
 			$result = [];
@@ -422,6 +330,112 @@
 			
 		}
 		
+
+
+		/*
+			return an array of Course Object
+		 */
+		function getCourseArray($courseCompleted, $prerequisiteTree, $program) {
+
+			$yearStanding = $this->getYearStanding($courseCompleted, $program);
+			// function checkRequirement($requirement, $completedCourses)
+
+			$openingClasses = $this->getOpeningClasses();
+
+			$requiredCourses = flatArray($prerequisiteTree);
+
+			// get courses that uncompleted in prerequisite Tree
+			$unCompletedCourse = array_diff($requiredCourses, $courseCompleted);
+
+			// get course that unCompletedCourses open in current term
+			// check if this course open or not
+			$unCompletedOpeningCourses = array_diff($unCompletedCourse, array_diff($unCompletedCourse, $openingClasses));
+			$unCompletedOpeningCourses = $this->filterCourseListByPrerequisite($courseCompleted, $yearStanding, $unCompletedOpeningCourses);
+
+			// return $unCompletedOpeningCourses;
+
+			$classInfo = $this->getCourseInfoByCourseArray($unCompletedOpeningCourses);
+
+			$courseArray = createCourseArray($unCompletedOpeningCourses, $classInfo);
+
+			return $courseArray;
+		}
+
+
+		function filterCourseListByPrerequisite($courseCompleted, $yearStanding, $unCompletedCourses)
+		{
+			$sql = "SELECT `Subject`, `CourseNumber`, `Requirement`, `YearReq` FROM Prerequisite";
+			$result = mysqli_query($this->mysqli, $sql);
+			$filteredResult = [];
+			while ($row = mysqli_fetch_array($result)){
+				foreach ($unCompletedCourses as $key => $course) {
+					if ($row['Subject']." ".$row['CourseNumber'] == $course) {
+						if ($row['YearReq'] > $yearStanding) {
+							break;
+						} {
+							$filteredResult[] = [$course, $row['Requirement']];
+							break;
+						}
+					}
+				}
+			}
+
+
+			$result = [];
+			foreach ($filteredResult as $key => $coursRequiremnt) {
+				$requirement = $coursRequiremnt[1];
+				if (!checkRequirement($requirement, $courseCompleted)) {
+					unset($filteredResult[$key]);
+				} else {
+					$result[] = $coursRequiremnt[0];
+				}
+			}
+
+			return $result;
+		}
+
+		/*
+			return an array of Course Object
+		 */
+		function createCourseArrayBySelectCourse($courseForTable){
+			$result = [];
+			$classesInfo = $this->getCourseInfoByCourseArray($courseForTable);
+			if (count($courseForTable) == 0) return []; // TODO: WHAT IF NO COURSES SELECTED?
+
+			foreach ($courseForTable as $number => $singleCourse) {
+				$course = new Course($singleCourse);
+				foreach ($classesInfo as $classInfo) {
+					if ($singleCourse == $classInfo["Subject"]." ".$classInfo["CourseNumber"]){
+						$course->addClass($classInfo);
+					} 
+				}
+				array_push($result, $course);
+			}
+
+			return $result;
+		}
 	}
+
+	/*
+		return an array of Course Object
+	 */
+	function createCourseArray($unCompletedCourses, $classesInfo){
+		$result = [];
+
+		if (count($unCompletedCourses) == 0) return []; // TODO: WHAT IF NO COURSES SELECTED?
+
+		foreach ($unCompletedCourses as $number => $singleCourse) {
+			$course = new Course($singleCourse);
+			foreach ($classesInfo as $classInfo) {
+				if ($singleCourse == $classInfo["Subject"]." ".$classInfo["CourseNumber"]){
+					$course->addClass($classInfo);
+				} 
+			}
+			array_push($result, $course);
+		}
+
+		return $result;
+	}
+
 
 ?>

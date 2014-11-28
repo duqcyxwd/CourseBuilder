@@ -142,11 +142,32 @@ function ReadCookie(cookieName) {
  * stores all tables in tableList object
  */
 
-function storeTables(tables, tableListObj) {
+function storeTables(courseNames, tables, tableListObj) {
+
+  tableListObj.clearList();
 
   for (var i = 0; i < tables.length; i++) {
-    tableListObj.appendTable(tables[i]);
+    var table = tables[i];
+    tableListObj.appendTable(tables[i], courseNames);
   }
+}
+
+
+function setTable (timeTable, courses) {
+  // remove all items from the table
+  timeTable.clearTable();
+
+  // add new elements to the timetable
+  for (var i = courses.length - 1; i >= 0; i--) {
+    var info = courses[i][0] + " " + courses[i][1];
+    var days = courses[i][2];
+    var startTime = courses[i][3];
+    var endTime = courses[i][4];
+      var courseTitle = courses[i][5];
+
+  timeTable.appendCourse(days, startTime, endTime, info, courseTitle);
+
+  };
 }
 
 
@@ -161,20 +182,118 @@ function storeTables(tables, tableListObj) {
  * param courses: array of courses to append to id
  */
 
-function listSelectedCourses(id, childClass, courses) {
+function listSelectedCourses(id, childClass, courses, params, page) {
 
   var elem = document.getElementById(id);
+  elem.innerHTML = ""; // clear list
 
   for (var i = 0; i < courses.length; i++) {
-    if (courses[i].length > 2) { // skip empty strings
+    if (courses[i][0].length > 2) { // skip empty strings
       var course = document.createElement('div');
-      course.innerHTML = courses[i];
+      course.innerHTML = courses[i][0];
       course.className = childClass;
+      course.allCourses = courses;
+
+      course.onmouseover = function() {
+        this.innerHTML += " (remove)";
+      }
+
+      course.onmouseout = function() {
+        this.innerHTML = this.innerHTML.slice(0, -9);
+      }
+
+      course.onclick = function() {
+
+        var tableCourses = "";
+
+        for (var i = 0; i < this.allCourses.length; i++) {
+          console.log(this.allCourses[i][0]);
+          if (this.allCourses[i][0] !== course.innerHTML) {
+            tableCourses += this.allCourses[i][0] + ",";
+          }
+        };
+
+        tableCourses = tableCourses.replace(/,\s*$/, "")
+   
+        var customParams = {
+            action: 'timeTable',
+            TimeTableCourse: tableCourses,
+            courseCompleted: params['courseCompleted'],
+            program: params['program']
+          }
+
+        loadTimetableContent(customParams);      
+      }
+
       elem.appendChild(course);
     }
   }
 }
 
+// CALLED IN TIMETABLE
+function loadTimetableContent(customParams) {
+  var timetable;
+  var tableList;
+  
+  timetable = new Timetable('timetable');
+  tableList = new TableList('alt-table', timetable);
+
+  var timeTableInfo = ReadCookie("TimeTableInfo");
+
+
+  if (!(typeof timeTableInfo === 'undefined' || timeTableInfo === null)) {
+    var page = DB_CONNECTION_URL
+    
+    if (typeof customParams === 'undefined' || customParams === null) {
+      params = timeTableInfo
+    } else {
+      params = customParams;
+    }
+
+    // request 
+    AJAXRequest( function(response) {
+        // alert(response);
+        console.log(response);
+        var json = JSON.parse(response);
+
+        // add courses to sidebar
+        listSelectedCourses('selected-courses', 'selected-course', json[0][0], 
+                           params, page);
+
+        // add timetables to sidebar
+        storeTables(json[0][0], json[1], tableList);
+
+        // display message banner
+        displayBannerMessage('messageBanner', json[2]);
+
+        // add courses to sidebar
+        addCourses('add-course', json[3]);
+
+        // add electives to sidebar
+        addElectives('add-elective', json[4]);
+
+        // setting the first table
+        var firstTable = json[1][0];
+        setTable(timetable, firstTable);
+      
+    }, page, params);
+  }
+}
+
+
+/**
+ *
+ *
+ *
+ */
+function displayBannerMessage(id, message) {
+
+  if (message != '') {
+    var banner = document.getElementById(id);
+    banner.className = "displayBanner";
+    banner.innerHTML = "Notice: " + message;
+  }
+}
 
 
 /**

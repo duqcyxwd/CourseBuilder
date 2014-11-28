@@ -48,7 +48,7 @@ INSERT INTO `Prerequisite` (`Subject`, `CourseNumber`, `Requirement`, `YearReq`)
 ("SYSC", 3120, "SYSC 2004 and SYSC 2100", 4),
 ("SYSC", 3200, "MATH 1004 and MATH 1104 and (ECOR 1606 or SYSC 1100)", 0),
 ("SYSC", 3203, "MATH 3705 and PHYS 1004 and enrolment in Biomedical and Electrical Engineering or Biomedical and Mechanical Engineering programs", 0),
-("SYSC", 3303, "for students in the Faculty of Engineering and Design, SYSC 2003 and (SYSC 2004 or SYSC 2100);for students in Computer Science, (COMP 2003 or COMP 2401) and (COMP 2002 or COMP 2402)", 0),
+("SYSC", 3303, "SYSC 2003 and (SYSC 2004 or SYSC 2100)", 0),
 ("SYSC", 3500, "MATH 2004", 0),
 ("SYSC", 3501, "MATH 3705 and (SYSC 3600 or SYSC 3610)", 0),
 ("SYSC", 3503, "SYSC 3500 and STAT 2605", 0),
