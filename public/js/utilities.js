@@ -477,7 +477,9 @@ function addPopupToElement(elem, headerText, subheaderText, listOfItems, callbac
  * check if any of the courses have filled up
  * during user session
  *
- * param
+ * param tableList: tableList object
+ * param params: list of parameters for AJAX call
+ * param waitTime: time interval betwen calls
  */
 function checkAvailabilityInRealTime(tableList, params, waitTime) {
 
@@ -487,6 +489,7 @@ function checkAvailabilityInRealTime(tableList, params, waitTime) {
       selectedCourses: tableList.getSelectedList()
     }
 
+  // TODO: POSSIBLY REFRESH WEB PAGE AFTER A FEW SECONDS?
   setInterval(function() {
     AJAXRequest( function(response) {
 
