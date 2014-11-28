@@ -381,7 +381,6 @@
 		 */
 		function createCourseArrayBySelectCourse($courseForTable){
 			$result = [];
-
 			$classesInfo = $this->getCourseInfoByCourseArray($courseForTable);
 			if (count($courseForTable) == 0) return []; // TODO: WHAT IF NO COURSES SELECTED?
 

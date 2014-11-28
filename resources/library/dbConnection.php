@@ -31,7 +31,8 @@
 
 			if (isset($variable['TimeTableCourse'])) {
 				// Generate table from selected course.
-				$courseForTable = $variable['TimeTableCourse'];
+				$courseForTable = ($variable['TimeTableCourse'] != '' ? explode(",", $variable['TimeTableCourse']) : []);
+
 				$maxNumOfCourse = sizeof($courseForTable);
 				$courseForTable = $db->createCourseArrayBySelectCourse($courseForTable);
 				$singleTimeTable = getATimeTable($courseForTable, $maxNumOfCourse);
