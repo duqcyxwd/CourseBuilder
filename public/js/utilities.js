@@ -390,6 +390,7 @@ function addRegistrationSubmission(id, tableList, params) {
     AJAXRequest( function(response) {
       console.log(response);
       var json = JSON.parse(response);
+      displayBannerMessage('messageBanner', json[0]);
 
     }, DB_CONNECTION_URL, customParams);
 

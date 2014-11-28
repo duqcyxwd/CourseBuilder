@@ -303,20 +303,36 @@
 			}
 			return $result;
 		}
-		
+
+
+		/*
+		* registers a student for classes in bulk. If a student can register
+		* in all classes it returns TRUE. if there is an error registering for
+		* one of the classes it return FALSE.
+		*/
+
 		function registerForClasses($courseList){
+
+			$array = $this->checkCourseAvailability($courseList);
+			if(count($array) == 0){
 			
-			$courses = explode(";", $courseList);
-			foreach ($courses as $course) {
+				$courses = explode(";", $courseList);
+				foreach ($courses as $course) {
 
-				if ($course != "") { // ignore empty strings
-					$course_info = explode(" ", $course);
+					if ($course != "") { // ignore empty strings
+						$course_info = explode(" ", $course);
 
-					$sql = "UPDATE Classes
-				        SET RoomCap = RoomCap - 1
-				        WHERE Subject = '$course_info[0]' AND CourseNumber = '$course_info[1]' AND Section='$course_info[2]'";
+						$sql = "UPDATE Classes
+					        SET RoomCap = RoomCap - 1
+					        WHERE Subject = '$course_info[0]' AND CourseNumber = '$course_info[1]' AND Section='$course_info[2]'";
 
+					    $this->execute($sql);
+					}
 				}
+				return [];
+			}
+			else{
+				return $array;
 			}
 		}
 		

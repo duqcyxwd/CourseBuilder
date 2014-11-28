@@ -62,8 +62,16 @@
 			if (isset($variable['selectedCourses'])) {
 				$registrationMsg = $db->registerForClasses($variable['selectedCourses']);				
 			}
+			if($registrationMsg == []){
+				$result[] = "All Classes Registered :)";
+			}else{
+				foreach ($registrationMsg as $message) {
+					array_push($result, "Could not register for the following courses: ".$message);
+				}
+				array_push($result, ". Please remove course(s) and try again");
+			}
 
-			$result[] = "Message Goes Here";
+			//$result[] = "Message Goes Here";
 
 			echo json_encode($result);
 
