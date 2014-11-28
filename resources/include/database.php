@@ -99,7 +99,7 @@
 			if($count >= 8){
 				$yearStanding = 3;
 			}else{
-				echo $yearStanding;
+				
 				return $yearStanding;
 			}
 
@@ -113,11 +113,11 @@
 				if($count >= 7){
 					$yearStanding = 4;
 				}else{
-					echo $yearStanding;
+					
 					return $yearStanding;
 				}
 			}
-			echo $yearStanding;
+			
 			return $yearStanding;
 
 		}
@@ -138,8 +138,7 @@
 
 		function getEligibleCourses($completedCourses, $program, $yearStanding) {
 
-			$this->getYearStanding($completedCourses, $program);
-			$yearStanding = 2;
+			$yearStanding = $this->getYearStanding($completedCourses, $program);
 
 			$eligibleCourses = [];
 
@@ -410,6 +409,19 @@
 			}
 			return $result;
 		}
+		
+		function registerForClasses($courses){
+			
+			foreach ($courses as $course) {
+				$course_info = explode(" ", $course[0]);
+
+				$sql = "UPDATE Classes
+			        SET RoomCap = RoomCap - 1
+			        WHERE Subject = '$course_info[0]' AND CourseNumber = '$course_info[1]' AND Section='$course[1]'";
+			}
+			
+		}
+		
 	}
 
 ?>
