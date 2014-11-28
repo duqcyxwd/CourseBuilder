@@ -161,7 +161,7 @@ function storeTables(tables, tableListObj) {
  * param courses: array of courses to append to id
  */
 
-function listSelectedCourses(id, childClass, courses) {
+function listSelectedCourses(id, childClass, courses, completedCourses, maxCourses, page) {
 
   var elem = document.getElementById(id);
 
@@ -170,11 +170,75 @@ function listSelectedCourses(id, childClass, courses) {
       var course = document.createElement('div');
       course.innerHTML = courses[i];
       course.className = childClass;
+
+      course.onmouseover = function() {
+        this.innerHTML += " (remove)";
+      }
+
+      course.onmouseout = function() {
+        this.innerHTML = this.innerHTML.slice(0, -9);
+      }
+
+      course.onclick = function() {
+
+        var params = {
+            action: 'timetable',
+            TimeTableCourse: course.innerHTML,
+            courseCompleted: completedCourses,
+            max: maxCourses,
+          }
+
+        AJAXRequest( function(response) {
+
+            var json = JSON.parse(response);
+
+            // add courses to sidebar
+            listSelectedCourses('selected-courses', 'selected-course', json[0][0].split(","));
+
+            // add timetables to sidebar
+            storeTables(json[1], tableList);
+
+            // display message banner
+            displayBannerMessage('messageBanner', json[2]);
+
+            // add courses to sidebar
+            addCourses('add-course', json[3]);
+
+            // add electives to sidebar
+            addElectives('add-elective', json[4]);
+
+            var courseArray = json[1][0];
+            for (var i = courseArray.length - 1; i >= 0; i--) {
+              var info = courseArray[i][0] + " " + courseArray[i][1];
+              var days = courseArray[i][2];
+              var startTime = courseArray[i][3];
+              var endTime = courseArray[i][4];
+
+            timetable.appendCourse(days, startTime, endTime, info);
+            };
+          
+        }, page, params);
+      }
+
       elem.appendChild(course);
     }
   }
 }
 
+
+/**
+ *
+ *
+ *
+ */
+function displayBannerMessage(id, message) {
+
+  if (message != '') {
+    var banner = document.getElementById(id);
+    banner.className = "displayBanner";
+    banner.innerHTML = "Notice: " + message;
+  }
+}
 
 
 /**
