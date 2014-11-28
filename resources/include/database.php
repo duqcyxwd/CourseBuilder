@@ -50,38 +50,95 @@
 
 		function getYearStanding($completedCourses, $program)
 		{
-			$sql = "SELECT YearRequirement 
-							FROM ProgramsRequirement 
-							WHERE Program = '$program' 
-							AND concat(Subject, ' ', CourseNumber)
-							NOT IN (";
+			$first_year = [];
+			$second_year = [];
+			$third_year = [];
 
-			foreach ($completedCourses as $course) {
-				$sql .= "'$course',";
-			}
+			$yearStanding = 1;
 
-			$sql = trim($sql, ",") . ") LIMIT 1";
+			$sql = "SELECT * 
+					FROM ProgramsRequirement 
+					WHERE Program = '$program' 
+					AND Subject != 'Elective'";
 
 			$result = $this->execute($sql);
-
-			if ($row = mysqli_fetch_array($result)) {
+			
+			while($row = mysqli_fetch_array($result)){
 				$term = $row['YearRequirement'];
 
-				// convert term to year status
-				if ($term % 2 == 0) // even
-					return ($term + 2) / 2;
-				else // odd
-					return ($term + 1) / 2;
+				$course = $row['Subject']." ".$row['CourseNumber'];
 
-			} else {
-				return 0;
+				if($row['YearRequirement'] < 2 ){
+					array_push($first_year, $course);
+				}
+				elseif($row['YearRequirement'] < 4){
+					array_push($second_year, $course);
+				}
+				elseif($row['YearRequirement'] < 6){
+					array_push($third_year, $course);
+				}
+				else{}
+
+			}
+		
+			if($this->yearCompleted($first_year,$completedCourses) == true){
+				$yearStanding = 2;
+			}
+			else{ 
+				echo $yearStanding;
+				return $yearStanding; 
 			}
 
+			//for second year specifications
+			$count = 0;
+			foreach ($second_year as $course) {
+				if(in_array($course, $completedCourses)){
+					$count++;
+				}
+			}
+			if($count >= 8){
+				$yearStanding = 3;
+			}else{
+				echo $yearStanding;
+				return $yearStanding;
+			}
+
+			if($this->yearCompleted($second_year,$completedCourses)){
+				$count = 0;
+				foreach ($third_year as $course) {
+					if(in_array($course, $completedCourses)){
+						$count++;
+					}
+				}
+				if($count >= 7){
+					$yearStanding = 4;
+				}else{
+					echo $yearStanding;
+					return $yearStanding;
+				}
+			}
+			echo $yearStanding;
+			return $yearStanding;
+
+		}
+
+		function yearCompleted($requiredCourses,$completedCourses){
+			foreach ($requiredCourses as $course) {
+				if(in_array($course, $completedCourses)){
+					continue;
+				}
+				else{
+					return false;
+				}
+			}
+
+			return true;
 		}
 
 
 		function getEligibleCourses($completedCourses, $program, $yearStanding) {
 
+			$this->getYearStanding($completedCourses, $program);
 			$yearStanding = 2;
 
 			$eligibleCourses = [];
@@ -96,8 +153,6 @@
 							AND ProgramsRequirement.CourseNumber=Prerequisite.CourseNumber
 							WHERE YearRequirement >= $yearStanding AND Program = '$program'";
 
-			var_dump($sql);
-			print_r($yearStanding);
 			$result = $this->execute($sql);
 
 			while ($row = mysqli_fetch_array($result)){
@@ -143,8 +198,8 @@
 					if(strpos($requirement, 'and')!== false){
 						$requirement = preg_split('/(and)/', $requirement);
 						
-						echo "<br/>";
-						print_r($requirement);
+						// echo "<br/>";
+						// print_r($requirement);
 
 						// evaluate each and
 						foreach($requirement as $courses) {
@@ -165,8 +220,8 @@
 					array_push($eligibleCourses, $row['Subject'] . " " . $row['CourseNumber']);
 				}
 			}
-			echo "<br/>";
-			print_r($eligibleCourses);
+			// echo "<br/>";
+			// print_r($eligibleCourses);
 			return $eligibleCourses;
 
 		}

@@ -244,6 +244,10 @@
 		// TODO:
 		return true;
 	}
+	
+	function getStudentYear(){
+		
+	}
 
 
 ?>

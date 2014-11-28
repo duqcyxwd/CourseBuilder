@@ -15,7 +15,7 @@
 		if($month < 4)
 			return $year."w";
 		else 
-			return $year."f";
+			return $year."w";
 	}
 
 	// flat a multi dimension array
