@@ -47,7 +47,7 @@
 			}
 
 			$result = [];
-			$result[] = [$singleTimeTable->toString()];     // 1-6 Courses that we scheduled
+			$result[] = [$singleTimeTable->toArray()];     // 1-6 Courses that we scheduled
 			$result[] = $singleTimeTable->getTablesInArray();;								// Combination of time table that available
 			$result[] = [$singleTimeTable->message];		//Message From Backend
 			$result[] = $avaiableCourses; // A list of course that available and unCompleted

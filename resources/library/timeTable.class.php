@@ -26,7 +26,7 @@
 				$r .= $var->name.",";
 			}
 			return $r;
-		}
+		}		
 
 		public function toArray(){
 			$r = [];

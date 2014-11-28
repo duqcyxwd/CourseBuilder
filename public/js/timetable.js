@@ -157,7 +157,7 @@ function Timetable(id) {
 	 * parm startTime	: string of time. (format: DD:HH:MM)
 	 */
 
-	function appendCourse(days, startTime, endTime, courseInfo) {
+	function appendCourse(days, startTime, endTime, courseInfo, courseTitle) {
 
 		var startHour = Math.floor(parseInt(startTime)/100),
 		 		startMin  = parseInt(startTime)%100,
@@ -190,7 +190,8 @@ function Timetable(id) {
 
 			// format course
 			var cellLayout = "<h1>" + courseInfo + "</h1>"
-				+ "<p>" + startTime + "-" + endTime + "</p>";
+				+ "<h2>" + courseTitle + "</h2>"
+				+ "<p>" + startTime + " - " + endTime + "</p>";
 
 			newCell.innerHTML = cellLayout;
 
@@ -251,13 +252,11 @@ window.onload = function() {
 		  	// alert(response);
 		  	var json = JSON.parse(response);
 
-		  	//
-
 		  	// add courses to sidebar
-		  	listSelectedCourses('selected-courses', 'selected-course', json[0][0].split(","));
+		  	listSelectedCourses('selected-courses', 'selected-course', json[0][0]);
 
 		  	// add timetables to sidebar
-		  	storeTables(json[1], tableList);
+		  	storeTables(json[0][0], json[1], tableList);
 
 		  	// display banner for message
 		  	if (json[2] != '') {
@@ -272,22 +271,9 @@ window.onload = function() {
 		  	// add electives to sidebar
 		  	addElectives('add-elective', json[4]);
 
-
-
-
-		  	console.log("Courses " + json[0]); 
-		  	console.log("Message " + json[2]); 
-		  	console.log("Available Course " + json[3]); 
-		  	console.log("Available Elective " + json[4]); 
-		  	var courseArray = json[1][0];
-		  	for (var i = courseArray.length - 1; i >= 0; i--) {
-		  		var info = courseArray[i][0] + " " + courseArray[i][1];
-		  		var days = courseArray[i][2];
-		  		var startTime = courseArray[i][3];
-		  		var endTime = courseArray[i][4];
-
-				timetable.appendCourse(days, startTime, endTime, info);
-		  	};
+		  	// setting the first table
+		  	var firstTable = json[1][0];
+			setTable(timetable, firstTable);
 		  
 		}, page, params);
 	}

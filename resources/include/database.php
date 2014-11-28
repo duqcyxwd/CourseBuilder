@@ -364,6 +364,28 @@
 
 			return $courseArray;
 		}
+
+		/*
+			return an array of Course Object
+		 */
+		function createCourseArrayBySelectCourse($courseForTable){
+			$result = [];
+
+			$classesInfo = $this->getCourseInfoByCourseArray($courseForTable);
+			if (count($courseForTable) == 0) return []; // TODO: WHAT IF NO COURSES SELECTED?
+
+			foreach ($courseForTable as $number => $singleCourse) {
+				$course = new Course($singleCourse);
+				foreach ($classesInfo as $classInfo) {
+					if ($singleCourse == $classInfo["Subject"]." ".$classInfo["CourseNumber"]){
+						$course->addClass($classInfo);
+					} 
+				}
+				array_push($result, $course);
+			}
+
+			return $result;
+		}
 	}
 
 	/*
@@ -387,24 +409,5 @@
 		return $result;
 	}
 
-	/*
-		return an array of Course Object
-	 */
-	function createCourseArrayBySelectCourse($courseForTable){
-		$result = [];
 
-		if (count($courseForTable) == 0) return []; // TODO: WHAT IF NO COURSES SELECTED?
-
-		foreach ($courseForTable as $number => $singleCourse) {
-			$course = new Course($singleCourse);
-			foreach ($classesInfo as $classInfo) {
-				if ($singleCourse == $classInfo["Subject"]." ".$classInfo["CourseNumber"]){
-					$course->addClass($classInfo);
-				} 
-			}
-			array_push($result, $course);
-		}
-
-		return $result;
-	}
 ?>

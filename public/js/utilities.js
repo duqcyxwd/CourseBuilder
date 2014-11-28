@@ -142,11 +142,30 @@ function ReadCookie(cookieName) {
  * stores all tables in tableList object
  */
 
-function storeTables(tables, tableListObj) {
+function storeTables(courseNames, tables, tableListObj) {
 
   for (var i = 0; i < tables.length; i++) {
-    tableListObj.appendTable(tables[i]);
+    var table = tables[i];
+    tableListObj.appendTable(tables[i], courseNames);
   }
+}
+
+
+function setTable (timeTable, courses) {
+  // remove all items from the table
+  timeTable.clearTable();
+
+  // add new elements to the timetable
+  for (var i = courses.length - 1; i >= 0; i--) {
+    var info = courses[i][0] + " " + courses[i][1];
+    var days = courses[i][2];
+    var startTime = courses[i][3];
+    var endTime = courses[i][4];
+      var courseTitle = courses[i][5];
+
+  timeTable.appendCourse(days, startTime, endTime, info, courseTitle);
+
+  };
 }
 
 
@@ -166,9 +185,9 @@ function listSelectedCourses(id, childClass, courses) {
   var elem = document.getElementById(id);
 
   for (var i = 0; i < courses.length; i++) {
-    if (courses[i].length > 2) { // skip empty strings
+    if (courses[i][0].length > 2) { // skip empty strings
       var course = document.createElement('div');
-      course.innerHTML = courses[i];
+      course.innerHTML = courses[i][0];
       course.className = childClass;
       elem.appendChild(course);
     }
