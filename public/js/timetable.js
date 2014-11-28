@@ -234,47 +234,7 @@ function Timetable(id) {
 
 
 // MOVE THIS CODE OUTSIDE OF THE TIMETABLE CLASS
-var timetable;
-var tableList;
 window.onload = function() {
-	timetable = new Timetable('timetable');
-	tableList = new TableList('alt-table', timetable);
 
-	var timeTableInfo = ReadCookie("TimeTableInfo");
-
-
-	if (!(typeof timeTableInfo === 'undefined' || timeTableInfo === null)){
-		var page = DB_CONNECTION_URL,
-		    params = timeTableInfo
-
-		// request 
-		AJAXRequest( function(response) {
-		  	// alert(response);
-		  	var json = JSON.parse(response);
-
-		  	// add courses to sidebar
-		  	listSelectedCourses('selected-courses', 'selected-course', json[0][0]);
-
-		  	// add timetables to sidebar
-		  	storeTables(json[0][0], json[1], tableList);
-
-		  	// display banner for message
-		  	if (json[2] != '') {
-		  		var banner = document.getElementById('messageBanner');
-		  		banner.className = "displayBanner";
-		  		banner.innerHTML = "Notice: " + json[2];
-		  	}
-
-		  	// add courses to sidebar
-		  	addCourses('add-course', json[3]);
-
-		  	// add electives to sidebar
-		  	addElectives('add-elective', json[4]);
-
-		  	// setting the first table
-		  	var firstTable = json[1][0];
-			setTable(timetable, firstTable);
-		  
-		}, page, params);
-	}
+	loadTimetableContent();
 }

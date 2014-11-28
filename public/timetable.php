@@ -3,8 +3,6 @@
 	require("../resources/config.php");
 	include(TEMPLATES_PATH . "/header.php");
 	session_start();
-	// TODO: handle php stuff from dbConnection
-	// TODO: if no sessions, return to index page
 	if (isset($_SESSION['timetables'])) {
 		$generatedTables = $_SESSION['timetables'];
 	}
@@ -18,7 +16,7 @@
 	</div>
 
 	<div id="sidebar-wrapper">
-		<div id='registration' onclick="todo()">Click to Register</div>
+		<div id='registration'>Click to Register</div>
 		<div id='sidebar-header'>Table Customization</div>
 		<div id='selected-courses-header'>Select Courses to remove</div>
 		<div id='selected-courses'></div>

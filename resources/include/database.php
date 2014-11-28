@@ -98,6 +98,7 @@
 			if($count >= 8){
 				$yearStanding = 3;
 			}else{
+
 				return $yearStanding;
 			}
 
@@ -111,9 +112,12 @@
 				if($count >= 7){
 					$yearStanding = 4;
 				}else{
+
+					
 					return $yearStanding;
 				}
 			}
+
 			return $yearStanding;
 		}
 
@@ -129,6 +133,7 @@
 
 			return true;
 		}
+
 
 		function getPrerequisiteTree($program)
 		{
@@ -312,6 +317,19 @@
 			}
 			return $result;
 		}
+		
+		function registerForClasses($courses){
+			
+			foreach ($courses as $course) {
+				$course_info = explode(" ", $course[0]);
+
+				$sql = "UPDATE Classes
+			        SET RoomCap = RoomCap - 1
+			        WHERE Subject = '$course_info[0]' AND CourseNumber = '$course_info[1]' AND Section='$course[1]'";
+			}
+			
+		}
+		
 
 
 		/*

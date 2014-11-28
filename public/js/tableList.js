@@ -74,12 +74,18 @@ function TableList(id, timeTableObj) {
 
 			this.id = id + '-highlight';
 
-			setTable (timeTable, this.courses);
+			setTable(timeTable, this.courses);
 		} 
 
 	}
 
+	function clearList() {
+		courseList = [];
+		listFrame.innerHTML = "";
+	}
+
 	this.appendTable = appendTable;
+	this.clearList = clearList;
 
 	init(); // initialize object on creation
 }

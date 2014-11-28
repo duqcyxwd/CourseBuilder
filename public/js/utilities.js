@@ -144,6 +144,8 @@ function ReadCookie(cookieName) {
 
 function storeTables(courseNames, tables, tableListObj) {
 
+  tableListObj.clearList();
+
   for (var i = 0; i < tables.length; i++) {
     var table = tables[i];
     tableListObj.appendTable(tables[i], courseNames);
@@ -180,20 +182,118 @@ function setTable (timeTable, courses) {
  * param courses: array of courses to append to id
  */
 
-function listSelectedCourses(id, childClass, courses) {
+function listSelectedCourses(id, childClass, courses, params, page) {
 
   var elem = document.getElementById(id);
+  elem.innerHTML = ""; // clear list
 
   for (var i = 0; i < courses.length; i++) {
     if (courses[i][0].length > 2) { // skip empty strings
       var course = document.createElement('div');
       course.innerHTML = courses[i][0];
       course.className = childClass;
+      course.allCourses = courses;
+
+      course.onmouseover = function() {
+        this.innerHTML += " (remove)";
+      }
+
+      course.onmouseout = function() {
+        this.innerHTML = this.innerHTML.slice(0, -9);
+      }
+
+      course.onclick = function() {
+
+        var tableCourses = "";
+
+        for (var i = 0; i < this.allCourses.length; i++) {
+          console.log(this.allCourses[i][0]);
+          if (this.allCourses[i][0] !== course.innerHTML) {
+            tableCourses += this.allCourses[i][0] + ",";
+          }
+        };
+
+        tableCourses = tableCourses.replace(/,\s*$/, "")
+   
+        var customParams = {
+            action: 'timeTable',
+            TimeTableCourse: tableCourses,
+            courseCompleted: params['courseCompleted'],
+            program: params['program']
+          }
+
+        loadTimetableContent(customParams);      
+      }
+
       elem.appendChild(course);
     }
   }
 }
 
+// CALLED IN TIMETABLE
+function loadTimetableContent(customParams) {
+  var timetable;
+  var tableList;
+  
+  timetable = new Timetable('timetable');
+  tableList = new TableList('alt-table', timetable);
+
+  var timeTableInfo = ReadCookie("TimeTableInfo");
+
+
+  if (!(typeof timeTableInfo === 'undefined' || timeTableInfo === null)) {
+    var page = DB_CONNECTION_URL
+    
+    if (typeof customParams === 'undefined' || customParams === null) {
+      params = timeTableInfo
+    } else {
+      params = customParams;
+    }
+
+    // request 
+    AJAXRequest( function(response) {
+        // alert(response);
+        console.log(response);
+        var json = JSON.parse(response);
+
+        // add courses to sidebar
+        listSelectedCourses('selected-courses', 'selected-course', json[0][0], 
+                           params, page);
+
+        // add timetables to sidebar
+        storeTables(json[0][0], json[1], tableList);
+
+        // display message banner
+        displayBannerMessage('messageBanner', json[2]);
+
+        // add courses to sidebar
+        addCourses('add-course', json[3]);
+
+        // add electives to sidebar
+        addElectives('add-elective', json[4]);
+
+        // setting the first table
+        var firstTable = json[1][0];
+        setTable(timetable, firstTable);
+      
+    }, page, params);
+  }
+}
+
+
+/**
+ *
+ *
+ *
+ */
+function displayBannerMessage(id, message) {
+
+  if (message != '') {
+    var banner = document.getElementById(id);
+    banner.className = "displayBanner";
+    banner.innerHTML = "Notice: " + message;
+  }
+}
 
 
 /**

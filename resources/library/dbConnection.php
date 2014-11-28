@@ -1,12 +1,11 @@
-<?php require '/Users/SuperiMan/repo/kint/Kint.class.php';?>
 <?php
 // <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
 	require "../config.php";
 	require "timeTable.class.php";
 	require("../library/PreRequisite.class.php");
+	// require '/Users/SuperiMan/repo/kint/Kint.class.php';
 
-
-	Kint::enabled(true);
+	// Kint::enabled(true);
 	session_start();
 
 	$variable = (isset($_POST['action']) ? $_POST: $_GET);
@@ -53,8 +52,7 @@
 			$result[] = [$singleTimeTable->message];		//Message From Backend
 			$result[] = $avaiableCourses; // A list of course that available and unCompleted
 			$result[] = $elective;  
-
-
+			
 			echo json_encode($result);
 
 			break;
