@@ -192,6 +192,7 @@ function listSelectedCourses(id, childClass, courses, params, page) {
       var course = document.createElement('div');
       course.innerHTML = courses[i][0];
       course.className = childClass;
+      course.allCourses = courses;
 
       course.onmouseover = function() {
         this.innerHTML += " (remove)";
@@ -203,11 +204,21 @@ function listSelectedCourses(id, childClass, courses, params, page) {
 
       course.onclick = function() {
 
+        var tableCourses = "";
+
+        for (var i = 0; i < this.allCourses.length; i++) {
+          console.log(this.allCourses[i][0]);
+          if (this.allCourses[i][0] !== course.innerHTML) {
+            tableCourses += this.allCourses[i][0] + ",";
+          }
+        };
+
+        tableCourses = tableCourses.replace(/,\s*$/, "")
+   
         var customParams = {
             action: 'timeTable',
-            TimeTableCourse: course.innerHTML,
+            TimeTableCourse: tableCourses,
             courseCompleted: params['courseCompleted'],
-            max: params['max'],
             program: params['program']
           }
 

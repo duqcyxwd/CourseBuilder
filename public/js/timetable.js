@@ -235,5 +235,6 @@ function Timetable(id) {
 
 // MOVE THIS CODE OUTSIDE OF THE TIMETABLE CLASS
 window.onload = function() {
-	loadTimetableContent()
+
+	loadTimetableContent();
 }

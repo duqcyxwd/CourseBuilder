@@ -51,8 +51,7 @@
 			$result[] = [$singleTimeTable->message];		//Message From Backend
 			$result[] = $avaiableCourses; // A list of course that available and unCompleted
 			$result[] = $elective;  
-
-
+			
 			echo json_encode($result);
 
 			break;
@@ -107,6 +106,10 @@
 	{
 		// TODO:
 		return true;
+	}
+
+	function getYearStand(){
+		return 3;
 	}
 
 
