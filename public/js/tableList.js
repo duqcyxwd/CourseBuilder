@@ -85,8 +85,21 @@ function TableList(id, timeTableObj) {
 
 	}
 
+	/**
+	 * getSelectedList
+	 *
+	 * returns string representation of
+	 * semi-colon separated list of
+	 * selected courses
+	 */
 	function getSelectedList() {
-		return selectedCourses || courseList[0];
+
+		var courseString = "";
+		for (var i = 0; i < selectedCourses.length; i++) {
+			courseString += selectedCourses[i][0] + " " + selectedCourses[i][1] + ";";
+		};
+
+		return courseString;
 	}
 
 	function clearList() {

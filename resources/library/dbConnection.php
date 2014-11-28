@@ -47,12 +47,24 @@
 			}
 
 			$result = [];
-			$result[] = [$singleTimeTable->toArray()];     // 1-6 Courses that we scheduled
-			$result[] = $singleTimeTable->getTablesInArray();;								// Combination of time table that available
-			$result[] = [$singleTimeTable->message];		//Message From Backend
-			$result[] = $avaiableCourses; // A list of course that available and unCompleted
+			$result[] = [$singleTimeTable->toArray()];     		// 1-6 Courses that we scheduled
+			$result[] = $singleTimeTable->getTablesInArray(); // Combination of time table that available
+			$result[] = [$singleTimeTable->message]; 					// Message From Backend
+			$result[] = $avaiableCourses; 										// A list of course that available and unCompleted
 			$result[] = $elective;  
 			
+			echo json_encode($result);
+
+			break;
+		case 'registration':
+
+			$result = [];
+			if (isset($variable['selectedCourses'])) {
+				$registrationMsg = $db->registerForClasses($variable['selectedCourses']);				
+			}
+
+			$result[] = "Message Goes Here";
+
 			echo json_encode($result);
 
 			break;

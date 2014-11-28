@@ -318,14 +318,18 @@
 			return $result;
 		}
 		
-		function registerForClasses($courses){
+		function registerForClasses($courseList){
 			
+			$courses = explode(";", $courseList);
 			foreach ($courses as $course) {
-				$course_info = explode(" ", $course[0]);
 
-				$sql = "UPDATE Classes
-			        SET RoomCap = RoomCap - 1
-			        WHERE Subject = '$course_info[0]' AND CourseNumber = '$course_info[1]' AND Section='$course[1]'";
+				if ($course != "") { // ignore empty strings
+					$course_info = explode(" ", $course);
+
+					$sql = "UPDATE Classes
+				        SET RoomCap = RoomCap - 1
+				        WHERE Subject = '$course_info[0]' AND CourseNumber = '$course_info[1]' AND Section='$course_info[2]'";
+				}
 			}
 			
 		}

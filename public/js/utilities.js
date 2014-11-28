@@ -106,11 +106,12 @@ function objectToParameters(obj) {
   return retval.slice(0, -1);
 }
 
+
 /**
  * SetCookie
  *
  * Set the value to cookie
- * param obj : cookieName,cookieValue,minutes
+ * param obj : cookieName, cookieValue, minutes
 **/
 
 function SetCookie(cookieName, cookieValue, minutes) {
@@ -122,11 +123,12 @@ function SetCookie(cookieName, cookieValue, minutes) {
   document.cookie = cookie + ";expires="+expiresTime.toGMTString();
 }
 
+
 /**
  * ReadCookie
  *
- * read the value to cookie
- * param obj : cookieName
+ * read the value stored as a cookie
+ * param cookieName : name of the cookie
 **/
 
 function ReadCookie(cookieName) {
@@ -140,6 +142,9 @@ function ReadCookie(cookieName) {
  * storeTables
  *
  * stores all tables in tableList object
+ * param courseNames: list of course names
+ * param tables: array of tables to add to tableList
+ * param tableListObj: tableList to append tables to
  */
 
 function storeTables(courseNames, tables, tableListObj) {
@@ -153,7 +158,15 @@ function storeTables(courseNames, tables, tableListObj) {
 }
 
 
-function setTable (timeTable, courses) {
+/**
+ * setTable
+ *
+ * populate the timetable with courses
+ * param timeTable: timetable object to add courses to
+ * param courses: list of courses to append
+ */
+
+function setTable(timeTable, courses) {
   // remove all items from the table
   timeTable.clearTable();
 
@@ -163,7 +176,7 @@ function setTable (timeTable, courses) {
     var days = courses[i][2];
     var startTime = courses[i][3];
     var endTime = courses[i][4];
-      var courseTitle = courses[i][5];
+    var courseTitle = courses[i][5];
 
   timeTable.appendCourse(days, startTime, endTime, info, courseTitle);
 
@@ -222,7 +235,7 @@ function listSelectedCourses(id, childClass, courses, params, page) {
             program: params['program']
           }
 
-        loadTimetableContent(customParams);      
+        loadTimetableContent(customParams);
       }
 
       elem.appendChild(course);
@@ -236,6 +249,7 @@ function listSelectedCourses(id, childClass, courses, params, page) {
  *
  * param customParams: custom parameters for AJAX call
  */
+
 function loadTimetableContent(customParams) {
   var timetable;
   var tableList;
@@ -257,7 +271,7 @@ function loadTimetableContent(customParams) {
 
     // request 
     AJAXRequest( function(response) {
-        // console.log(response);
+        console.log(response);
         var json = JSON.parse(response);
 
         // add courses to sidebar
@@ -277,7 +291,7 @@ function loadTimetableContent(customParams) {
         addElectives('add-elective', json[4]);
 
         // add registration button
-        addRegistrationSubmission('registration', tableList);
+        addRegistrationSubmission('registration', tableList, params);
 
         // setting the first table
         var firstTable = json[1][0];
@@ -313,6 +327,7 @@ function displayBannerMessage(id, message) {
  *
  * param id: object to add electives to
  * param electives: list of electives
+ * param callback: function to call upon selecting an elective
  */
 
 function addElectives(id, electives, callback) {
@@ -324,6 +339,18 @@ function addElectives(id, electives, callback) {
   addPopupToElement(elem, header, subheader, electives, callback);
 }
 
+
+/**
+ * addCourses
+ *
+ * add list of courses to id and
+ * display pop-up when user clicks
+ * on the id.
+ *
+ * param id: object to add courses to
+ * param courses: list of courses
+ * param callback: function to call upon selecting a course
+ */
 function addCourses(id, courses, callback) {
 
   var elem = document.getElementById(id);
@@ -337,23 +364,33 @@ function addCourses(id, courses, callback) {
 /**
  * addRegistrationSubmission
  *
- *
+ * adds an AJAX call to the registration button and
+ * calls the server to register for courses
  * param id: id of registration button
+ * param tableList: table containing all of the timetables
+ * param params: AJAX parameters required to call the server
+ * param page: server page to call
  */
-function addRegistrationSubmission(id, tableList) {
+
+function addRegistrationSubmission(id, tableList, params) {
 
   var registrButton = document.getElementById(id);
 
   registrButton.onclick = function() {
 
-    console.log(tableList.getSelectedList());
-    // var customParams = {
+    var customParams = {
+        action: 'registration',
+        program: params['program'],
+        selectedCourses: tableList.getSelectedList()
+      }
 
-    // }
+    AJAXRequest( function(response) {
+      console.log(response);
+      var json = JSON.parse(response);
 
-    // loadTimetableContent(customParams);
+    }, DB_CONNECTION_URL, customParams);
+
   }
-
 }
 
 
