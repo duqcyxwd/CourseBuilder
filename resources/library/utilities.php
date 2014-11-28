@@ -18,6 +18,7 @@
 			return $year."f";
 	}
 
+
 	// flat a multi dimension array
 	function flatArray($array){
 		$result = [];
