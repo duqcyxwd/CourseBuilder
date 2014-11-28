@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS Classes;
 DROP TABLE IF EXISTS ProgramsRequirement;
 DROP TABLE IF EXISTS Electives;
 DROP TABLE IF EXISTS Courses;
+DROP TABLE IF EXISTS Administrators;
 
 --
 -- Database: `courseBuilder`
@@ -73,7 +74,7 @@ CREATE TABLE IF NOT EXISTS Classes(
 	Start_Time varchar(4),
 	End_Time varchar(4),
 	Days varchar(6),
-	RoomCap varchar(6),
+	RoomCap int(6),
 	Professor varchar(30),
 	Type varchar(4),
 	Section varchar(4),
