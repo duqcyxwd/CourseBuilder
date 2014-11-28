@@ -23,6 +23,8 @@
 <?php elseif ($pageTitle == "Timetable") : ?>
 	<script src="<?php echo ROOT_PATH . '/js/timetable.js'; ?>"></script>
 	<script src="<?php echo ROOT_PATH . '/js/tableList.js'; ?>"></script>
+<?php elseif ($pageTitle == "Administrator") : ?>
+	<script src="<?php echo ROOT_PATH . '/js/adminlogin.js'; ?>"></script>
 <?php endif; ?>
 
 <body>
@@ -46,3 +48,4 @@
 	<div id="fade" class="blackOverlay"></div>
 
 	<div id="container">
+		<div id="messageBanner"></div>

@@ -16,7 +16,6 @@
 			return mysqli_query($this->mysqli, "SELECT * FROM $table");
 		}
 
-
 		function execute($sql) {
 			return mysqli_query($this->mysqli, $sql);
 		}
@@ -455,6 +454,117 @@
 
 			return $coursesNoLongerAvailable;
 		}
+
+		function getAllAdmins() {
+			$retVal = "";
+			$result = $this->getAllRowsFromTable('Administrators');
+			while($row = mysqli_fetch_array($result)){
+				$retVal .= "'" . $row['Username']  . "','" . $row['Password'] .  "'\n";
+			}
+
+			return $retVal;
+		}
+
+		function getAllClasses() {
+			$retVal = "";
+			$result = $this->getAllRowsFromTable('Classes');
+			while($row = mysqli_fetch_array($result)){
+				$retVal .= "'" . $row['Subject']  . "','" . $row['CourseNumber']  . "','" 
+								. $row['Start_Time']  . "','" .$row['End_Time']  . "','" 
+								. $row['Days']  . "','" . $row['RoomCap']  . "','" . $row['Professor']  . "','" 
+								. $row['Type']  . "','" .$row['Section']  . "','" . $row['Term'] . "'\n";
+			}
+
+			return $retVal;
+		}
+
+		function getAllCourses() {
+			$retVal = "";
+			$result = $this->getAllRowsFromTable('Courses');
+			while($row = mysqli_fetch_array($result)){
+				$retVal .= "'" . $row['Subject']  . "','" . $row['CourseNumber'] . "','" 
+								. $row['CourseTitle'] . "\n";
+			}
+
+			return $retVal;
+		}
+
+		function getAllElectives() {
+			$retVal = "";
+			$result = $this->getAllRowsFromTable('Electives');
+			while($row = mysqli_fetch_array($result)){
+				$retVal .= "'" . $row['ElectiveType']  . "','" . $row['Subject'] . "','" 
+								. $row['CourseNumber'] . "','" . $row['ElectiveName'] . "'\n";
+			}
+
+			return $retVal;
+		}
+
+		function getAllPrerequisites() {
+			$retVal = "";
+			$result = $this->getAllRowsFromTable('Prerequisite');
+			while($row = mysqli_fetch_array($result)){
+				$retVal .= "'" . $row['CourseNumber']  . "',' " . $row['Requirement'] . "',' " 
+								. $row['YearReq'] . "'\n";
+			}
+
+			return $retVal;
+		}
+
+		function getAllProgramsRequirements() {
+			$retVal = "";
+			$result = $this->getAllRowsFromTable('ProgramsRequirement');
+			while($row = mysqli_fetch_array($result)){
+				$retVal .= "'" . $row['Program']  . "',' " . $row['Subject'] . "',' " 
+								. $row['CourseNumber'] . "','" . $row['YearRequirement'] . "'\n";
+			}
+
+			return $retVal;
+		}
+
+		function setAllTableValues($table, $data) {
+
+			$tableLayout = array(
+												'Administrators' => array('Username', 'Password'),
+												'Classes' => array('Subject', 'CourseNumber', 'Section', 'Type', 'Days', 'Start_Time', 'End_Time', 'RoomCap', 'Term'),
+												'Courses' => array('Subject', 'CourseNumber', 'CourseTitle'),
+												'Electives' => array('ElectiveType', 'Subject', 'CourseNumber', 'ElectiveName'),
+												'Prerequisite' => array('Subject', 'CourseNumber', 'Requirement', 'YearReq'),
+												'Program Requirements' => array('Program', 'Subject', 'CourseNumber', 'YearRequirement')
+										  );
+
+			if (isset($tableLayout[$table])) {
+				$rowNames = $tableLayout[$table];
+				$rows = split("\n", $data);
+
+				$sqlFront = "INSERT INTO $table (";
+				foreach ($rowNames as $name) {
+					$sqlFront .= "$name,";
+				}
+
+				$sqlFront = rtrim($sqlFront, ",") . ") VALUES (";
+
+				$sql = "";
+				foreach ($rows as $row) {
+					if ($row != "")
+						$sql .= $sqlFront . $row . ");";
+				}
+
+				// run the query once. if it succeeds, clear the database and run query again
+				$result = mysqli_multi_query($this->mysqli, $sql);
+				if (mysqli_error($this->mysqli) != "") {
+					return "There is an error in the file: Error Msg: " . mysqli_error($this->mysqli);
+				} else {
+					$sql = "TRUNCATE TABLE $table; " . $sql;
+					$result = mysqli_multi_query($this->mysqli, $sql);
+					return "Successfully Updated the database! " . $sql;
+				}
+
+			}
+
+			return "Could not successfully update the database";
+		}
+
 
 	}
 

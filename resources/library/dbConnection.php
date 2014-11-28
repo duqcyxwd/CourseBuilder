@@ -12,11 +12,14 @@
 
 	$variable = (isset($_POST['action']) ? $_POST: $_GET);
 
-	$program = $variable['program'];
-	$prerequisiteTree = $db->getPrerequisiteTree($program);
+	if (isset($variable['program'])) {
+		$program = $variable['program'];
+		$prerequisiteTree = $db->getPrerequisiteTree($program);
 
-	// Need another Ajax for Elective when select form prerequisite table
-	$elective = $db->getElectivesByProgram($program);
+		// Need another Ajax for Elective when select form prerequisite table
+		$elective = $db->getElectivesByProgram($program);
+	}
+
 
 	$action = $variable['action'];
 	switch ($action) {
@@ -91,6 +94,41 @@
 
 			echo json_encode($courses);
 
+			break;
+		case 'getTableData':
+
+			if (isset($variable['dbTable'])) {
+
+				switch ($variable['dbTable']) {
+					case 'Administrators':
+						echo $db->getAllAdmins();
+						break;
+					case 'Classes':
+						echo $db->getAllClasses();
+						break;
+					case 'Courses':
+						echo $db->getAllCourses();
+						break;
+					case 'Electives':
+						echo $db->getAllElectives();
+						break;
+					case 'Prerequisite':
+						echo $db->getAllPrerequisites();
+						break;
+					case 'Program Requirements':
+						echo $db->getAllProgramsRequirements();
+						break;
+					default:
+						break;
+				}
+			}
+			break;
+		case 'updateDB':
+			if (isset($variable['dbTable']) && isset($variable['dbData'])) {
+				echo $db->setAllTableValues($variable['dbTable'], $variable['dbData']);
+			} else {
+				echo "could not update database";
+			}
 			break;
 		default:
 			break;

@@ -23,22 +23,26 @@
 	include(TEMPLATES_PATH . "/header.php");
 ?>
 
-<h1>Update Database</h1>
+<div class='adminlogin'>
+	<h1>Update Database</h1>
+</div>
+
 
 <div id='input-wrapper'>
 	<form id="inputList">
+	<div id='db-submit'>Submit Update</div>
+		<h3>Select one of the following tabs to edit the database. Hit submit to update database</h3>
 		<table>
 			<tr>
-				<td>Administrator</td>
-				<td>Classes</td>
-				<td>Courses</td>
-				<td>Electives</td>
-				<td>Prerequisite</td>
-				<td>Program Requirements</td>
+				<td class='db-tabs'>Administrators</td>
+				<td class='db-tabs'>Classes</td>
+				<td class='db-tabs'>Courses</td>
+				<td class='db-tabs'>Electives</td>
+				<td class='db-tabs'>Prerequisite</td>
+				<td class='db-tabs'>Program Requirements</td>
 			</tr>
 		</table>
-		<!-- <textarea rows='10' cols='20'></textarea> -->
-		<textarea></textarea>
+		<textarea id='db-text'></textarea>
 	</form>
 </div>
 
