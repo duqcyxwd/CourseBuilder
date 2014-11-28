@@ -41,7 +41,7 @@ function selectProgram(obj) {
  * updateProgramtitle
  *
  * set the program header of the given title
- * param title : new header title
+ * param title : new header name
 **/
 
 function updateProgramTitle(title) {

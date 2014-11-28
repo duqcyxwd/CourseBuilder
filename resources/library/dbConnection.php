@@ -73,8 +73,8 @@
 		}
 		if ($timeTable->isFull()) {
 			array_push($timeTables, $timeTable);
-			pprint("find solution");
-			d($timeTable);
+			// pprint("find solution");
+			// d($timeTable);
 			return true;
 		}
 		for ($i=$startPoint; $i < sizeof($courseArray); $i++) { 

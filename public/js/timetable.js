@@ -187,8 +187,12 @@ function Timetable(id) {
 			newCell.rowSpan   = diffTime;
 			newCell.className = prevClass;
 			newCell.id				= 'course';
-			newCell.innerHTML = courseInfo;
 
+			// format course
+			var cellLayout = "<h1>" + courseInfo + "</h1>"
+				+ "<p>" + startTime + "-" + endTime + "</p>";
+
+			newCell.innerHTML = cellLayout;
 
 			// get the first cell
 			var rows = row[startRow].cells;
@@ -247,17 +251,28 @@ window.onload = function() {
 		  	// alert(response);
 		  	var json = JSON.parse(response);
 
+		  	//
+
 		  	// add courses to sidebar
 		  	listSelectedCourses('selected-courses', 'selected-course', json[0][0].split(","));
 
-		  	// add electives to sidebar
-		  	addElectives('add-elective', json[4]);
+		  	// add timetables to sidebar
+		  	storeTables(json[1], tableList);
+
+		  	// display banner for message
+		  	if (json[2] != '') {
+		  		var banner = document.getElementById('messageBanner');
+		  		banner.className = "displayBanner";
+		  		banner.innerHTML = "Notice: " + json[2];
+		  	}
 
 		  	// add courses to sidebar
 		  	addCourses('add-course', json[3]);
 
-		  	// add timetables to sidebar
-		  	storeTables(json[1], tableList);
+		  	// add electives to sidebar
+		  	addElectives('add-elective', json[4]);
+
+
 
 
 		  	console.log("Courses " + json[0]); 

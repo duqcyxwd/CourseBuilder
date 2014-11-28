@@ -157,6 +157,16 @@ function table(id, numOfYears, progName) {
   }
 
 
+  function selectTerm(term) {
+    resetSelection();
+
+    for (var i = 0; i < listOfCourses.length; i++) {
+      if (listOfCourses[i].getTermNumber() <= term)
+        listOfCourses[i].select();
+    }
+  }
+
+
   function getJSON() {
     var json = [];
 
@@ -188,6 +198,7 @@ function table(id, numOfYears, progName) {
   this.getJSON         = getJSON;
   this.appendCourse    = appendCourse;
   this.selectYear      = selectYear;
+  this.selectTerm      = selectTerm;
   this.resetSelection  = resetSelection;
   this.getStringFormat = getStringFormat;
   this.getProgramName  = getProgramName;

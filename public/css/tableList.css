@@ -15,7 +15,7 @@
 	color: #C0392B;
 	overflow: hidden;
 	border-bottom: solid black 1px;
-	/*border-top: solid black 1px;*/
+	border-top: solid black 1px;
 }
 
 #registration:hover {

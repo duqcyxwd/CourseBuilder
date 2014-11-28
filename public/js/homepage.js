@@ -2,9 +2,10 @@ var prerequisiteTable; // global declaration of table
 
 // String to number conversion
 var stringToYear = {
-      'First'  : 1,
-      'Second' : 2,
-      'Third'  : 3
+      '1st' : 1,
+      '2nd' : 2,
+      '3rd' : 3,
+      '4th' : 4
     };
 
 
@@ -20,7 +21,8 @@ function submitTable() {
 
   if (prerequisiteTable == null) return;
   var selectedCourses = prerequisiteTable.getStringFormat();
-  var maxCourseTaking = document.getElementById('max').value;
+  var maxCourseTaking = document.getElementById('max').value || 5;
+
   var page = TIMETABLE_URL;
   var params = { action: "timeTable", 
                  courseCompleted: selectedCourses, 
@@ -146,7 +148,14 @@ function createPatternCheckbox() {
  *
  * generate the dropdown menu which
  * allows the user to select the year
- * that they last completed
+ * that they last completed.
+ * 
+ * The selection is based on the time of year.
+ * If Fall Term: On pattern selects everything
+ * up to the fall term of year specified
+ *
+ * If Winter Term: On pattern selects everything
+ * up to the Winter term of year specified
  */
 
 function createYearDropdown() {
@@ -158,12 +167,23 @@ function createYearDropdown() {
 
       if (prerequisiteTable != null) {
         var text = this.innerHTML.split(/[ ,]+/);
-        var year = stringToYear[text[0]];
+        var year = stringToYear[text[0]] - 1;
 
-        prerequisiteTable.selectYear(year);
+        var date = new Date();
+
+        if (date.getMonth() < 4 || date.getMonth() > 10) { // winter
+          prerequisiteTable.selectTerm(year * 2 - 2);
+        } else { // fall
+          prerequisiteTable.selectTerm(year * 2 - 1);
+        }
+
+        // updateProgramTitle(this.innerHTML);
+        document.getElementById('year-select-subtitle').innerHTML = this.innerHTML;
       }
     }
   }
+
+
 }
 
 
