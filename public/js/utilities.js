@@ -285,10 +285,10 @@ function loadTimetableContent(customParams) {
         displayBannerMessage('messageBanner', json[2]);
 
         // add courses to sidebar
-        addCourses('add-course', json[3]);
+        addCourses('add-course', json[3], json[0][0]);
 
         // add electives to sidebar
-        addElectives('add-elective', json[4]);
+        addElectives('add-elective', json[4], json[0][0]);
 
         // add registration button
         addRegistrationSubmission('registration', tableList, params);
@@ -333,13 +333,13 @@ function displayBannerMessage(id, message) {
  * param callback: function to call upon selecting an elective
  */
 
-function addElectives(id, electives, callback) {
+function addElectives(id, electives, selectedCourses) {
 
   var elem = document.getElementById(id);
   var header = "Select Elective";
   var subheader = "Please select the elective that you wish to add to your timetable";
 
-  addPopupToElement(elem, header, subheader, electives, callback);
+  addPopupToElement(elem, header, subheader, electives, selectedCourses);
 }
 
 
@@ -354,13 +354,39 @@ function addElectives(id, electives, callback) {
  * param courses: list of courses
  * param callback: function to call upon selecting a course
  */
-function addCourses(id, courses, callback) {
+function addCourses(id, courses, selectedCourses) {
 
   var elem = document.getElementById(id);
   var header = "Select Course";
   var subheader = "Please select the course that you wish to add to your timetable";
 
-  addPopupToElement(elem, header, subheader, courses, callback);
+  addPopupToElement(elem, header, subheader, courses, selectedCourses);
+}
+
+
+function addCourseToTable(addedCourse, selectedCourses) {
+
+  var tableCourses = "";
+
+  for (var i = 0; i < selectedCourses.length; i++) {
+
+    if (selectedCourses[i][0] !== course.innerHTML) {
+      tableCourses += selectedCourses[i][0] + ",";
+    }
+  };
+
+  tableCourses += addedCourse;
+  // tableCourses = tableCourses.replace(/,\s*$/, "")
+  
+  var customParams = {
+      action: 'timeTable',
+      TimeTableCourse: tableCourses,
+      courseCompleted: params['courseCompleted'],
+      program: params['program']
+    }
+
+  loadTimetableContent(customParams);
+
 }
 
 
@@ -406,7 +432,7 @@ function addRegistrationSubmission(id, tableList, params) {
  *
  */
 
-function addPopupToElement(elem, headerText, subheaderText, listOfItems, callback) {
+function addPopupToElement(elem, headerText, subheaderText, listOfItems, selectedCourses) {
 
   elem.onclick = function() {
 
@@ -441,12 +467,7 @@ function addPopupToElement(elem, headerText, subheaderText, listOfItems, callbac
 
       item.onclick = function() {
 
-        // update elective
-        body = course;
-        
-        if (callback != undefined) {
-          callback(body);
-        }
+        addCourseToTable(this.name, selectedCourses);
 
         // close pop-up
         document.getElementById('light').style.display = 'none';
