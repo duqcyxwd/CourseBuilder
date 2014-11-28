@@ -5,13 +5,18 @@
 	require("../library/PreRequisite.class.php");
 	// require '/Users/SuperiMan/repo/kint/Kint.class.php';
 
-	// Kint::enabled(true);
+	// Kint::enabled(false);
 	session_start();
+
 
 	$variable = (isset($_POST['action']) ? $_POST: $_GET);
 
 	$program = $variable['program'];
 	$prerequisiteTree = $db->getPrerequisiteTree($program);
+	if ($prerequisiteTree == []) {
+		echo "Can't find info about this program";
+		exit();
+	}
 
 	// Need another Ajax for Elective when select form prerequisite table
 	$elective = $db->getElectivesByProgram($program);
@@ -70,8 +75,6 @@
 				}
 				array_push($result, ". Please remove course(s) and try again");
 			}
-
-			//$result[] = "Message Goes Here";
 
 			echo json_encode($result);
 

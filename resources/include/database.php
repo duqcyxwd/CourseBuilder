@@ -134,24 +134,19 @@
 				$courses[] = $row;
 			}
 
+			$prerequisiteTree = [];
 			foreach ($courses as $key => $course) {
 				$term = '' . $course['YearRequirement'];
 				$courseTitle = $course['Subject'] . " " . $course['CourseNumber'];
 
-				// CLEAN THIS UP
-
-				// if ($course['Subject'] == 'Elective') {
-				// 	$courseTitle = $this->getElectives($course['CourseNumber']);
-				// }
-
-				if (isset($courseArray[$term])) {
-					array_push($courseArray[$term], $courseTitle);
+				if (isset($prerequisiteTree[$term])) {
+					array_push($prerequisiteTree[$term], $courseTitle);
 				} else {
-					$courseArray[$term] = array($courseTitle);
+					$prerequisiteTree[$term] = array($courseTitle);
 				}
 			}
 
-			return $courseArray;
+			return $prerequisiteTree;
 		}
 
 
@@ -356,10 +351,8 @@
 			// get course that unCompletedCourses open in current term
 			// check if this course open or not
 			$unCompletedOpeningCourses = array_diff($unCompletedCourse, array_diff($unCompletedCourse, $openingClasses));
-			// TODO: RECOMMENT BELOW
-			// $unCompletedOpeningCourses = $this->filterCourseListByPrerequisite($courseCompleted, $yearStanding, $unCompletedOpeningCourses);
-
-			// return $unCompletedOpeningCourses;
+			
+			$unCompletedOpeningCourses = $this->filterCourseListByPrerequisite($courseCompleted, $yearStanding, $unCompletedOpeningCourses);
 
 			$classInfo = $this->getCourseInfoByCourseArray($unCompletedOpeningCourses);
 
@@ -374,28 +367,36 @@
 			$sql = "SELECT `Subject`, `CourseNumber`, `Requirement`, `YearReq` FROM Prerequisite";
 			$result = mysqli_query($this->mysqli, $sql);
 			$filteredResult = [];
+
+
+			foreach ($unCompletedCourses as $c) {
+				$filteredResult[] = [$c];
+			}
+
 			while ($row = mysqli_fetch_array($result)){
-				foreach ($unCompletedCourses as $key => $course) {
-					if ($row['Subject']." ".$row['CourseNumber'] == $course) {
+				foreach ($filteredResult as $key => $course) {
+					if ($row['Subject']." ".$row['CourseNumber'] == $course[0]) {
+						// Find one course in prerequisite table, lets check
 						if ($row['YearReq'] > $yearStanding) {
 							break;
-						} {
-							$filteredResult[] = [$course, $row['Requirement']];
+						} else {
+							array_push($filteredResult[$key], $row['Requirement']);
 							break;
 						}
 					}
 				}
 			}
 
-
 			$result = [];
 			foreach ($filteredResult as $key => $coursRequiremnt) {
-				$requirement = $coursRequiremnt[1];
-				if (!checkRequirement($requirement, $courseCompleted)) {
-					unset($filteredResult[$key]);
-				} else {
-					$result[] = $coursRequiremnt[0];
-				}
+				if (sizeof($coursRequiremnt) == 2) {
+					$requirement = $coursRequiremnt[1];
+					if (!checkRequirement($requirement, $courseCompleted)) {
+						unset($filteredResult[$key]);
+						continue;
+					}
+				} 
+				$result[] = $coursRequiremnt[0];
 			}
 
 			return $result;
