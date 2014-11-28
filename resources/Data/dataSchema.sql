@@ -19,7 +19,7 @@ DROP TABLE IF EXISTS Administrators;
 CREATE TABLE IF NOT EXISTS Courses(
 	Subject varchar(10)  NOT NULL,
 	CourseNumber int(4)  NOT NULL,
-	CourseTitle varchar(40)  NOT NULL,
+	CourseTitle varchar(60)  NOT NULL,
 	PRIMARY KEY(Subject, CourseNumber)
 );
 
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS Courses(
 
 CREATE TABLE IF NOT EXISTS ProgramsRequirement(
 	AutoId integer PRIMARY KEY NOT NULL AUTO_INCREMENT,
-	Program varchar(30) NOT NULL,
+	Program varchar(60) NOT NULL,
 	Subject varchar(10)  NOT NULL,
 	CourseNumber int(4)  NOT NULL,
 	YearRequirement tinyint(1)
