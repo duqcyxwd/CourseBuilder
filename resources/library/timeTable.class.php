@@ -138,8 +138,9 @@
 				$combination[] = $couse->getCourseCombination();
 			}
 			$result = [];
-			d($combination);
-
+			if (sizeof($combination) == 0) {
+				return [];
+			}
 			$this->recursiveGetTimeTables($result, $combination, [], 0, 0);
 
 			$size = $this->numberOfCourses;
