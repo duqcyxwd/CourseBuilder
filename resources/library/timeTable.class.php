@@ -67,8 +67,6 @@
 			return true;
 		}
 
-
-
 		/**
 		 * [recursiveGetTimeTables description]
 		 * @param  [type] $combination Courses combination to pick
@@ -140,9 +138,9 @@
 				$combination[] = $couse->getCourseCombination();
 			}
 			$result = [];
+			d($combination);
+
 			$this->recursiveGetTimeTables($result, $combination, [], 0, 0);
-
-
 
 			$size = $this->numberOfCourses;
 			while ($result == []) {
@@ -164,7 +162,7 @@
 	 *         false: there is no conflict	
 	 */
 	function hasTimeConflictArrayToClass($classArrayA, $classArrayB)
-	{	
+	{
 		$flat_classArrayA = flatArray($classArrayA);
 		$flat_classArrayB = flatArray($classArrayB);
 
@@ -183,7 +181,7 @@
 	 * @return true : there is conflict
 	 *         false: there is no conflict		
 	 */
-	function hasTimeConflictArray($classArray)
+	function hasTimeConflictInArray($classArray)
 	{
 		foreach ($classArray as $keyA => $classA) {
 			foreach ($classArray as $keyB => $classB) {
@@ -232,6 +230,7 @@
 			$sectionCode = [];
 			$labs = [];
 
+			// get Lecture
 			foreach ($this->courseClasses as $class) {
 				if ($class->isLecture()) {
 					array_push($lectures, $class);
@@ -239,6 +238,7 @@
 				}
 			}
 
+			// get Lab or classes
 			foreach ($this->courseClasses as $key =>$class) {
 				if (!$class->isLecture()) {
 					// $sec = preg_replace('/[0-9]+/', '', $class->section);
@@ -264,8 +264,11 @@
 			}
 
 			if (sizeof($labs) == 0) {
-				$result = [$lectures];
-				$this->courseCombination = sizeof($labs);
+				$result = [];
+				foreach ($lectures as $l) {
+					$result[] = [$l];
+				}
+				$this->courseCombination = sizeof($lectures);
 			}
 
 			if (sizeof($result) == 1) {

@@ -3,9 +3,9 @@
 	require "../config.php";
 	require "timeTable.class.php";
 	require("../library/PreRequisite.class.php");
-	// require '/Users/SuperiMan/repo/kint/Kint.class.php';
+	require '/Users/SuperiMan/repo/kint/Kint.class.php';
 
-	// Kint::enabled(false);
+	Kint::enabled(false);
 	session_start();
 
 
@@ -45,6 +45,8 @@
 				$maxNumOfCourse = (isset($variable['max']) ? $variable['max'] : 5);
 				$singleTimeTable = getATimeTable($courseObjectArray, $maxNumOfCourse);
 			}
+
+			
 
 			$avaiableCourses = [];
 			foreach ($courseObjectArray as $key => $value) {
@@ -129,7 +131,6 @@
 				break;
 			}
 		}
-
 		return $timeTable;
 	}
 
