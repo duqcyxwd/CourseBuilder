@@ -10,7 +10,15 @@ function TableList(id, timeTableObj) {
 	var listID = id;
 	var listFrame;
 	var courseList = [];
+	var selectedCourses = [];
 	var timeTable = timeTableObj;
+
+
+	/**
+	 * init
+	 *
+	 * initialize the object
+	 */
 
 	function init() {
 
@@ -18,9 +26,26 @@ function TableList(id, timeTableObj) {
 	}
 
 
+	/**
+	 * initFrame
+	 *
+	 * set the listFrame to the given id. This
+	 * object will be appended to this id.
+	 */
+
 	function initFrame() {
 		listFrame = document.getElementById(listID);
 	}
+
+
+	/**
+	 * appendTable
+	 *
+	 * append a new item to the tableList
+	 *
+	 * param courses: list of courses in the table
+	 * param courseNames: full name of courses
+	 */
 
 	function appendTable(courses, courseNames) {
 
@@ -45,9 +70,22 @@ function TableList(id, timeTableObj) {
 		addListener(item);
 		listFrame.appendChild(item);
 		
+		if (courseList[0] == null) { // set first list to selected
+			selectedCourses = courses;
+		}
+
 		courseList.push(courses);
 	}
 
+
+	/**
+	 * formatBody
+	 *
+	 * format the body of the list item 
+	 *
+	 * param courses: list of courses that will
+	 * 								be added to the table
+	 */
 
 	function formatBody(courses) {
 
@@ -62,6 +100,17 @@ function TableList(id, timeTableObj) {
 	}
 
 
+	/**
+	 * addListener
+	 *
+	 * add onclick functions to tableList
+	 * items which highlight the item and
+	 * update the table to the new set of
+	 * courses
+	 *
+	 * param item: item to add listener to
+	 */
+
 	function addListener(item) {
 
 		item.onclick = function() {
@@ -74,10 +123,39 @@ function TableList(id, timeTableObj) {
 
 			this.id = id + '-highlight';
 
+			selectedCourses = this.courses;
 			setTable(timeTable, this.courses);
 		} 
 
 	}
+
+
+	/**
+	 * getSelectedList
+	 *
+	 * returns string representation of
+	 * semi-colon separated list of
+	 * selected courses
+	 */
+	 
+	function getSelectedList() {
+
+		var courseString = "";
+		for (var i = 0; i < selectedCourses.length; i++) {
+			courseString += selectedCourses[i][0] + " " + selectedCourses[i][1] + ";";
+		};
+
+		return courseString;
+	}
+
+
+	/**
+	 * clearList
+	 *
+	 * clear the tableList of all items.
+	 * Used for updating the list with a
+	 * new set of timetables
+	 */
 
 	function clearList() {
 		courseList = [];
@@ -85,6 +163,7 @@ function TableList(id, timeTableObj) {
 	}
 
 	this.appendTable = appendTable;
+	this.getSelectedList = getSelectedList;
 	this.clearList = clearList;
 
 	init(); // initialize object on creation

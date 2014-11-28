@@ -18,13 +18,17 @@ function course (obj, courseName, courseNumber, courseYear, courseTerm, htmlBody
       listOfElectives = [];
 
 
+  /**
+   * init
+   *
+   * initialize course object
+   */
+
   function init() {
   	// append innerText to element
   	element.innerHTML = body;
   	addListener();
     setTermNumber();
-
-
 
     if (isElective)
       isElect = true;
@@ -34,9 +38,14 @@ function course (obj, courseName, courseNumber, courseYear, courseTerm, htmlBody
         listOfElectives.push(electives[i][1]);
       }
     };
-
   }
 
+
+  /**
+   * setTermNumber
+   *
+   * set the term value
+   */
 
   function setTermNumber() {
     if (term == 'FALL') {
@@ -45,6 +54,14 @@ function course (obj, courseName, courseNumber, courseYear, courseTerm, htmlBody
       termNum = year * 2 - 1;
     }
   }
+
+
+  /**
+   * addListener
+   *
+   * add onclick function to course item.
+   * Selects course when clicked
+   */
 
   function addListener() {
 		element.onclick = function() {
@@ -56,6 +73,14 @@ function course (obj, courseName, courseNumber, courseYear, courseTerm, htmlBody
 	  }
   }
 
+
+  /**
+   * displayElectivesList
+   *
+   * if this course object is an elective, a
+   * list of electives pop-up will appear
+   * allowing the user to select an elective.
+   */
 
   function displayElectivesList() { 
 
@@ -111,15 +136,26 @@ function course (obj, courseName, courseNumber, courseYear, courseTerm, htmlBody
     content.appendChild(subheader);
     content.appendChild(electives);
     content.appendChild(closeButton);
-
   }
 
+
+  /**
+   * getJSON
+   *
+   * get the course information in JSON format
+   */
 
   function getJSON() {
     return {"coursename" : name, "coursenumber" : number };
   }
 
 
+  /**
+   * toggleSelection
+   *
+   * select or deselect the course based
+   * on it's current state
+   */
   function toggleSelection() {
   	toggleClass(element, 'highlight');
   	toggleClass(element, 'active');
@@ -127,33 +163,78 @@ function course (obj, courseName, courseNumber, courseYear, courseTerm, htmlBody
   }
 
 
+  /**
+   * select
+   *
+   * set the item to selected
+   */
   function select() {
   	if (selected == false)
   		toggleSelection();
   }
 
 
+  /**
+   * deselect
+   *
+   * deselect the courses item
+   */
   function deselect() {
   	if (selected == true)
   		toggleSelection();
   }
 
+
+  /**
+   * isSelected
+   *
+   * return true if selected, 
+   *        false otherwise
+   */
   function isSelected() {
   	return selected;
   }
+
+
+  /**
+   * getName
+   *
+   * return the course name
+   */
 
   function getName() {
     return name;
   }
 
+
+  /**
+   * getNumber
+   *
+   * return the course number
+   */
   function getNumber() {
     return number;
   }
 
+
+  /**
+   * getTermNumber
+   *
+   * return the term number
+   */
   function getTermNumber() {
     return termNum;
   }
 
+
+  /**
+   * updateCourse
+   *
+   * update the course details and layout
+   * param newName: new course name
+   * param newNumber: new coures number
+   * param body: HTML to appear inside course obj
+   */
   function updateCourse(newName, newNumber, body) {
     name = newName;
     number = newNumber;
