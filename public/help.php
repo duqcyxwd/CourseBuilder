@@ -22,8 +22,9 @@
 			<h2>Course Table</h2>
 			<p>From the table that appears, select all the courses that you have completed. Courses highlighted in red
 				 indicate that you have completed the course. If you are <b>on pattern</b> within your program, you can specify
-				 your year status and the table will automatically fill the table with the coures that you've completed.
-				 <b>Note</b>: the on pattern selector is based on the current time of year. That is, if you are using
+				 your year status and the table will automatically fill the table with the coures that you've completed. If you 
+				 are in first year and you are building a schedule for the first semester, the on pattern option will not select 
+				 any courses. <b>Note</b>: the on pattern selector is based on the current time of year. That is, if you are using
 				 this application between November and January, the on pattern selector will assume that you have completed
 				 the fall term and are building a timetable for the upcoming Winter term.</p>
 			 <h2>Submit</h2>

@@ -31,7 +31,7 @@ function submitTable() {
                };
 
   SetCookie("TimeTableInfo", params);
-  console.log(prerequisiteTable.getStringFormat());
+
   window.location.href = TIMETABLE_URL;
 }
 
@@ -55,7 +55,8 @@ function createTable(tableID, selectedProgram, numOfYears) {
   AJAXRequest( function(response) {
 
     var json = JSON.parse(response);
-    var listOfElectives = json[1];
+    
+    var allElectives = json[1];
 
     json = json[0];
     prerequisiteTable = new table(tableID, numOfYears, selectedProgram);
@@ -86,7 +87,18 @@ function createTable(tableID, selectedProgram, numOfYears) {
         courseLabel = json[termNumber][course];
         courseDetails = courseLabel.split(/[ ,]+/);
 
-        isElective = (courseDetails[name] === "Elective") ? true : false;
+        var listOfElectives = [];
+
+        // if it's an elective, loop through all electives to find matching elective type
+        if (courseDetails[name] === "Elective") {
+          for (var i = 0; i < allElectives.length; i++) {
+            if (allElectives[i][2] == courseDetails[code]) {
+              listOfElectives.push(allElectives[i]);
+            }
+          }
+
+          isElective = listOfElectives[0][1];
+        }
 
         prerequisiteTable.appendCourse(year, term, courseDetails[name], courseDetails[code], courseLabel, isElective, listOfElectives);
       }
@@ -182,8 +194,6 @@ function createYearDropdown() {
       }
     }
   }
-
-
 }
 
 

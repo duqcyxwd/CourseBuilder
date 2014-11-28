@@ -4,18 +4,18 @@
  * representation of a single course
  */
 
-function course (obj, courseName, courseNumber, courseYear, courseTerm, htmlBody, isElective, electives) {
+function course (obj, courseName, courseNumber, courseYear, courseTerm, htmlBody, electiveType, electives) {
 
-  var name     = courseName,
-  		number   = courseNumber,
-  		body     = htmlBody,
-  		element  = obj,
-      selected = false,
-      isElect  = false,
-      year     = courseYear,
-      term     = courseTerm,
-      termNum  = 0,
-      listOfElectives = [];
+  var name       = courseName,
+  		number     = courseNumber,
+  		body       = htmlBody,
+  		element    = obj,
+      selected   = false,
+      electType  = electiveType || "",
+      year       = courseYear,
+      term       = courseTerm,
+      termNum    = 0,
+      listOfElectives = electives;
 
 
   /**
@@ -26,18 +26,9 @@ function course (obj, courseName, courseNumber, courseYear, courseTerm, htmlBody
 
   function init() {
   	// append innerText to element
-  	element.innerHTML = body;
+  	element.innerHTML = electiveType || body;
   	addListener();
     setTermNumber();
-
-    if (isElective)
-      isElect = true;
-
-    for (var i = electives.length - 1; i >= 0; i--) {
-      if (electives[i][0] == number) {
-        listOfElectives.push(electives[i][1]);
-      }
-    };
   }
 
 
@@ -67,7 +58,7 @@ function course (obj, courseName, courseNumber, courseYear, courseTerm, htmlBody
 		element.onclick = function() {
 	    toggleSelection();
 
-      if (isElect && isSelected()) {
+      if (electType != "" && isSelected()) {
         displayElectivesList();
       }
 	  }
@@ -102,17 +93,17 @@ function course (obj, courseName, courseNumber, courseYear, courseTerm, htmlBody
 
     for (var i = listOfElectives.length - 1; i >= 0; i--) {
       var item = document.createElement("div");
+
       item.className = "elective";
-      var course = listOfElectives[i].split(" ");
-      item.name = course[0];
-      item.number = course[1];
-      item.innerHTML = listOfElectives[i]; // TODO: may add description in the future
+      item.courseName = listOfElectives[i][0];
+      item.innerHTML = listOfElectives[i][0]; // + " (" + listOfElectives[i][1] + ")";
 
       item.onclick = function() {
 
         // update elective
-        body = this.name + " " + this.number;
-        updateCourse(this.name, this.number, body);
+        body = this.courseName;
+        var fullCourseName = this.courseName.split(" ");
+        updateCourse(fullCourseName[0], fullCourseName[1], body);
 
         // close pop-up
         document.getElementById('light').style.display = 'none';
@@ -128,6 +119,7 @@ function course (obj, courseName, courseNumber, courseYear, courseTerm, htmlBody
     closeButton.onclick = function() {
       document.getElementById('light').style.display = 'none';
       document.getElementById('fade').style.display = 'none';
+      toggleSelection();
     }
 
 
