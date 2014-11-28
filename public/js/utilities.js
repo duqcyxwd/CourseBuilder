@@ -207,7 +207,7 @@ function listSelectedCourses(id, childClass, courses, params, page) {
         var tableCourses = "";
 
         for (var i = 0; i < this.allCourses.length; i++) {
-          console.log(this.allCourses[i][0]);
+
           if (this.allCourses[i][0] !== course.innerHTML) {
             tableCourses += this.allCourses[i][0] + ",";
           }
@@ -230,7 +230,12 @@ function listSelectedCourses(id, childClass, courses, params, page) {
   }
 }
 
-// CALLED IN TIMETABLE
+
+/**
+ * loadTimetableContent
+ *
+ * param customParams: custom parameters for AJAX call
+ */
 function loadTimetableContent(customParams) {
   var timetable;
   var tableList;
@@ -252,8 +257,7 @@ function loadTimetableContent(customParams) {
 
     // request 
     AJAXRequest( function(response) {
-        // alert(response);
-        console.log(response);
+        // console.log(response);
         var json = JSON.parse(response);
 
         // add courses to sidebar
@@ -272,6 +276,9 @@ function loadTimetableContent(customParams) {
         // add electives to sidebar
         addElectives('add-elective', json[4]);
 
+        // add registration button
+        addRegistrationSubmission('registration', tableList);
+
         // setting the first table
         var firstTable = json[1][0];
         setTable(timetable, firstTable);
@@ -282,9 +289,10 @@ function loadTimetableContent(customParams) {
 
 
 /**
+ * displayBannerMessage
  *
- *
- *
+ * param id: banner id
+ * param message: message to display in banner
  */
 function displayBannerMessage(id, message) {
 
@@ -325,6 +333,28 @@ function addCourses(id, courses, callback) {
   addPopupToElement(elem, header, subheader, courses, callback);
 }
 
+
+/**
+ * addRegistrationSubmission
+ *
+ *
+ * param id: id of registration button
+ */
+function addRegistrationSubmission(id, tableList) {
+
+  var registrButton = document.getElementById(id);
+
+  registrButton.onclick = function() {
+
+    console.log(tableList.getSelectedList());
+    // var customParams = {
+
+    // }
+
+    // loadTimetableContent(customParams);
+  }
+
+}
 
 
 /**

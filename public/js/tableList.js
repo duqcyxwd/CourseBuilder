@@ -10,6 +10,7 @@ function TableList(id, timeTableObj) {
 	var listID = id;
 	var listFrame;
 	var courseList = [];
+	var selectedCourses = [];
 	var timeTable = timeTableObj;
 
 	function init() {
@@ -45,6 +46,10 @@ function TableList(id, timeTableObj) {
 		addListener(item);
 		listFrame.appendChild(item);
 		
+		if (courseList[0] == null) { // set first list to selected
+			selectedCourses = courses;
+		}
+
 		courseList.push(courses);
 	}
 
@@ -74,9 +79,14 @@ function TableList(id, timeTableObj) {
 
 			this.id = id + '-highlight';
 
+			selectedCourses = this.courses;
 			setTable(timeTable, this.courses);
 		} 
 
+	}
+
+	function getSelectedList() {
+		return selectedCourses || courseList[0];
 	}
 
 	function clearList() {
@@ -85,6 +95,7 @@ function TableList(id, timeTableObj) {
 	}
 
 	this.appendTable = appendTable;
+	this.getSelectedList = getSelectedList;
 	this.clearList = clearList;
 
 	init(); // initialize object on creation
