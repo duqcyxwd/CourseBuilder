@@ -83,10 +83,25 @@ timetables.
 ⋅⋅⋅header.php: contains the HTML for generating the headers for each client page config.php: sets up the connection with the database and includes all the necessary files for displaying the page. Also defines the file path variables.
 ⋅⋅⋅install.php: used to create and populate the database for the first time. This only needs to run once and if successful, this App should function properly.
 
+___
 
-HOW THE APPLICATION DETERMINES WHAT CLASSES SOMEONE CAN TAKE
+###Implementation
 
-To determine a students year standing we used the requirements set by the University ( http://carleton.ca/engineering-design/current-students/undergrad-academic-support/status-vs-standing/ ). On the first page the student chooses the classes that he/she has already taken. When they hit 'submit' the JS sends an array of classes that have been taken to the backend, this is how we can determine year standing. The getYearStanding() function in database.php parses the given class array to determine what their year-standing is. 
+To determine the status of the student, the application grabs all of the courses that the student has taken and subtracts those courses from the prerequisite table in the database by means of a query. The results from the query are then ordered by year such that the first row in the query contains the year that the course must be taken.
+
+1st Year Status: Admission to the program.
+
+2nd Year Status: Successful completion of all Engineering, Science and Mathematics course requirements in the first year of the program, all English as a Second Language Requirements, and any additional requirements as determined in the admissions process.
+
+3rd Year Status: Successful completion of 4.0 credits from the second year requirements of the program.
+
+4th Year Status: Successful completion of all second year requirements and 3.5 credits from the third year requirements of the program.
+
+
+#####HOW THE APPLICATION DETERMINES WHAT CLASSES SOMEONE CAN TAKE
+
+To determine a students year standing we used the requirements set by the University ( http://carleton.ca/engineering-design/current-students/undergrad-academic-support/status-vs-standing/ ). On the first page the student chooses the classes that he/she has already taken. When they hit 'submit' the JS sends an array of classes that have been taken to the backend, this is how we can determine year standing. The getYearStanding() function in database.php parses the given class array to determine what their year-standing is. The function takes as one of the parameters, the program that the user is in. It then uses that to grab a list of required courses for that program and then seperates them into 3 arrays for first, second and third year. 
+Getting the standing becomes pretty easy from there. If a user has not finished all 1st year classes then they have first year standing, if they have then they have second year standing. In order to see if a student is in 3rd year it makes sure they have taken all first year courses and at least 8 classes from second year. A similar method is used to check if they are fourth year.
 
 
 HOW DOES THE APPLICATION DETERMINE HOW TO REGISTER FOR COURSES
