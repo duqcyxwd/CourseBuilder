@@ -273,6 +273,8 @@ function loadTimetableContent(customParams) {
       params = customParams;
     }
 
+    console.log(params);
+    
     // request 
     AJAXRequest( function(response) {
         console.log(response);

@@ -5,7 +5,7 @@
 	require("../library/PreRequisite.class.php");
 	require '/Users/SuperiMan/repo/kint/Kint.class.php';
 
-	Kint::enabled(false);
+	// Kint::enabled(false);
 	session_start();
 
 
@@ -55,11 +55,13 @@
 				$avaiableCourses[] = [$value->name, $value->courseTitle];
 			}
 
+			$tablesInArray = $singleTimeTable->getTablesInArray();
+
 			$result = [];
 			$result[] = [$singleTimeTable->toArray()];     		// 1-6 Courses that we scheduled
-			$result[] = $singleTimeTable->getTablesInArray(); // Combination of time table that are available
-			$result[] = [$singleTimeTable->message]; 					// Message from Backend
-			$result[] = $avaiableCourses; 										// A list of course that are available and unCompleted
+			$result[] = $tablesInArray;                         // Combination of time table that are available
+			$result[] = [$singleTimeTable->message]; 			// Message from Backend
+			$result[] = $avaiableCourses; 						// A list of course that are available and unCompleted
 			$result[] = $elective;  
 			
 			echo json_encode($result);
