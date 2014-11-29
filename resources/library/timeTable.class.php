@@ -94,6 +94,7 @@
 
 						if ($this->numOfSulotion!= 0) {
 							// next solution
+							array_pop($path);
 							$this->recursiveGetTimeTables($result, $combination, $path, $x, $y+1);
 						}
 					} else {
@@ -142,7 +143,6 @@
 				return [];
 			}
 
-			d($this->toArray());
 			$size = $this->numberOfCourses;
 			
 			while ($result == []) {
@@ -151,15 +151,13 @@
 				if ($result != []) 
 					break;
 				array_pop($combination);
+
 				$course = array_pop($this->courses);
 				$this->message .= $this->courses[$size-1]->name." has non-fixable time conflict\n";
 				$size--;
 				
 			}
 
-			d($this->message);
-			d($this->toArray());
-			d($result);
 			return $result;
 		}
 	}
@@ -282,10 +280,6 @@
 				$this->courseCombination = sizeof($lectures);
 			}
 
-			if (sizeof($result) == 1) {
-				// d($result);
-				// d($this);
-			}
 			return $result;
 		}
 	}
