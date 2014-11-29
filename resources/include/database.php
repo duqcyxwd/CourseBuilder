@@ -552,13 +552,12 @@
 						$sql .= $sqlFront . $row . ");";
 				}
 
-				// run the query once. if it succeeds, clear the database and run query again
+				// clear table and re-add all values
+				$sql = "DELETE FROM $table; " . $sql;
 				$result = mysqli_multi_query($this->mysqli, $sql);
 				if (mysqli_error($this->mysqli) != "") {
-					return "There is an error in the file -  errormsg: " . mysqli_error($this->mysqli);
+					return "There is an error in the file - errormsg: " . mysqli_error($this->mysqli);
 				} else {
-					$sql = "TRUNCATE TABLE $table; " . $sql;
-					$result = mysqli_multi_query($this->mysqli, $sql);
 					return "Successfully Updated the database! " . $sql;
 				}
 

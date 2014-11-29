@@ -32,6 +32,7 @@
 	<form id="inputList">
 	<div id='db-submit'>Submit Update</div>
 		<h3>Select one of the following tabs to edit the database. Hit submit to update database</h3>
+		<h4>If anything goes wrong, <a href='<?php echo RESOURCE_PATH . "/install.php" ?>'>click here</a> to reset the database to the original values</h4>
 		<table>
 			<tr>
 				<td class='db-tabs'>Administrators</td>

@@ -103,6 +103,21 @@
 	font-weight: normal;
 }
 
+#inputList h4 {
+	margin-left: 20px; 
+	font-weight: normal;
+}
+
+#inputList h4 a {
+	font-weight: normal;
+	color: #C0392B;
+}
+
+#inputList h4 a:hover {
+	color: white;
+	cursor: pointer;
+}
+
 #inputList table {
 	width: 100%;
 	text-align: center;
