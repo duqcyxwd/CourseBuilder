@@ -12,6 +12,12 @@ Database implementation, timetable generator algorithm and server-side communica
 ###### Mitch Cail (std# 100871691): 
 prerequists generator, registration, year-standing algorithm
 
+#### TESTING
+Software Engineering (SE) was used to test the application
+
+#### Assigned TA
+Mr. Kazi (BahaKazi@cmail.carleton.ca)
+
 ###File Structure
 #####Course Builder /
 Main folder containing all of the files for the project
@@ -103,8 +109,35 @@ To determine the status of the student, the application grabs all of the courses
 To determine a students year standing we used the requirements set by the University ( http://carleton.ca/engineering-design/current-students/undergrad-academic-support/status-vs-standing/ ). On the first page the student chooses the classes that he/she has already taken. When they hit 'submit' the JS sends an array of classes that have been taken to the backend, this is how we can determine year standing. The getYearStanding() function in database.php parses the given class array to determine what their year-standing is. The function takes as one of the parameters, the program that the user is in. It then uses that to grab a list of required courses for that program and then seperates them into 3 arrays for first, second and third year. 
 Getting the standing becomes pretty easy from there. If a user has not finished all 1st year classes then they have first year standing, if they have then they have second year standing. In order to see if a student is in 3rd year it makes sure they have taken all first year courses and at least 8 classes from second year. A similar method is used to check if they are fourth year.
 
+From there the program needs to determine if a course can be taken based on the prerequists. In order to achieve this we parse the prerequists and use a boolean algebra formula. The algorithm parses based on the AND's and OR's. It compares theses values to a list of courses that the student has already taken. So for example if a prereq to a course looked like this ... (Sysc 1101 and Sysc 2004 and (Sysc 1005 or Comp 1001)).
 
-HOW DOES THE APPLICATION DETERMINE HOW TO REGISTER FOR COURSES
+the bracket would take precedence so the next step is seperate into an array
+
+..... ['Sysc 1101 and Sysc 2004', 'sysc 1005 or comp 1001']
+
+                                           ^ evaluate this expression (since the student HAS taken 1005 this is TRUE)
+                                           
+so it becomes .... ['Sysc 1101 and Sysc 2004', TRUE]
+
+now split the other AND .... ['Sysc 1101', 'Sysc 2004', TRUE]
+
+and evaluate those 2 so it becomes .... [TRUE, TRUE, TRUE]
+
+and the student is able to take the class.
+
+
+####Schedule Processing
+
+In our solution, the server process identifies the courses that can be taken based on the completed courses and prerequisites. This was done because the server needs to query the database in order to determine which courses the program requires. We chose to do it on the server because it prevents any form of sql injection and does not allow the user to know anything about the database implementation.
+The conflict-free timetable was also done on the server side since it needs to make database queries.
+
+
+####HOW DOES THE APPLICATION DETERMINE HOW TO REGISTER FOR COURSES
 
 Once a user has chosen the specific course schedual that they want they click the 'Register'. Once the that button is clicked the user accesses a Mutex lock to enter the registerForClasses() function. If the lock is already taken up than a message is displayed to "try to register again". Once the user has registered for classes the lock is released and other users can now register. 
 registerForClasses() serves 2 purposes, it needs to check that all classes a user wants to register for are available(capacity > 0) and then it registers for those classes by decrementing the capacity by 1. If one of the classes that a student wants to take is full then a error message is returned. If a student cannot register for one of the classes than he will not be able to register for all other selected classes. They will need to remove the full class and try to register again. 
+
+
+#### How we built conflict free timetables
+
+We grab 3 tables from the Database (completed, opening, required) and assign them to arrays. Then we do a join on open and required to get all the classes that a student is able to take. From that Join we subtract all the classes that they have already taken. From this the top 5 classes are chosen and put into an array which is then passed to getATimetable(). All instances of a class that a student is able to take are put into this array. It then uses a recursive algorithm to determine all possible timetables a student is able to have for a given semester. A list of electives is generated after the initial table and the student can chose from ones that would fit.
