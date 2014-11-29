@@ -530,10 +530,12 @@
 												'Courses' => array('Subject', 'CourseNumber', 'CourseTitle'),
 												'Electives' => array('ElectiveType', 'Subject', 'CourseNumber', 'ElectiveName'),
 												'Prerequisite' => array('Subject', 'CourseNumber', 'Requirement', 'YearReq'),
-												'Program Requirements' => array('Program', 'Subject', 'CourseNumber', 'YearRequirement')
+												'ProgramsRequirement' => array('Program', 'Subject', 'CourseNumber', 'YearRequirement')
 										  );
 
+			$table = ($table == 'Program Requirements') ? 'ProgramsRequirement' : $table;
 			if (isset($tableLayout[$table])) {
+
 				$rowNames = $tableLayout[$table];
 				$rows = split("\n", $data);
 
@@ -553,7 +555,7 @@
 				// run the query once. if it succeeds, clear the database and run query again
 				$result = mysqli_multi_query($this->mysqli, $sql);
 				if (mysqli_error($this->mysqli) != "") {
-					return "There is an error in the file: Error Msg: " . mysqli_error($this->mysqli);
+					return "There is an error in the file -  errormsg: " . mysqli_error($this->mysqli);
 				} else {
 					$sql = "TRUNCATE TABLE $table; " . $sql;
 					$result = mysqli_multi_query($this->mysqli, $sql);

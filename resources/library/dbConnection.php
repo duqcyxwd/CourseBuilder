@@ -98,7 +98,6 @@
 		case 'getTableData':
 
 			if (isset($variable['dbTable'])) {
-
 				switch ($variable['dbTable']) {
 					case 'Administrators':
 						echo $db->getAllAdmins();
