@@ -12,6 +12,12 @@ Database implementation, timetable generator algorithm and server-side communica
 ###### Mitch Cail (std# 100871691): 
 prerequists generator, registration, year-standing algorithm
 
+#### TESTING
+Software Engineering (SE) was used to test the application
+
+#### Assigned TA
+Mr. Kazi (BahaKazi@cmail.carleton.ca)
+
 ###File Structure
 #####Course Builder /
 Main folder containing all of the files for the project
