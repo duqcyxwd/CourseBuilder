@@ -28,10 +28,18 @@
 			return $r;
 		}		
 
-		public function toArray(){
+		public function toArrayWithTitle(){
 			$r = [];
 			foreach ($this->courses as $var) {
 				$r[] = [$var->name, $var->courseTitle];
+			}
+			return $r;
+		}
+
+		public function toArray(){
+			$r = [];
+			foreach ($this->courses as $var) {
+				$r[] = $var->name;
 			}
 			return $r;
 		}

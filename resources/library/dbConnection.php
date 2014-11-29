@@ -3,9 +3,9 @@
 	require "../config.php";
 	require "timeTable.class.php";
 	require("../library/PreRequisite.class.php");
-	require '/Users/SuperiMan/repo/kint/Kint.class.php';
+	// require '/Users/SuperiMan/repo/kint/Kint.class.php';
 
-	// Kint::enabled(false);
+	// Kint::enabled(true);
 	session_start();
 
 
@@ -50,15 +50,26 @@
 
 			
 
+			// Add a lock ....
+			// Need run getTablesInArray to update variable
+			$tablesInArray = $singleTimeTable->getTablesInArray();
 			$avaiableCourses = [];
+			$courArr = $singleTimeTable->toArray();
+
 			foreach ($courseObjectArray as $key => $value) {
-				$avaiableCourses[] = [$value->name, $value->courseTitle];
+				if (!in_array($value->name, $courArr)) {
+					$avaiableCourses[] = [$value->name, $value->courseTitle];
+				}
 			}
 
-			$tablesInArray = $singleTimeTable->getTablesInArray();
+			foreach ($elective as $key => $elec) {
+				if (in_array($elec[0], $courArr)) {
+					unset($elective[$key]);
+				}
+			}
 
 			$result = [];
-			$result[] = [$singleTimeTable->toArray()];     		// 1-6 Courses that we scheduled
+			$result[] = [$singleTimeTable->toArrayWithTitle()]; // 1-6 Courses that we scheduled
 			$result[] = $tablesInArray;                         // Combination of time table that are available
 			$result[] = [$singleTimeTable->message]; 			// Message from Backend
 			$result[] = $avaiableCourses; 						// A list of course that are available and unCompleted
