@@ -103,6 +103,22 @@ To determine the status of the student, the application grabs all of the courses
 To determine a students year standing we used the requirements set by the University ( http://carleton.ca/engineering-design/current-students/undergrad-academic-support/status-vs-standing/ ). On the first page the student chooses the classes that he/she has already taken. When they hit 'submit' the JS sends an array of classes that have been taken to the backend, this is how we can determine year standing. The getYearStanding() function in database.php parses the given class array to determine what their year-standing is. The function takes as one of the parameters, the program that the user is in. It then uses that to grab a list of required courses for that program and then seperates them into 3 arrays for first, second and third year. 
 Getting the standing becomes pretty easy from there. If a user has not finished all 1st year classes then they have first year standing, if they have then they have second year standing. In order to see if a student is in 3rd year it makes sure they have taken all first year courses and at least 8 classes from second year. A similar method is used to check if they are fourth year.
 
+From there the program needs to determine if a course can be taken based on the prerequists. In order to achieve this we parse the prerequists and use a boolean algebra formula. The algorithm parses based on the AND's and OR's. It compares theses values to a list of courses that the student has already taken. So for example if a prereq to a course looked like this ... (Sysc 1101 and Sysc 2004 and (Sysc 1005 or Comp 1001)).
+
+the bracket would take precedence so the next step is seperate into an array
+
+..... ['Sysc 1101 and Sysc 2004', 'sysc 1005 or comp 1001']
+
+                                           ^ evaluate this expression (since the student HAS taken 1005 this is TRUE)
+                                           
+so it becomes .... ['Sysc 1101 and Sysc 2004', TRUE]
+
+now split the other AND .... ['Sysc 1101', 'Sysc 2004', TRUE]
+
+and evaluate those 2 so it becomes .... [TRUE, TRUE, TRUE]
+
+and the student is able to take the class.
+
 
 ####Schedule Processing
 
