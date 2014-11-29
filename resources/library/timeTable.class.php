@@ -141,17 +141,20 @@
 			if (sizeof($combination) == 0) {
 				return [];
 			}
-			
+
 			d($this->toArray());
 			$size = $this->numberOfCourses;
+			
 			while ($result == []) {
 				// Take out one courses
+				$this->recursiveGetTimeTables($result, $combination, [], 0, 0);
+				if ($result != []) 
+					break;
 				array_pop($combination);
+				$course = array_pop($this->courses);
 				$this->message .= $this->courses[$size-1]->name." has non-fixable time conflict\n";
 				$size--;
-				array_pop($this->courses);
 				
-				$this->recursiveGetTimeTables($result, $combination, [], 0, 0);
 			}
 
 			d($this->message);
