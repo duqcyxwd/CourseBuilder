@@ -61,7 +61,6 @@
 			$course = explode(" ", $course);
 			array_push($array, $course);
 		}
-		echo "<br>";
 		return $array;
 	}
 	

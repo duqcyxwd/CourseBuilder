@@ -4,7 +4,7 @@
  *
  *
  */
-function getDBText(dbTableName, id) {
+function getDBText(dbTableName, id, rowsID) {
 
 	var page = '../' + DB_CONNECTION_URL;
 
