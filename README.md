@@ -1,7 +1,12 @@
 CourseBuilder
 =============
 
+How To Run Application:
 
+1. Add project to htdocs root folder.
+2. Run XAMPP Manager
+2. run the install.php file in /CourseBuilder/resources/install.php
+3. Open /CourseBuilder/public/index.php in browser
 
 Course selection assistant which generates a schedule based on student input
 
