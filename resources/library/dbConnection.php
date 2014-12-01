@@ -3,9 +3,10 @@
 	require "../config.php";
 	require "timeTable.class.php";
 	require("../library/PreRequisite.class.php");
-	// require '/Users/SuperiMan/repo/kint/Kint.class.php';
 
-	// Kint::enabled(true);
+	// require '/Users/SuperiMan/repo/kint/Kint.class.php';
+	// Kint::enabled(false);
+	
 	session_start();
 
 
@@ -62,9 +63,11 @@
 				}
 			}
 
+			
+			$alterElective = [];
 			foreach ($elective as $key => $elec) {
-				if (in_array($elec[0], $courArr)) {
-					unset($elective[$key]);
+				if (!in_array($elec[0], $courArr)) {
+					$alterElective[] = $elec;
 				}
 			}
 
@@ -73,7 +76,7 @@
 			$result[] = $tablesInArray;                         // Combination of time table that are available
 			$result[] = [$singleTimeTable->message]; 			// Message from Backend
 			$result[] = $avaiableCourses; 						// A list of course that are available and unCompleted
-			$result[] = $elective;  
+			$result[] = $alterElective;  
 			
 			echo json_encode($result);
 
