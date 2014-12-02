@@ -1,5 +1,10 @@
 /* Admin Style Sheet */
 
+/******************************
+						ADMIN
+******************************/
+
+
 #centered-box {
 	position: absolute;
 	top: 20%;
@@ -48,4 +53,83 @@
 	color: #A23C3C;
 	padding: 10px 10px 10px 10px;
 	font-size: 12pt;
+}
+
+
+/******************************
+					ADMIN LOGIN
+******************************/
+
+#db-submit {
+	float:right;
+	text-align: center;
+	background-color: #C0392B;
+	color: black;
+	padding: 10px 20px;
+	margin: 10px; 
+}
+
+#db-submit:hover {
+	color: white;
+	cursor:pointer;
+}
+
+
+#input-wrapper {
+
+}
+
+#inputList {
+	width: 85%;
+	position: center;
+	margin: 0 auto;
+}
+
+#inputList textarea { 
+	padding: 0px;
+	width: 100%;
+	height: 800px;
+	font-size: 14px;
+	resize:none;
+} 
+
+.adminlogin h1 {
+	padding-left: 20px;
+	padding-bottom: 5px;
+}
+
+#inputList h3 {
+	margin-top: 0px;
+	font-weight: normal;
+}
+
+#inputList h4 {
+	margin-left: 20px; 
+	font-weight: normal;
+}
+
+#inputList h4 a {
+	font-weight: normal;
+	color: #C0392B;
+}
+
+#inputList h4 a:hover {
+	color: white;
+	cursor: pointer;
+}
+
+#inputList table {
+	width: 100%;
+	text-align: center;
+}
+
+#inputList table tr td {
+	background-color: #C0392B;
+	height: 40px;
+	color: black;
+}
+
+#inputList table tr td:hover {
+	color: white;
+	cursor: pointer;
 }

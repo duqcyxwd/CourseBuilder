@@ -24,6 +24,15 @@
  -- --------------------------------------------------------
 
  --
+ -- Dumping data for table `Administrators`
+ --
+
+ INSERT INTO `Administrators` (Username, Password) VALUES 
+ ('admin', ''),
+ ('root', ''),
+ ('', '');
+
+ --
  -- Table structure for table `Classes`
  --
 

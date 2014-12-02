@@ -20,10 +20,9 @@ defined("TEMPLATES_PATH")
     or define("TEMPLATES_PATH", realpath(dirname(__FILE__) . '/templates'));
 defined("LIBRARY_PATH")
 		or define("LIBRARY_PATH", "/CourseBuilder/resources/library");
-    // or define("LIBRARY_PATH", realpath(dirname(__FILE__) . '/library'));
 
 defined("RESOURCE_PATH")
-    or define("RESOURCE_PATH", realpath(dirname(__FILE__) . '/'));
+		or define("RESOURCE_PATH", "/CourseBuilder/resources");
 
 // Connect to Database
 try 

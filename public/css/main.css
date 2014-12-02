@@ -234,6 +234,7 @@ header {
 	/*background-color: #EBEBEB;*/
 	background-color: #ecf0f1;
 	vertical-align: top;
+	overflow: hidden;
 }
 
 #course h1 {
