@@ -12,7 +12,10 @@ $db_password = '';
 $testing = false;
 
 defined("ROOT_PATH")
-    or define("ROOT_PATH", "/CourseBuilder/public");
+    or define("ROOT_PATH", "/CourseBuilder");
+
+defined("PUBLIC_PATH")
+    or define("PUBLIC_PATH", "/CourseBuilder/public");
 
 defined("INCLUDE_PATH")
     or define("INCLUDE_PATH", realpath(dirname(__FILE__) . '/include'));

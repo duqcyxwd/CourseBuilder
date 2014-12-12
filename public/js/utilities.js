@@ -1,5 +1,5 @@
-var DB_CONNECTION_URL = "../resources/library/dbConnection.php";
-var TIMETABLE_URL = "timetable.php";
+var DB_CONNECTION_URL = "/CourseBuilder/resources/library/dbConnection.php";
+var TIMETABLE_URL = "/CourseBuilder/public/timetable.php";
 // utilities
 
 /**

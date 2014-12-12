@@ -1,6 +1,6 @@
 <?php 
 	$pageTitle = "Home";
-	require("../resources/config.php");
+	require("resources/config.php");
 	include(TEMPLATES_PATH . "/header.php");
 	$programList = $db->getListOfPrograms();
 ?>

@@ -6,7 +6,7 @@
  */
 function getDBText(dbTableName, id, rowsID) {
 
-	var page = '../' + DB_CONNECTION_URL;
+	var page = DB_CONNECTION_URL;
 
 	var params = {
 		action: 'getTableData',

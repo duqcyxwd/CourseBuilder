@@ -6,7 +6,7 @@
 		$username = $_POST['login'];
 		$password = $_POST['password'];
 	} else {
-		header('Location: ' . ROOT_PATH . '/admin.php'); // return to login page
+		header('Location: ' . PUBLIC_PATH . '/admin.php'); // return to login page
 	}
 
 	// Verify Login
@@ -17,7 +17,7 @@
 	$rows = $db->execute($sql);
 
 	if ($rows->num_rows == 0) {
-		header('Location: ' . ROOT_PATH . '/admin.php?login=failed');
+		header('Location: ' . PUBLIC_PATH . '/admin.php?login=failed');
 	}
 
 	include(TEMPLATES_PATH . "/header.php");
